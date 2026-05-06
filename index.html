@@ -949,8 +949,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 28px;
-      max-width: 780px;
-      margin: 0 auto;
     }
     .sesit-card {
       background: var(--white);
@@ -1473,6 +1471,32 @@
 
       <div class="sesit-card">
         <div class="sesit-img">
+          <!-- Replace src with real photo: jarni-sesit.jpg -->
+          <div class="sesit-img-placeholder">
+            <svg viewBox="0 0 52 52" fill="none"><rect x="8" y="4" width="36" height="44" rx="3" fill="#A8D8A8" opacity=".25"/><path d="M18 12 C22 8 30 8 34 12" stroke="#3A5A40" stroke-width="2" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="26" cy="20" r="7" fill="#3A5A40" opacity=".2"/><path d="M14 30 H38 M14 36 H30 M14 42 H34" stroke="#3A5A40" stroke-width="1.8" stroke-linecap="round" opacity=".35"/></svg>
+            <span>Foto: Jarní sešit</span>
+          </div>
+        </div>
+        <div class="sesit-body">
+          <span class="sesit-tag">🌸 Jaro</span>
+          <h3>Jarní pracovní sešit</h3>
+          <p>Sešit plný jarního probouzení – úkoly o přírodě, rostlinách a zvířatech, která se vrací po zimě. Krásný start do nové sezóny.</p>
+          <div class="sesit-pricing">
+            <div class="sesit-price-row">
+              <span>🖨 Tištěný sešit</span>
+              <span class="price-val">450 Kč</span>
+            </div>
+            <div class="sesit-price-row">
+              <span>📄 PDF ke stažení</span>
+              <span class="price-val">100 Kč</span>
+            </div>
+          </div>
+          <a href="#objednat" class="btn btn-terra" style="width:100%;justify-content:center;">Objednat sešit</a>
+        </div>
+      </div>
+
+      <div class="sesit-card">
+        <div class="sesit-img">
           <!-- Replace src with real photo: letni-sesit.jpg -->
           <div class="sesit-img-placeholder">
             <svg viewBox="0 0 52 52" fill="none"><rect x="8" y="4" width="36" height="44" rx="3" fill="#F5C842" opacity=".2"/><circle cx="26" cy="14" r="8" fill="#F5C842" opacity=".4"/><path d="M20 10 C24 6 28 10 32 6" stroke="#A0522D" stroke-width="1.8" stroke-linecap="round" fill="none" opacity=".4"/><path d="M14 26 H38 M14 32 H30 M14 38 H34" stroke="#3A5A40" stroke-width="1.8" stroke-linecap="round" opacity=".35"/></svg>
@@ -1594,6 +1618,8 @@
                 <option value="Sada: Dopravní prostředky (250 Kč)">Sada: Dopravní prostředky – 250 Kč</option>
               </optgroup>
               <optgroup label="📒 Sešity">
+                <option value="Jarní pracovní sešit – tištěný (450 Kč)">Jarní pracovní sešit – tištěný 450 Kč</option>
+                <option value="Jarní pracovní sešit – PDF (100 Kč)">Jarní pracovní sešit – PDF 100 Kč</option>
                 <option value="Letní pracovní sešit – tištěný (450 Kč)">Letní pracovní sešit – tištěný 450 Kč</option>
                 <option value="Letní pracovní sešit – PDF (100 Kč)">Letní pracovní sešit – PDF 100 Kč</option>
               </optgroup>
@@ -1622,6 +1648,10 @@
                 <span class="radio-price">89 Kč</span>
               </label>
             </div>
+          </div>
+          <div class="form-group full" id="pobocka-wrap" style="display:none;">
+            <label for="f-pobocka">Název a adresa pobočky / Alzaboxu <span class="req">*</span></label>
+            <input type="text" id="f-pobocka" name="entry.pobocka" placeholder="Např. Alzabox – OC Palladium, Praha 1 nebo Zásilkovna – Korunní 2, Praha 2" />
           </div>
           <div class="form-group full">
             <label for="f-note">Poznámka / dotaz</label>
@@ -1777,12 +1807,15 @@
     const email   = document.getElementById('f-email').value.trim();
     const product = document.getElementById('f-product').value;
     const doprava = form.querySelector('input[name="entry.doprava"]:checked');
+    const pobockaVisible = pobockaWrap.style.display !== 'none';
+    const pobocka = pobockaVisible ? pobockaInput.value.trim() : 'n/a';
 
-    if (!name || !email || !product || !doprava) {
+    if (!name || !email || !product || !doprava || (pobockaVisible && !pobocka)) {
       [
         { el: document.getElementById('f-name'),    val: name },
         { el: document.getElementById('f-email'),   val: email },
-        { el: document.getElementById('f-product'), val: product }
+        { el: document.getElementById('f-product'), val: product },
+        ...(pobockaVisible ? [{ el: pobockaInput, val: pobocka }] : [])
       ].forEach(function (item) {
         if (!item.val) {
           item.el.style.borderColor = '#C0392B';
@@ -1858,13 +1891,23 @@
       : '0 2px 12px rgba(58,90,64,.06)';
   }, { passive: true });
 
-  /* — Radio option highlight — */
+  /* — Radio option highlight + dynamic pobočka field — */
+  const pobockaWrap = document.getElementById('pobocka-wrap');
+  const pobockaInput = document.getElementById('f-pobocka');
+
   document.querySelectorAll('.radio-option input[type="radio"]').forEach(function (radio) {
     radio.addEventListener('change', function () {
       document.querySelectorAll('.radio-option').forEach(function (opt) {
         opt.classList.remove('selected');
       });
-      if (this.checked) this.closest('.radio-option').classList.add('selected');
+      if (this.checked) {
+        this.closest('.radio-option').classList.add('selected');
+        /* Show address field for all carriers */
+        if (this.name === 'entry.doprava') {
+          pobockaWrap.style.display = 'flex';
+          pobockaInput.required = true;
+        }
+      }
     });
   });
 
