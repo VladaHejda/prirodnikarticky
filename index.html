@@ -1,1178 +1,1874 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Přírodní kartičky – Ručně tvořené karty z přírodních materiálů</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* ========================================
-           CSS RESET A ZÁKLADNÍ STYLY
-           ======================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            /* Barevná paleta */
-            --cream: #F5F0E8;
-            --dark-green: #3A5A40;
-            --beige: #C9B99A;
-            --terracotta: #A0522D;
-            --light-green: #588157;
-            --dark-cream: #E8E0D5;
-            
-            /* Typografie */
-            --font-display: 'Playfair Display', serif;
-            --font-body: 'Lora', serif;
-            
-            /* Rozměry */
-            --header-height: 70px;
-            --sidebar-width: 280px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--cream);
-            color: #333;
-            line-height: 1.7;
-            /* Papírová textura pomocí SVG */
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-        }
-
-        /* ========================================
-           HEADER A NAVIGACE
-           ======================================== */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: var(--header-height);
-            background-color: var(--cream);
-            border-bottom: 2px solid var(--beige);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 1.5rem;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Hamburger menu tlačítko */
-        .hamburger {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            color: var(--dark-green);
-            cursor: pointer;
-            padding: 0.5rem;
-            transition: color 0.3s ease;
-            z-index: 200;
-        }
-
-        .hamburger:hover {
-            color: var(--terracotta);
-        }
-
-        /* Logo */
-        .logo {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark-green);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-icon {
-            width: 35px;
-            height: 35px;
-        }
-
-        /* Prázdný element pro vycentrování loga */
-        .header-spacer {
-            width: 40px;
-        }
-
-        /* ========================================
-           SIDEBAR MENU
-           ======================================== */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 150;
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: var(--sidebar-width);
-            height: 100vh;
-            background-color: var(--cream);
-            border-right: 2px solid var(--beige);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            z-index: 200;
-            overflow-y: auto;
-            padding: 2rem 0;
-        }
-
-        .sidebar.active {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            padding: 0 1.5rem 1.5rem;
-            border-bottom: 1px solid var(--beige);
-            margin-bottom: 1rem;
-        }
-
-        .sidebar-title {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            color: var(--dark-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar-subtitle {
-            font-size: 0.85rem;
-            color: var(--terracotta);
-        }
-
-        .sidebar-nav {
-            list-style: none;
-        }
-
-        .sidebar-nav li {
-            border-bottom: 1px solid var(--dark-cream);
-        }
-
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            text-decoration: none;
-            color: #333;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: var(--dark-cream);
-            color: var(--dark-green);
-            padding-left: 2rem;
-        }
-
-        .sidebar-nav .nav-icon {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-        }
-
-        /* Tlačítko zavřít sidebar */
-        .sidebar-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--dark-green);
-            cursor: pointer;
-            padding: 0.3rem;
-        }
-
-        /* ========================================
-           HLAVNÍ OBSAH
-           ======================================== */
-        .main {
-            padding-top: var(--header-height);
-        }
-
-        /* ========================================
-           HERO SEKCE
-           ======================================== */
-        .hero {
-            min-height: calc(100vh - var(--header-height));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 3rem 1.5rem;
-            background: linear-gradient(135deg, var(--cream) 0%, var(--dark-cream) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Dekorativní prvky v hero */
-        .hero::before,
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            opacity: 0.1;
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-
-        .hero::before {
-            top: 10%;
-            left: -50px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 C30 30, 20 50, 50 90 C80 50, 70 30, 50 10' fill='%233A5A40'/%3E%3C/svg%3E");
-        }
-
-        .hero::after {
-            bottom: 10%;
-            right: -50px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23A0522D' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='25' fill='none' stroke='%23A0522D' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23A0522D'/%3E%3C/svg%3E");
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-        }
-
-        .hero-icon {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-title {
-            font-family: var(--font-display);
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--dark-green);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: #555;
-            margin-bottom: 2rem;
-            font-style: italic;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            font-family: var(--font-body);
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary {
-            background-color: var(--dark-green);
-            color: white;
-            box-shadow: 0 4px 15px rgba(58, 90, 64, 0.3);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--light-green);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(58, 90, 64, 0.4);
-        }
-
-        /* ========================================
-           SEKCE - OBECNÉ STYLY
-           ======================================== */
-        .section {
-            padding: 5rem 1.5rem;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 2.2rem;
-            color: var(--dark-green);
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto 3rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* ========================================
-           KATEGORIE - GRID KARET
-           ======================================== */
-        .categories {
-            background-color: var(--dark-cream);
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .categories-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .categories-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .category-card {
-            background-color: var(--cream);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            border: 2px solid var(--beige);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .category-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            border-color: var(--dark-green);
-        }
-
-        .category-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background-color: var(--dark-cream);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease;
-        }
-
-        .category-card:hover .category-icon {
-            background-color: var(--beige);
-        }
-
-        .category-icon svg {
-            width: 40px;
-            height: 40px;
-        }
-
-        .category-title {
-            font-family: var(--font-display);
-            font-size: 1.4rem;
-            color: var(--dark-green);
-            margin-bottom: 0.75rem;
-        }
-
-        .category-desc {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* ========================================
-           O KARTIČKÁCH
-           ======================================== */
-        .about {
-            background-color: var(--cream);
-        }
-
-        .about-content {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        @media (min-width: 768px) {
-            .about-content {
-                flex-direction: row;
-                gap: 4rem;
-            }
-        }
-
-        .about-image {
-            flex: 1;
-            max-width: 400px;
-            aspect-ratio: 4/3;
-            background-color: var(--dark-cream);
-            border-radius: 20px;
-            border: 3px solid var(--beige);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .about-image svg {
-            width: 60%;
-            height: 60%;
-            opacity: 0.5;
-        }
-
-        .about-text {
-            flex: 1;
-        }
-
-        .about-text h3 {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            color: var(--dark-green);
-            margin-bottom: 1rem;
-        }
-
-        .about-text p {
-            margin-bottom: 1rem;
-            color: #555;
-        }
-
-        .about-features {
-            list-style: none;
-            margin-top: 1.5rem;
-        }
-
-        .about-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            color: #444;
-        }
-
-        .about-features li::before {
-            content: '';
-            width: 24px;
-            height: 24px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233A5A40'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E");
-            background-size: contain;
-            flex-shrink: 0;
-        }
-
-        /* ========================================
-           KONTAKTNÍ FORMULÁŘ
-           ======================================== */
-        .contact {
-            background-color: var(--dark-cream);
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: var(--cream);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 2px solid var(--beige);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--dark-green);
-        }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: 0.9rem 1.2rem;
-            font-family: var(--font-body);
-            font-size: 1rem;
-            border: 2px solid var(--beige);
-            border-radius: 10px;
-            background-color: white;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--dark-green);
-            box-shadow: 0 0 0 3px rgba(58, 90, 64, 0.1);
-        }
-
-        .form-textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .form-error {
-            color: var(--terracotta);
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
-
-        .form-group.error .form-error {
-            display: block;
-        }
-
-        .form-group.error .form-input,
-        .form-group.error .form-select,
-        .form-group.error .form-textarea {
-            border-color: var(--terracotta);
-        }
-
-        .form-submit {
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .form-success {
-            display: none;
-            text-align: center;
-            padding: 2rem;
-            background-color: rgba(58, 90, 64, 0.1);
-            border-radius: 10px;
-            color: var(--dark-green);
-        }
-
-        .form-success.show {
-            display: block;
-        }
-
-        .form-success h4 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* ========================================
-           PATIČKA
-           ======================================== */
-        .footer {
-            background-color: var(--dark-green);
-            color: white;
-            padding: 3rem 1.5rem;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-social {
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-social a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: white;
-        }
-
-        .footer-copyright {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        /* ========================================
-           SCROLL-TO-TOP TLAČÍTKO
-           ======================================== */
-        .scroll-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background-color: var(--dark-green);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 50;
-        }
-
-        .scroll-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scroll-top:hover {
-            background-color: var(--terracotta);
-            transform: translateY(-3px);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Přírodní kartičky – Ručně tvořené vzdělávací kartičky pro děti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #F5F0E8;
+      --cream-dark: #EDE5D5;
+      --green:      #3A5A40;
+      --green-light:#5C8A63;
+      --green-pale: #E8F0E9;
+      --beige:      #C9B99A;
+      --beige-light:#EDE3D3;
+      --terra:      #A0522D;
+      --terra-light:#C4703F;
+      --text:       #3D3228;
+      --text-light: #6B5B4E;
+      --white:      #FFFFFF;
+      --shadow:     0 4px 20px rgba(58,90,64,.12);
+      --shadow-hover:0 8px 32px rgba(58,90,64,.22);
+      --radius:     14px;
+      --radius-sm:  8px;
+      --transition: .28s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+      /* Subtle paper texture via CSS */
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Lora', serif; line-height: 1.3; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: 'Nunito', sans-serif; border: none; }
+
+    /* ─── Overlay ─── */
+    #overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(30,20,15,.45);
+      z-index: 800;
+      backdrop-filter: blur(2px);
+    }
+    #overlay.active { display: block; }
+
+    /* ─── Sidebar ─── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: min(320px, 88vw);
+      height: 100vh;
+      background: var(--cream);
+      z-index: 900;
+      transform: translateX(-100%);
+      transition: transform .38s cubic-bezier(.4,0,.2,1);
+      overflow-y: auto;
+      box-shadow: 4px 0 30px rgba(58,90,64,.18);
+      display: flex;
+      flex-direction: column;
+    }
+    #sidebar.open { transform: translateX(0); }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 24px 18px;
+      border-bottom: 1px solid var(--beige-light);
+    }
+    .sidebar-logo {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      color: var(--green);
+      font-style: italic;
+    }
+    #close-btn {
+      background: none;
+      font-size: 1.5rem;
+      color: var(--text-light);
+      line-height: 1;
+      padding: 4px;
+      transition: color var(--transition);
+    }
+    #close-btn:hover { color: var(--terra); }
+
+    .sidebar-nav { padding: 12px 0 24px; flex: 1; }
+    .sidebar-nav a, .submenu-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 26px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: color var(--transition), background var(--transition);
+    }
+    .sidebar-nav a:hover, .submenu-toggle:hover { color: var(--green); background: var(--green-pale); }
+    .sidebar-nav a .nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+    .submenu-toggle {
+      width: 100%;
+      background: none;
+      font-family: 'Nunito', sans-serif;
+      justify-content: space-between;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .submenu-toggle .left { display: flex; align-items: center; gap: 10px; }
+    .toggle-arrow {
+      display: inline-block;
+      transition: transform .25s;
+      font-style: normal;
+      font-size: .8rem;
+    }
+    .submenu-toggle.expanded .toggle-arrow { transform: rotate(90deg); }
+
+    .submenu {
+      display: none;
+      background: var(--green-pale);
+      border-left: 3px solid var(--green);
+      margin: 0 12px 4px 12px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+    .submenu.open { display: block; }
+    .submenu a {
+      padding: 8px 20px 8px 28px;
+      font-size: .93rem;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+    .submenu a:hover { color: var(--green); background: transparent; }
+
+    .sidebar-footer {
+      padding: 18px 24px;
+      border-top: 1px solid var(--beige-light);
+      font-size: .85rem;
+      color: var(--text-light);
+      text-align: center;
+    }
+
+    /* ─── Top Navbar ─── */
+    #topbar {
+      position: sticky; top: 0; z-index: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: rgba(245,240,232,.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--beige-light);
+      box-shadow: 0 2px 12px rgba(58,90,64,.06);
+    }
+    #hamburger {
+      background: none;
+      font-size: 1.45rem;
+      color: var(--green);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      transition: background var(--transition);
+      line-height: 1;
+    }
+    #hamburger:hover { background: var(--green-pale); }
+
+    .topbar-logo {
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      color: var(--green);
+      font-style: italic;
+      letter-spacing: .02em;
+    }
+    .topbar-cart {
+      background: none;
+      font-size: 1.3rem;
+      color: var(--green);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      transition: background var(--transition);
+    }
+    .topbar-cart:hover { background: var(--green-pale); }
+
+    /* ─── Botanical SVG dividers ─── */
+    .botanical-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0;
+      opacity: .55;
+    }
+    .botanical-divider svg { width: min(420px, 90vw); height: auto; }
+
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: .95rem;
+      transition: all var(--transition);
+      letter-spacing: .02em;
+    }
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+      box-shadow: 0 3px 14px rgba(58,90,64,.3);
+    }
+    .btn-primary:hover {
+      background: var(--green-light);
+      box-shadow: 0 6px 20px rgba(58,90,64,.35);
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--green);
+      border: 2px solid var(--green);
+    }
+    .btn-outline:hover {
+      background: var(--green);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+    .btn-terra {
+      background: var(--terra);
+      color: var(--white);
+      box-shadow: 0 3px 14px rgba(160,82,45,.28);
+    }
+    .btn-terra:hover {
+      background: var(--terra-light);
+      box-shadow: 0 6px 20px rgba(160,82,45,.34);
+      transform: translateY(-2px);
+    }
+    .btn-sm { padding: 9px 20px; font-size: .88rem; }
+
+    /* ─── Section common ─── */
+    section { padding: 72px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-heading h2 {
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+    .section-heading p {
+      color: var(--text-light);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .section-label {
+      display: inline-block;
+      font-family: 'Nunito', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--terra);
+      background: #FDF0E8;
+      border: 1px solid var(--terra);
+      border-radius: 50px;
+      padding: 4px 14px;
+      margin-bottom: 14px;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-content { z-index: 2; }
+    .hero-eyebrow {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 2px;
+      background: var(--terra);
+      border-radius: 2px;
+    }
+    .hero-content h1 {
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      color: var(--green);
+      margin-bottom: 20px;
+      line-height: 1.18;
+    }
+    .hero-content h1 em {
+      font-style: italic;
+      color: var(--terra);
+    }
+    .hero-content p {
+      font-size: 1.12rem;
+      color: var(--text-light);
+      margin-bottom: 36px;
+      max-width: 460px;
+      line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .hero-image-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-img-frame {
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 4/5;
+      border-radius: 40% 60% 55% 45% / 45% 40% 60% 55%;
+      overflow: hidden;
+      border: 4px solid var(--beige);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .hero-img-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .hero-img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, var(--green-pale) 0%, var(--beige-light) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--green);
+    }
+    .hero-img-placeholder svg { width: 80px; height: 80px; opacity: .45; }
+    .hero-img-placeholder span { font-size: .88rem; color: var(--text-light); font-style: italic; }
+
+    .hero-badge {
+      position: absolute;
+      bottom: -18px;
+      right: 18px;
+      background: var(--terra);
+      color: var(--white);
+      border-radius: 50%;
+      width: 88px; height: 88px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Lora', serif;
+      font-size: .78rem;
+      font-style: italic;
+      text-align: center;
+      line-height: 1.3;
+      box-shadow: 0 4px 16px rgba(160,82,45,.32);
+    }
+    .hero-bg-leaf {
+      position: absolute;
+      opacity: .06;
+      pointer-events: none;
+    }
+    .hero-bg-leaf.top-right { top: -40px; right: -80px; width: 380px; }
+    .hero-bg-leaf.bottom-left { bottom: -60px; left: -60px; width: 300px; transform: rotate(180deg); }
+
+    /* ─── NOVINKY ─── */
+    #novinky { background: var(--cream-dark); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .card-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--green-pale);
+      position: relative;
+    }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+    .product-card:hover .card-img img { transform: scale(1.04); }
+    .card-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--green-light);
+      background: linear-gradient(135deg, var(--green-pale), var(--beige-light));
+    }
+    .card-img-placeholder svg { width: 52px; height: 52px; opacity: .5; }
+    .card-img-placeholder span { font-size: .8rem; color: var(--text-light); font-style: italic; text-align: center; padding: 0 12px; }
+
+    .card-badge {
+      position: absolute;
+      top: 12px; left: 12px;
+      background: var(--terra);
+      color: var(--white);
+      font-size: .75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .card-badge.badge-new { background: var(--terra); }
+    .card-badge.badge-sale { background: #B85C38; }
+    .card-badge.badge-best { background: var(--green); }
+
+    .card-body {
+      padding: 20px 22px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-category {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--beige);
+      margin-bottom: 6px;
+    }
+    .card-title {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+    .card-desc {
+      font-size: .9rem;
+      color: var(--text-light);
+      flex: 1;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-price {
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+    .card-price .old-price {
+      font-size: .85rem;
+      color: var(--beige);
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-left: 6px;
+    }
+
+    /* ─── CENÍK ─── */
+    #cenik { background: var(--cream); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+    }
+    .pricing-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 28px 32px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      border: 2px solid transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .pricing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--green);
+    }
+    .pricing-card.featured {
+      border-color: var(--green);
+      background: linear-gradient(160deg, #FAFFF8 0%, var(--cream) 100%);
+    }
+    .pricing-card.featured::before {
+      content: 'Nejoblíbenější';
+      position: absolute;
+      top: -14px;
+      left: 50%; transform: translateX(-50%);
+      background: var(--green);
+      color: var(--white);
+      font-size: .75rem;
+      font-weight: 700;
+      padding: 4px 18px;
+      border-radius: 50px;
+      letter-spacing: .08em;
+      white-space: nowrap;
+    }
+    .pricing-icon {
+      width: 72px; height: 72px;
+      background: var(--green-pale);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--green);
+    }
+    .pricing-icon svg { width: 36px; height: 36px; }
+    .pricing-card h3 {
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .pricing-card p {
+      font-size: .92rem;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      line-height: 1.65;
+    }
+    .pricing-price {
+      font-family: 'Lora', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .pricing-price span { font-size: 1rem; font-weight: 400; color: var(--text-light); }
+    .pricing-features {
+      margin: 18px 0 28px;
+      text-align: left;
+      width: 100%;
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 5px 0;
+      font-size: .9rem;
+      color: var(--text-light);
+    }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── SADY ─── */
+    #sady { background: var(--cream-dark); }
+
+    .sets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .set-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .set-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .set-img {
+      aspect-ratio: 3/2;
+      background: var(--green-pale);
+      overflow: hidden;
+      position: relative;
+    }
+    .set-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .set-card:hover .set-img img { transform: scale(1.04); }
+    .set-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--green-light);
+      background: linear-gradient(135deg, var(--green-pale), var(--beige-light));
+    }
+    .set-img-placeholder svg { width: 52px; height: 52px; opacity: .5; }
+    .set-img-placeholder span { font-size: .8rem; color: var(--text-light); font-style: italic; }
+    .set-body { padding: 22px 24px 26px; }
+    .set-tag {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: var(--green-pale);
+      padding: 3px 12px;
+      border-radius: 50px;
+      margin-bottom: 10px;
+    }
+    .set-body h3 {
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .set-body p {
+      font-size: .9rem;
+      color: var(--text-light);
+      margin-bottom: 18px;
+      line-height: 1.65;
+    }
+    .set-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .set-price {
+      font-family: 'Lora', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+    .set-count {
+      font-size: .8rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* ─── O MNĚ ─── */
+    #o-mne { background: var(--cream); }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 60px;
+      align-items: center;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .about-avatar-wrap { flex-shrink: 0; }
+    .about-avatar {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid var(--beige);
+      box-shadow: var(--shadow);
+    }
+    .about-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, var(--green-pale), var(--beige-light));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--green-light);
+    }
+    .avatar-placeholder svg { width: 56px; height: 56px; opacity: .5; }
+    .avatar-placeholder span { font-size: .75rem; color: var(--text-light); font-style: italic; }
+
+    .about-content h2 {
+      font-size: 1.8rem;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+    .about-subtitle {
+      font-size: .9rem;
+      color: var(--terra);
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: .04em;
+    }
+    .about-content p {
+      color: var(--text-light);
+      line-height: 1.85;
+      margin-bottom: 16px;
+      font-size: .98rem;
+    }
+    .about-content p:last-of-type { margin-bottom: 24px; }
+    .about-signature {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--green);
+    }
+
+    /* ─── FORMULÁŘ ─── */
+    #objednat { background: var(--green-pale); }
+
+    .form-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 48px 52px;
+      max-width: 720px;
+      margin: 0 auto;
+      box-shadow: var(--shadow);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: .02em;
+    }
+    .form-group label .req { color: var(--terra); margin-left: 2px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 12px 16px;
+      border: 1.5px solid var(--beige);
+      border-radius: var(--radius-sm);
+      font-family: 'Nunito', sans-serif;
+      font-size: .95rem;
+      color: var(--text);
+      background: var(--cream);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(58,90,64,.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit-row {
+      text-align: center;
+      margin-top: 28px;
+    }
+    .form-submit-row .btn { min-width: 240px; justify-content: center; }
+    #form-success {
+      display: none;
+      text-align: center;
+      padding: 36px 24px;
+    }
+    #form-success .success-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    #form-success h3 {
+      font-size: 1.6rem;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+    #form-success p {
+      color: var(--text-light);
+      font-size: .98rem;
+    }
+
+    /* ─── PATIČKA ─── */
+    footer {
+      background: var(--green);
+      color: var(--cream);
+      padding: 52px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+    }
+    .footer-brand h3 {
+      font-size: 1.4rem;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .footer-brand p {
+      font-size: .9rem;
+      color: rgba(245,240,232,.7);
+      line-height: 1.75;
+      max-width: 300px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      color: var(--cream);
+      transition: background var(--transition), transform var(--transition);
+      font-size: 1.1rem;
+    }
+    .social-link:hover {
+      background: rgba(255,255,255,.25);
+      transform: translateY(-2px);
+    }
+    .footer-col h4 {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--beige);
+      margin-bottom: 16px;
+    }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a {
+      font-size: .9rem;
+      color: rgba(245,240,232,.7);
+      transition: color var(--transition);
+    }
+    .footer-col ul li a:hover { color: var(--cream); }
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: .9rem;
+      color: rgba(245,240,232,.7);
+    }
+    .footer-contact-item a { color: rgba(245,240,232,.7); transition: color var(--transition); }
+    .footer-contact-item a:hover { color: var(--cream); }
+    .footer-bottom {
+      border-top: 1px solid rgba(245,240,232,.15);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p {
+      font-size: .85rem;
+      color: rgba(245,240,232,.5);
+    }
+    .footer-made-with { display: flex; align-items: center; gap: 6px; font-size: .85rem; color: rgba(245,240,232,.4); }
+
+    /* ─── Hero mosaic ─── */
+    .hero-inner {
+      grid-template-columns: 3fr 2fr;
+    }
+    .hero-mosaic {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 1 / 1;
+    }
+    .hero-mosaic-cell {
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--green-pale);
+      position: relative;
+      box-shadow: 0 3px 12px rgba(58,90,64,.13);
+    }
+    .hero-mosaic-cell img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-mosaic-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--green-pale), var(--beige-light));
+      color: var(--green-light);
+      padding: 8px;
+    }
+    .hero-mosaic-placeholder svg { width: 36px; height: 36px; opacity: .45; }
+    .hero-mosaic-placeholder span { font-size: .72rem; color: var(--text-light); font-style: italic; text-align: center; line-height: 1.3; }
+
+    /* ─── Sešity section ─── */
+    #sesity { background: var(--cream); }
+    .sesity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .sesit-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .sesit-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .sesit-img {
+      aspect-ratio: 4/3;
+      background: var(--beige-light);
+      overflow: hidden;
+    }
+    .sesit-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .sesit-card:hover .sesit-img img { transform: scale(1.04); }
+    .sesit-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #FDF5E6, var(--beige-light));
+      color: var(--terra);
+    }
+    .sesit-img-placeholder svg { width: 52px; height: 52px; opacity: .45; }
+    .sesit-img-placeholder span { font-size: .8rem; color: var(--text-light); font-style: italic; }
+    .sesit-body { padding: 22px 24px 26px; }
+    .sesit-tag {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--terra);
+      background: #FDF0E8;
+      border: 1px solid rgba(160,82,45,.2);
+      padding: 3px 12px;
+      border-radius: 50px;
+      margin-bottom: 10px;
+    }
+    .sesit-body h3 { font-size: 1.2rem; color: var(--text); margin-bottom: 8px; }
+    .sesit-body p { font-size: .9rem; color: var(--text-light); margin-bottom: 18px; line-height: 1.65; }
+    .sesit-pricing {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .sesit-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+    }
+    .sesit-price-row span:first-child { font-size: .9rem; color: var(--text-light); }
+    .sesit-price-row .price-val {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    /* ─── Doprava radio group ─── */
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 2px;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      border: 1.5px solid var(--beige);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      background: var(--cream);
+    }
+    .radio-option:hover { border-color: var(--green); background: var(--green-pale); }
+    .radio-option input[type="radio"] {
+      accent-color: var(--green);
+      width: 17px; height: 17px;
+      flex-shrink: 0;
+      cursor: pointer;
+      margin: 0; padding: 0;
+      border: none;
+      box-shadow: none;
+    }
+    .radio-option input[type="radio"]:focus { box-shadow: none; }
+    .radio-option.selected { border-color: var(--green); background: var(--green-pale); }
+    .radio-label { flex: 1; font-size: .95rem; color: var(--text); }
+    .radio-price {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--green);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+      .hero-content p, .hero-actions { max-width: 100%; }
+      .hero-eyebrow { justify-content: center; }
+      .hero-actions { justify-content: center; }
+      .hero-image-wrap { order: -1; }
+      .hero-mosaic { max-width: 360px; margin: 0 auto; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 680px) {
+      section { padding: 52px 18px; }
+      .form-card { padding: 28px 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+      .about-inner { grid-template-columns: 1fr; text-align: center; gap: 28px; }
+      .about-avatar { margin: 0 auto; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .pricing-card.featured::before { font-size: .68rem; }
+      .hero-mosaic { max-width: 300px; gap: 7px; }
+      .radio-group { gap: 8px; }
+    }
+  </style>
 </head>
+
 <body>
-    <!-- ========================================
-         HEADER
-         ======================================== -->
-    <header class="header">
-        <button class="hamburger" id="hamburgerBtn" aria-label="Otevřít menu">☰</button>
-        
-        <a href="#hero" class="logo">
-            <!-- Ikona listu -->
-            <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 10 C25 35, 20 55, 30 75 C35 85, 45 90, 50 90 C55 90, 65 85, 70 75 C80 55, 75 35, 50 10" fill="#3A5A40"/>
-                <path d="M50 25 L50 80" stroke="#F5F0E8" stroke-width="2"/>
-                <path d="M50 40 L35 50" stroke="#F5F0E8" stroke-width="1.5"/>
-                <path d="M50 50 L65 40" stroke="#F5F0E8" stroke-width="1.5"/>
-                <path d="M50 60 L38 68" stroke="#F5F0E8" stroke-width="1.5"/>
-            </svg>
-            Přírodní kartičky
-        </a>
-        
-        <div class="header-spacer"></div>
-    </header>
 
-    <!-- ========================================
-         SIDEBAR MENU
-         ======================================== -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
-    <nav class="sidebar" id="sidebar">
-        <button class="sidebar-close" id="sidebarClose" aria-label="Zavřít menu">✕</button>
-        
-        <div class="sidebar-header">
-            <div class="sidebar-title">Kategorie</div>
-            <div class="sidebar-subtitle">Prozkoumejte naše kolekce</div>
+<!-- ░░ OVERLAY ░░ -->
+<div id="overlay"></div>
+
+<!-- ░░░ SIDEBAR ░░░ -->
+<aside id="sidebar" aria-label="Navigace">
+  <div class="sidebar-header">
+    <span class="sidebar-logo">🌿 Přírodní kartičky</span>
+    <button id="close-btn" aria-label="Zavřít menu">✕</button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#novinky"><span class="nav-icon">✨</span>Novinky</a>
+    <a href="#cenik"><span class="nav-icon">🃏</span>Kartičky</a>
+
+    <!-- Podkategorie: Kartičky -->
+    <button class="submenu-toggle" data-target="sub-karticky">
+      <span class="left"><span class="nav-icon">📂</span>Sady kartiček</span>
+      <i class="toggle-arrow">›</i>
+    </button>
+    <ul class="submenu" id="sub-karticky">
+      <li><a href="#novinky">🏗 Na stavbě</a></li>
+      <li><a href="#sady">🚗 Dopravní prostředky</a></li>
+      <li><a href="#sady">🌍 8 různých prostředí</a></li>
+    </ul>
+
+    <a href="#sady"><span class="nav-icon">📦</span>Sady kartiček</a>
+    <a href="#sesity"><span class="nav-icon">📒</span>Sešity</a>
+    <a href="#sady"><span class="nav-icon">🏷</span>Samolepky</a>
+
+    <button class="submenu-toggle" data-target="sub-rocni">
+      <span class="left"><span class="nav-icon">🌸</span>Jaro</span>
+      <i class="toggle-arrow">›</i>
+    </button>
+    <ul class="submenu" id="sub-rocni">
+      <li><a href="#sady">🌸 Jaro – kolekce</a></li>
+      <li><a href="#sady">🌻 Léto – kolekce</a></li>
+    </ul>
+
+    <a href="#sady"><span class="nav-icon">☀️</span>Léto</a>
+    <a href="#o-mne"><span class="nav-icon">👩</span>O mně</a>
+    <a href="#objednat"><span class="nav-icon">🛒</span>Objednat</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <p>🌿 Ručně tvořeno s láskou k přírodě</p>
+  </div>
+</aside>
+
+<!-- ░░░ TOPBAR ░░░ -->
+<header id="topbar">
+  <button id="hamburger" aria-label="Otevřít menu">☰</button>
+  <a href="#hero" class="topbar-logo">🌿 Přírodní kartičky</a>
+  <button class="topbar-cart" aria-label="Košík" onclick="document.getElementById('objednat').scrollIntoView({behavior:'smooth'})">🛒</button>
+</header>
+
+<!-- ░░░ HERO ░░░ -->
+<section id="hero">
+  <!-- Background leaves -->
+  <svg class="hero-bg-leaf top-right" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M190 20 C280 20 360 90 360 190 C360 290 280 360 190 360 C90 360 20 280 20 190 C20 90 100 20 190 20Z" fill="#3A5A40"/>
+    <path d="M190 60 L190 320 M130 100 C150 140 170 160 190 190 M250 100 C230 140 210 160 190 190" stroke="#F5F0E8" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+  <svg class="hero-bg-leaf bottom-left" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="150" cy="150" rx="130" ry="100" fill="#A0522D"/>
+    <path d="M150 50 L150 250 M100 90 C120 130 140 150 150 170 M200 90 C180 130 160 150 150 170" stroke="#F5F0E8" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Ručně tvořeno s láskou</div>
+      <h1>Přírodní<br /><em>kartičky</em></h1>
+      <p>Ručně laminované vzdělávací kartičky pro malé objevitele přírody. Každá kartička je originální – tvořená s láskou a úctou k přírodnímu světu.</p>
+      <div class="hero-actions">
+        <a href="#cenik" class="btn btn-primary">🌿 Prohlédnout kartičky</a>
+        <a href="#o-mne" class="btn btn-outline">O tvůrkyni</a>
+      </div>
+    </div>
+
+    <div class="hero-image-wrap">
+      <div class="hero-mosaic">
+        <div class="hero-mosaic-cell">
+          <!-- hero-foto-1.jpg: první foto produktů -->
+          <div class="hero-mosaic-placeholder">
+            <svg viewBox="0 0 36 36" fill="none"><rect x="2" y="5" width="32" height="26" rx="3" fill="#3A5A40" opacity=".3"/><circle cx="11" cy="14" r="4" fill="#3A5A40" opacity=".3"/><path d="M2 27 L10 18 L18 24 L24 17 L34 27 Z" fill="#3A5A40" opacity=".25"/></svg>
+            <span>hero-foto-1.jpg</span>
+          </div>
         </div>
-        
-        <ul class="sidebar-nav">
-            <li>
-                <a href="#jarni-sesit" class="nav-link">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="#3A5A40">
-                        <path d="M12 2C8.5 6 6 10 6 14c0 3.31 2.69 6 6 6s6-2.69 6-6c0-4-2.5-8-6-12zm0 18c-2.21 0-4-1.79-4-4 0-2.5 1.5-5.5 4-9 2.5 3.5 4 6.5 4 9 0 2.21-1.79 4-4 4z"/>
-                    </svg>
-                    Jarní sešit
-                </a>
-            </li>
-            <li>
-                <a href="#ovoce" class="nav-link">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="#A0522D">
-                        <circle cx="12" cy="14" r="7"/>
-                        <path d="M12 7V4" stroke="#3A5A40" stroke-width="2"/>
-                        <ellipse cx="14" cy="5" rx="2" ry="1" fill="#3A5A40"/>
-                    </svg>
-                    Ovoce
-                </a>
-            </li>
-            <li>
-                <a href="#zelenina" class="nav-link">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="#588157">
-                        <ellipse cx="12" cy="15" rx="5" ry="7"/>
-                        <path d="M12 8 C10 5, 8 4, 6 5" stroke="#3A5A40" stroke-width="2" fill="none"/>
-                    </svg>
-                    Zelenina
-                </a>
-            </li>
-            <li>
-                <a href="#les" class="nav-link">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="#3A5A40">
-                        <path d="M12 3L4 15h5v6h6v-6h5L12 3z"/>
-                    </svg>
-                    Les
-                </a>
-            </li>
-            <li>
-                <a href="#farma" class="nav-link">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="#A0522D">
-                        <path d="M4 21V11l8-6 8 6v10H4z"/>
-                        <rect x="9" y="14" width="6" height="7" fill="#F5F0E8"/>
-                    </svg>
-                    Farma
-                </a>
-            </li>
-            <li>
-                <a href="#hory" class="nav-link">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="#C9B99A">
-                        <path d="M2 20L9 10l4 5 7-10 4 15H2z"/>
-                        <path d="M9 10l2-3 2 3" fill="white"/>
-                    </svg>
-                    Hory
-                </a>
-            </li>
-            <li>
-                <a href="#more" class="nav-link">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="#588157">
-                        <path d="M2 16c2-2 4-2 6 0s4 2 6 0 4-2 6 0" stroke="#3A5A40" stroke-width="2" fill="none"/>
-                        <path d="M2 20c2-2 4-2 6 0s4 2 6 0 4-2 6 0" stroke="#3A5A40" stroke-width="2" fill="none"/>
-                        <circle cx="17" cy="8" r="4" fill="#C9B99A"/>
-                    </svg>
-                    Moře a oceány
-                </a>
-            </li>
+        <div class="hero-mosaic-cell">
+          <!-- hero-foto-2.jpg: druhé foto produktů -->
+          <div class="hero-mosaic-placeholder">
+            <svg viewBox="0 0 36 36" fill="none"><rect x="2" y="5" width="32" height="26" rx="3" fill="#A0522D" opacity=".25"/><circle cx="25" cy="14" r="4" fill="#A0522D" opacity=".3"/><path d="M2 27 L12 19 L20 25 L26 18 L34 27 Z" fill="#A0522D" opacity=".2"/></svg>
+            <span>hero-foto-2.jpg</span>
+          </div>
+        </div>
+        <div class="hero-mosaic-cell">
+          <!-- hero-foto-3.jpg: třetí foto produktů -->
+          <div class="hero-mosaic-placeholder">
+            <svg viewBox="0 0 36 36" fill="none"><rect x="2" y="5" width="32" height="26" rx="3" fill="#C9B99A" opacity=".3"/><circle cx="11" cy="14" r="4" fill="#C9B99A" opacity=".35"/><path d="M2 27 L9 20 L17 26 L25 17 L34 27 Z" fill="#C9B99A" opacity=".25"/></svg>
+            <span>hero-foto-3.jpg</span>
+          </div>
+        </div>
+        <div class="hero-mosaic-cell">
+          <!-- hero-foto-4.jpg: čtvrté foto produktů -->
+          <div class="hero-mosaic-placeholder">
+            <svg viewBox="0 0 36 36" fill="none"><rect x="2" y="5" width="32" height="26" rx="3" fill="#5C8A63" opacity=".25"/><circle cx="25" cy="13" r="4" fill="#5C8A63" opacity=".3"/><path d="M2 27 L11 18 L19 24 L27 16 L34 27 Z" fill="#5C8A63" opacity=".2"/></svg>
+            <span>hero-foto-4.jpg</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-badge">
+        Ručně<br/>tvořeno
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Botanical divider -->
+<div class="botanical-divider">
+  <svg viewBox="0 0 420 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="20" x2="155" y2="20" stroke="#C9B99A" stroke-width="1"/>
+    <path d="M165 20 C170 10 180 8 185 10 C190 12 195 18 200 20 C195 22 190 28 185 30 C180 32 170 30 165 20Z" fill="#3A5A40" opacity=".45"/>
+    <path d="M185 8 L185 32" stroke="#3A5A40" stroke-width="1.2" stroke-linecap="round" opacity=".4"/>
+    <path d="M195 20 C200 12 208 10 212 12 C216 14 220 18 222 20 C220 22 216 26 212 28 C208 30 200 28 195 20Z" fill="#A0522D" opacity=".4"/>
+    <circle cx="210" cy="20" r="3" fill="#C9B99A" opacity=".6"/>
+    <path d="M225 20 C230 12 238 10 242 12 C246 14 250 18 252 20 C250 22 246 26 242 28 C238 30 230 28 225 20Z" fill="#3A5A40" opacity=".35"/>
+    <line x1="265" y1="20" x2="420" y2="20" stroke="#C9B99A" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- ░░░ NOVINKY ░░░ -->
+<section id="novinky">
+  <div class="section-inner">
+    <div class="section-heading">
+      <div class="section-label">Čerstvě přidáno</div>
+      <h2>Novinky</h2>
+      <p>Nové kartičky a sady, které na vás čekají – čerstvě z pracovního stolu.</p>
+    </div>
+
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="card-img">
+          <!-- Replace src with real product photo: kartičky Na stavbě -->
+          <div class="card-img-placeholder">
+            <svg viewBox="0 0 52 52" fill="none"><rect x="6" y="28" width="40" height="18" rx="2" fill="#C9B99A" opacity=".35"/><path d="M10 28 L10 14 L22 14 L22 28" fill="#A0522D" opacity=".25"/><rect x="28" y="18" width="16" height="10" rx="1" fill="#A0522D" opacity=".2"/><path d="M6 28 H46" stroke="#3A5A40" stroke-width="1.5" opacity=".3"/><rect x="14" y="18" width="4" height="6" rx="1" fill="#3A5A40" opacity=".3"/></svg>
+            <span>Foto: Kartičky Na stavbě</span>
+          </div>
+          <span class="card-badge badge-new">Novinka</span>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Kartičky</div>
+          <h3 class="card-title">Kartičky: Na stavbě</h3>
+          <p class="card-desc">Bagry, jeřáby, míchačky a pracovní stroje – kartičky pro malé stavbaře a techniky.</p>
+          <div class="card-footer">
+            <div class="card-price">od 30 Kč</div>
+            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="card-img">
+          <!-- Replace src with real product photo: sada Dopravní prostředky -->
+          <div class="card-img-placeholder">
+            <svg viewBox="0 0 52 52" fill="none"><rect x="4" y="30" width="44" height="14" rx="2" fill="#C9B99A" opacity=".3"/><rect x="8" y="22" width="20" height="12" rx="3" fill="#3A5A40" opacity=".3"/><rect x="32" y="24" width="14" height="10" rx="2" fill="#A0522D" opacity=".3"/><circle cx="14" cy="44" r="4" fill="#3D3228" opacity=".2"/><circle cx="38" cy="44" r="4" fill="#3D3228" opacity=".2"/></svg>
+            <span>Foto: Sada Dopravní prostředky</span>
+          </div>
+          <span class="card-badge badge-new">Novinka</span>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Sady kartiček</div>
+          <h3 class="card-title">Sada: Dopravní prostředky</h3>
+          <p class="card-desc">Sada 3 kartiček – auto, vlak, letadlo. Hravý úvod do světa dopravy pro nejmenší.</p>
+          <div class="card-footer">
+            <div class="card-price">250 Kč</div>
+            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="card-img">
+          <!-- Replace src with real product photo: letní sešit -->
+          <div class="card-img-placeholder">
+            <svg viewBox="0 0 52 52" fill="none"><rect x="8" y="6" width="36" height="42" rx="3" fill="#F5C842" opacity=".2"/><circle cx="26" cy="16" r="7" fill="#F5C842" opacity=".4"/><path d="M14 28 H38 M14 34 H30" stroke="#A0522D" stroke-width="2" stroke-linecap="round" opacity=".4"/><path d="M20 22 C24 18 28 22 32 18" stroke="#3A5A40" stroke-width="1.8" stroke-linecap="round" fill="none" opacity=".4"/></svg>
+            <span>Foto: Letní sešit</span>
+          </div>
+          <span class="card-badge badge-new">Novinka</span>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Sešity</div>
+          <h3 class="card-title">Letní pracovní sešit</h3>
+          <p class="card-desc">Sešit plný letních dobrodružství – aktivity, omalovánky a hádanky na prázdniny.</p>
+          <div class="card-footer">
+            <div class="card-price">450 Kč <span style="font-size:.8rem;color:var(--text-light);font-weight:400;">/ PDF 100 Kč</span></div>
+            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Botanical divider -->
+<div class="botanical-divider">
+  <svg viewBox="0 0 420 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="24" x2="140" y2="24" stroke="#C9B99A" stroke-width="1"/>
+    <path d="M150 24 C153 16 158 14 163 16 C168 18 172 22 175 24 C172 26 168 30 163 32 C158 34 153 32 150 24Z" fill="#A0522D" opacity=".4"/>
+    <path d="M163 12 L163 36" stroke="#A0522D" stroke-width="1.2" stroke-linecap="round" opacity=".35"/>
+    <circle cx="210" cy="24" r="5" fill="none" stroke="#C9B99A" stroke-width="1.5" opacity=".7"/>
+    <circle cx="210" cy="24" r="2" fill="#C9B99A" opacity=".5"/>
+    <path d="M245 24 C248 16 253 14 258 16 C263 18 267 22 270 24 C267 26 263 30 258 32 C253 34 248 32 245 24Z" fill="#3A5A40" opacity=".4"/>
+    <path d="M258 12 L258 36" stroke="#3A5A40" stroke-width="1.2" stroke-linecap="round" opacity=".35"/>
+    <line x1="280" y1="24" x2="420" y2="24" stroke="#C9B99A" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- ░░░ KARTIČKY – CENÍK ░░░ -->
+<section id="cenik">
+  <div class="section-inner">
+    <div class="section-heading">
+      <div class="section-label">Typy a ceny</div>
+      <h2>Kartičky & ceník</h2>
+      <p>Vyberte si variantu, která vám nejlépe vyhovuje – ať už chcete tisknout sami, nebo dostanete kartičky rovnou hotové.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <div class="pricing-card featured">
+        <div class="pricing-icon">
+          <svg viewBox="0 0 36 36" fill="none"><rect x="4" y="6" width="28" height="24" rx="3" fill="#3A5A40"/><rect x="7" y="10" width="10" height="8" rx="2" fill="#F5F0E8" opacity=".6"/><path d="M20 12 H29 M20 16 H26 M7 22 H29" stroke="#F5F0E8" stroke-width="1.5" stroke-linecap="round" opacity=".6"/></svg>
+        </div>
+        <h3>Vystřižené kartičky</h3>
+        <div class="pricing-price">95 <span>Kč/set</span></div>
+        <p>Kartičky připravené k okamžitému použití – pečlivě vystřižené, ručně laminované a zaoblené.</p>
+        <ul class="pricing-features">
+          <li>Ručně laminované</li>
+          <li>Vystřižené a zaoblené</li>
+          <li>Připravené k použití</li>
+          <li>Tiskové kvality A4/A5</li>
         </ul>
-    </nav>
+        <a href="#objednat" class="btn btn-primary">Objednat</a>
+      </div>
 
-    <!-- ========================================
-         HLAVNÍ OBSAH
-         ======================================== -->
-    <main class="main">
-        
-        <!-- HERO SEKCE -->
-        <section class="hero" id="hero">
-            <div class="hero-content">
-                <!-- Dekorativní ikona -->
-                <svg class="hero-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="45" stroke="#3A5A40" stroke-width="2" fill="none"/>
-                    <path d="M50 15 C30 35, 25 50, 35 70 C40 80, 48 85, 50 85 C52 85, 60 80, 65 70 C75 50, 70 35, 50 15" fill="#3A5A40"/>
-                    <path d="M50 25 L50 75" stroke="#F5F0E8" stroke-width="2"/>
-                    <path d="M50 35 L38 45" stroke="#F5F0E8" stroke-width="1.5"/>
-                    <path d="M50 45 L62 38" stroke="#F5F0E8" stroke-width="1.5"/>
-                    <path d="M50 55 L40 62" stroke="#F5F0E8" stroke-width="1.5"/>
-                    <circle cx="25" cy="30" r="5" fill="#A0522D" opacity="0.6"/>
-                    <circle cx="75" cy="70" r="4" fill="#C9B99A" opacity="0.6"/>
-                    <circle cx="78" cy="25" r="3" fill="#588157" opacity="0.6"/>
-                </svg>
-                
-                <h1 class="hero-title">Přírodní kartičky</h1>
-                <p class="hero-subtitle">Kartičky tvořené přírodou, pro vaše děti i domov</p>
-                <a href="#kategorie" class="btn btn-primary">Prohlédnout kartičky</a>
-            </div>
-        </section>
-
-        <!-- KATEGORIE -->
-        <section class="section categories" id="kategorie">
-            <div class="container">
-                <h2 class="section-title">Naše kolekce</h2>
-                <p class="section-subtitle">Každá kartička je jedinečná, ručně tvořená a inspirovaná krásou přírody kolem nás.</p>
-                
-                <div class="categories-grid">
-                    <!-- Jarní sešit -->
-                    <article class="category-card" id="jarni-sesit">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M25 5 C15 15, 10 25, 15 35 C18 42, 23 45, 25 45 C27 45, 32 42, 35 35 C40 25, 35 15, 25 5" fill="#3A5A40"/>
-                                <path d="M25 12 L25 40" stroke="#F5F0E8" stroke-width="1.5"/>
-                                <circle cx="18" cy="20" r="3" fill="#FFB6C1"/>
-                                <circle cx="32" cy="25" r="3" fill="#FFB6C1"/>
-                            </svg>
-                        </div>
-                        <h3 class="category-title">Jarní sešit</h3>
-                        <p class="category-desc">Probouzející se příroda, první květiny a ptačí zpěv. Kartičky plné svěžích barev a jemných motivů jara.</p>
-                    </article>
-
-                    <!-- Ovoce -->
-                    <article class="category-card" id="ovoce">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <circle cx="25" cy="28" r="15" fill="#A0522D"/>
-                                <path d="M25 13V8" stroke="#3A5A40" stroke-width="2"/>
-                                <ellipse cx="28" cy="10" rx="4" ry="2" fill="#3A5A40"/>
-                                <circle cx="20" cy="25" r="3" fill="#F5F0E8" opacity="0.4"/>
-                            </svg>
-                        </div>
-                        <h3 class="category-title">Ovoce</h3>
-                        <p class="category-desc">Šťavnaté plody zahrady i sadu. Jablka, hrušky, třešně a další ovoce v nádherných přírodních barvách.</p>
-                    </article>
-
-                    <!-- Zelenina -->
-                    <article class="category-card" id="zelenina">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <ellipse cx="25" cy="30" rx="10" ry="14" fill="#588157"/>
-                                <path d="M25 16 C22 10, 18 8, 14 10" stroke="#3A5A40" stroke-width="2" fill="none"/>
-                                <path d="M25 16 C28 10, 32 8, 36 10" stroke="#3A5A40" stroke-width="2" fill="none"/>
-                            </svg>
-                        </div>
-                        <h3 class="category-title">Zelenina</h3>
-                        <p class="category-desc">Zdravá zelenina ze zahrádky. Mrkev, rajčata, paprika a další zeleninové poklady pro malé zahradníky.</p>
-                    </article>
-
-                    <!-- Les -->
-                    <article class="category-card" id="les">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M25 5L10 30h8v12h14V30h8L25 5z" fill="#3A5A40"/>
-                                <rect x="22" y="35" width="6" height="10" fill="#A0522D"/>
-                            </svg>
-                        </div>
-                        <h3 class="category-title">Les</h3>
-                        <p class="category-desc">Tajemný svět lesa plný stromů, hub a lesních zvířátek. Kartičky voní mechem a jehličím.</p>
-                    </article>
-
-                    <!-- Farma -->
-                    <article class="category-card" id="farma">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M5 42V22l20-12 20 12v20H5z" fill="#A0522D"/>
-                                <rect x="18" y="28" width="14" height="14" fill="#F5F0E8"/>
-                                <path d="M25 10L5 22h40L25 10z" fill="#C9B99A"/>
-                            </svg>
-                        </div>
-                        <h3 class="category-title">Farma</h3>
-                        <p class="category-desc">Život na statku s domácími zvířaty. Krávy, ovečky, slepičky a všichni farmářští přátelé.</p>
-                    </article>
-
-                    <!-- Hory -->
-                    <article class="category-card" id="hory">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M5 42L18 20l8 10 14-22 10 34H5z" fill="#C9B99A"/>
-                                <path d="M18 20l5-8 5 8" fill="white"/>
-                                <path d="M32 8l3-5 3 5" fill="white"/>
-                            </svg>
-                        </div>
-                        <h3 class="category-title">Hory</h3>
-                        <p class="category-desc">Majestátní vrcholy a horská příroda. Kamzíci, sněžné vrcholky a alpské květiny.</p>
-                    </article>
-
-                    <!-- Moře a oceány -->
-                    <article class="category-card" id="more">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <circle cx="38" cy="12" r="6" fill="#FFD700"/>
-                                <path d="M5 30c5-4 10-4 15 0s10 4 15 0 10-4 15 0" stroke="#588157" stroke-width="2.5" fill="none"/>
-                                <path d="M5 38c5-4 10-4 15 0s10 4 15 0 10-4 15 0" stroke="#3A5A40" stroke-width="2.5" fill="none"/>
-                                <path d="M20 20L22 28l8-3-2-8-8 3z" fill="#C9B99A"/>
-                            </svg>
-                        </div>
-                        <h3 class="category-title">Moře a oceány</h3>
-                        <p class="category-desc">Podmořský svět plný zázraků. Ryby, mušle, korály a vlny oceánu v uklidňujících barvách.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- O KARTIČKÁCH -->
-        <section class="section about" id="o-nas">
-            <div class="container">
-                <div class="about-content">
-                    <div class="about-image">
-                        <svg viewBox="0 0 200 150" fill="none">
-                            <rect x="20" y="20" width="70" height="90" rx="5" fill="#C9B99A" stroke="#A0522D" stroke-width="2"/>
-                            <rect x="110" y="40" width="70" height="90" rx="5" fill="#3A5A40" stroke="#588157" stroke-width="2"/>
-                            <path d="M55 50 C45 60, 42 70, 48 85" stroke="#3A5A40" stroke-width="2"/>
-                            <circle cx="55" cy="45" r="8" fill="#588157"/>
-                            <path d="M145 70 C135 80, 132 90, 138 105" stroke="#F5F0E8" stroke-width="2"/>
-                            <circle cx="145" cy="65" r="8" fill="#C9B99A"/>
-                        </svg>
-                    </div>
-                    <div class="about-text">
-                        <h3>Ručně tvořené s láskou k přírodě</h3>
-                        <p>Každá kartička z naší dílny je jedinečným kouskem přírody. Používáme pouze přírodní materiály – recyklovaný papír, rostlinná barviva a ekologické obaly.</p>
-                        <p>Naše kartičky jsou ideální pro vzdělávání dětí, jako originální dekorace do dětského pokoje, nebo jako krásný dárek pro milovníky přírody.</p>
-                        
-                        <ul class="about-features">
-                            <li>100% přírodní a ekologické materiály</li>
-                            <li>Ručně malované s citem pro detail</li>
-                            <li>Vhodné pro děti od 2 let</li>
-                            <li>Bezpečné netoxické barvy</li>
-                            <li>Každý kus je originál</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- KONTAKTNÍ FORMULÁŘ -->
-        <section class="section contact" id="kontakt">
-            <div class="container">
-                <h2 class="section-title">Napište nám</h2>
-                <p class="section-subtitle">Máte dotaz nebo zájem o naše kartičky? Rádi vám odpovíme!</p>
-                
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <label class="form-label" for="name">Jméno *</label>
-                        <input type="text" class="form-input" id="name" name="name" placeholder="Vaše jméno" required>
-                        <div class="form-error">Prosím vyplňte své jméno</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="email">E-mail *</label>
-                        <input type="email" class="form-input" id="email" name="email" placeholder="vas@email.cz" required>
-                        <div class="form-error">Prosím zadejte platný e-mail</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="category">Kategorie zájmu</label>
-                        <select class="form-select" id="category" name="category">
-                            <option value="">Vyberte kategorii...</option>
-                            <option value="jarni-sesit">Jarní sešit</option>
-                            <option value="ovoce">Ovoce</option>
-                            <option value="zelenina">Zelenina</option>
-                            <option value="les">Les</option>
-                            <option value="farma">Farma</option>
-                            <option value="hory">Hory</option>
-                            <option value="more">Moře a oceány</option>
-                            <option value="vse">Všechny kategorie</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="message">Zpráva *</label>
-                        <textarea class="form-textarea" id="message" name="message" placeholder="Vaše zpráva..." required></textarea>
-                        <div class="form-error">Prosím napište svou zprávu</div>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary form-submit">Odeslat zprávu</button>
-                    
-                    <div class="form-success" id="formSuccess">
-                        <h4>Děkujeme za zprávu!</h4>
-                        <p>Ozveme se vám co nejdříve.</p>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <!-- ========================================
-         PATIČKA
-         ======================================== -->
-    <footer class="footer">
-        <div class="footer-logo">🌿 Přírodní kartičky</div>
-        
-        <div class="footer-social">
-            <a href="https://instagram.com/prirodni.karticky" target="_blank" rel="noopener noreferrer">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-                @prirodni.karticky
-            </a>
+      <div class="pricing-card">
+        <div class="pricing-icon">
+          <svg viewBox="0 0 36 36" fill="none"><rect x="4" y="6" width="28" height="24" rx="3" fill="#C9B99A"/><path d="M8 12 L28 12 M8 18 L20 18 M8 24 L24 24" stroke="#F5F0E8" stroke-width="2" stroke-linecap="round"/></svg>
         </div>
-        
-        <p class="footer-copyright">© 2026 Přírodní kartičky. Všechna práva vyhrazena.</p>
-    </footer>
+        <h3>Nevystřižené kartičky</h3>
+        <div class="pricing-price">70 <span>Kč/set</span></div>
+        <p>Laminované archy s kartičkami – dostanete je v celé ploše, vystřihnete dle vlastní libosti.</p>
+        <ul class="pricing-features">
+          <li>Ručně laminované</li>
+          <li>Nevystřižené archy</li>
+          <li>Vystřihněte si sami</li>
+          <li>Variabilní použití</li>
+        </ul>
+        <a href="#objednat" class="btn btn-outline">Objednat</a>
+      </div>
 
-    <!-- Tlačítko scroll-to-top -->
-    <button class="scroll-top" id="scrollTopBtn" aria-label="Zpět nahoru">↑</button>
+      <div class="pricing-card">
+        <div class="pricing-icon">
+          <svg viewBox="0 0 36 36" fill="none"><path d="M8 4 L24 4 L30 10 L30 32 L8 32 Z" fill="#A0522D" opacity=".35"/><path d="M22 4 L22 12 L30 12" stroke="#A0522D" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M13 18 L23 18 M13 23 L20 23" stroke="#3A5A40" stroke-width="1.8" stroke-linecap="round"/><path d="M18 28 L22 32 L30 20" stroke="#3A5A40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>PDF verze ke stažení</h3>
+        <div class="pricing-price">30 <span>Kč/set</span></div>
+        <p>Stáhněte, vytiskněte a laminujte doma. Ideální pro opakovaný tisk nebo větší množství.</p>
+        <ul class="pricing-features">
+          <li>Okamžité stažení po platbě</li>
+          <li>Tiskněte kolikrát chcete</li>
+          <li>Formát A4, 300 DPI</li>
+          <li>Nejnižší cena</li>
+        </ul>
+        <a href="#objednat" class="btn btn-outline">Objednat</a>
+      </div>
 
-    <!-- ========================================
-         JAVASCRIPT
-         ======================================== -->
-    <script>
-        // ========================================
-        // HAMBURGER MENU
-        // ========================================
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const sidebarClose = document.getElementById('sidebarClose');
-        const navLinks = document.querySelectorAll('.nav-link');
+    </div>
+  </div>
+</section>
 
-        // Otevření menu
-        function openSidebar() {
-            sidebar.classList.add('active');
-            sidebarOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Zamezení scrollování
+<!-- Botanical divider -->
+<div class="botanical-divider" style="background:var(--cream-dark); padding: 12px 24px;">
+  <svg viewBox="0 0 420 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="28" x2="120" y2="28" stroke="#C9B99A" stroke-width="1"/>
+    <path d="M128 28 C132 18 140 14 148 18 C152 20 155 24 157 28 C155 32 152 36 148 38 C140 42 132 38 128 28Z" fill="#3A5A40" opacity=".4"/>
+    <path d="M148 12 L148 44" stroke="#3A5A40" stroke-width="1.3" stroke-linecap="round" opacity=".38"/>
+    <path d="M148 28 C148 20 152 16 158 18 C162 20 164 24 164 28" fill="#3A5A40" opacity=".25"/>
+    <path d="M168 28 C172 20 178 16 184 18 C188 20 190 24 190 28 C188 32 184 36 178 38 C172 38 168 34 168 28Z" fill="#A0522D" opacity=".38"/>
+    <circle cx="210" cy="28" r="7" fill="none" stroke="#C9B99A" stroke-width="1.5" opacity=".6"/>
+    <circle cx="210" cy="28" r="3" fill="#C9B99A" opacity=".4"/>
+    <path d="M230 28 C234 20 240 16 246 18 C250 20 252 24 252 28 C250 32 246 36 240 38 C234 38 230 34 230 28Z" fill="#3A5A40" opacity=".38"/>
+    <path d="M256 28 C260 20 266 14 272 18 C276 20 278 24 278 28" fill="#3A5A40" opacity=".25"/>
+    <path d="M272 12 L272 44" stroke="#3A5A40" stroke-width="1.3" stroke-linecap="round" opacity=".38"/>
+    <path d="M264 28 C268 18 276 14 284 18 C288 20 291 24 293 28 C291 32 288 36 284 38 C276 42 268 38 264 28Z" fill="#A0522D" opacity=".32"/>
+    <line x1="300" y1="28" x2="420" y2="28" stroke="#C9B99A" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- ░░░ SADY KARTIČEK ░░░ -->
+<section id="sady" style="background:var(--cream-dark);">
+  <div class="section-inner">
+    <div class="section-heading">
+      <div class="section-label">Tematické kolekce</div>
+      <h2>Sady kartiček</h2>
+      <p>Sady jsou navrženy pro zábavné učení – každá přináší unikátní téma i herní prvky.</p>
+    </div>
+
+    <div class="sets-grid" style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); max-width: 800px; margin: 0 auto;">
+
+      <div class="set-card">
+        <div class="set-img">
+          <!-- Replace src: sada 8 prostředí -->
+          <div class="set-img-placeholder">
+            <svg viewBox="0 0 52 52" fill="none"><path d="M6 40 L14 22 L22 32 L30 18 L40 30 L48 20 L48 46 L6 46 Z" fill="#3A5A40" opacity=".3"/><circle cx="40" cy="12" r="7" fill="#F5C842" opacity=".3"/><path d="M6 46 H48" stroke="#C9B99A" stroke-width="1.5"/></svg>
+            <span>Foto: Sada 8 prostředí</span>
+          </div>
+        </div>
+        <div class="set-body">
+          <span class="set-tag">🌍 8 prostředí</span>
+          <h3>8 různých prostředí + přiřazování ke stínům</h3>
+          <p>Komplexní sada pro starší děti – 8 kartiček ze zcela odlišných prostředí světa doplněná o hru přiřazování siluet ke stínům. Rozvíjí pozornost a logické myšlení.</p>
+          <div class="set-footer">
+            <div>
+              <div class="set-price">700 Kč</div>
+              <div class="set-count">8 kartiček v sadě</div>
+            </div>
+            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="set-card">
+        <div class="set-img">
+          <!-- Replace src: sada Dopravní prostředky -->
+          <div class="set-img-placeholder">
+            <svg viewBox="0 0 52 52" fill="none"><rect x="4" y="30" width="44" height="14" rx="2" fill="#C9B99A" opacity=".3"/><rect x="8" y="22" width="20" height="12" rx="3" fill="#3A5A40" opacity=".3"/><rect x="32" y="24" width="14" height="10" rx="2" fill="#A0522D" opacity=".3"/><circle cx="14" cy="44" r="4" fill="#3D3228" opacity=".2"/><circle cx="38" cy="44" r="4" fill="#3D3228" opacity=".2"/></svg>
+            <span>Foto: Sada Dopravní prostředky</span>
+          </div>
+        </div>
+        <div class="set-body">
+          <span class="set-tag">🚗 Doprava</span>
+          <h3>Dopravní prostředky</h3>
+          <p>Sada 3 kartiček s oblíbenými dopravními prostředky – auto, vlak, letadlo. Krásný úvod do světa dopravy pro nejmenší objevitele.</p>
+          <div class="set-footer">
+            <div>
+              <div class="set-price">250 Kč</div>
+              <div class="set-count">3 kartičky v sadě</div>
+            </div>
+            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Botanical divider -->
+<div class="botanical-divider">
+  <svg viewBox="0 0 420 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="22" x2="155" y2="22" stroke="#C9B99A" stroke-width="1"/>
+    <path d="M162 22 C165 14 172 11 178 14 C182 16 184 19 185 22 C184 25 182 28 178 30 C172 33 165 30 162 22Z" fill="#3A5A40" opacity=".42"/>
+    <path d="M178 10 L178 34" stroke="#3A5A40" stroke-width="1.3" stroke-linecap="round" opacity=".4"/>
+    <circle cx="210" cy="22" r="5" fill="none" stroke="#C9B99A" stroke-width="1.5" opacity=".65"/>
+    <circle cx="210" cy="22" r="2" fill="#C9B99A" opacity=".45"/>
+    <path d="M235 22 C238 14 245 11 251 14 C255 16 257 19 258 22 C257 25 255 28 251 30 C245 33 238 30 235 22Z" fill="#A0522D" opacity=".38"/>
+    <path d="M251 10 L251 34" stroke="#A0522D" stroke-width="1.3" stroke-linecap="round" opacity=".38"/>
+    <line x1="265" y1="22" x2="420" y2="22" stroke="#C9B99A" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- ░░░ SEŠITY ░░░ -->
+<section id="sesity">
+  <div class="section-inner">
+    <div class="section-heading">
+      <div class="section-label">Pracovní sešity</div>
+      <h2>Sešity</h2>
+      <p>Tematické pracovní sešity s úkoly, omalovánkami a hádankami – zábava pro zvídavé děti na celé prázdniny.</p>
+    </div>
+
+    <div class="sesity-grid">
+
+      <div class="sesit-card">
+        <div class="sesit-img">
+          <!-- Replace src with real photo: letni-sesit.jpg -->
+          <div class="sesit-img-placeholder">
+            <svg viewBox="0 0 52 52" fill="none"><rect x="8" y="4" width="36" height="44" rx="3" fill="#F5C842" opacity=".2"/><circle cx="26" cy="14" r="8" fill="#F5C842" opacity=".4"/><path d="M20 10 C24 6 28 10 32 6" stroke="#A0522D" stroke-width="1.8" stroke-linecap="round" fill="none" opacity=".4"/><path d="M14 26 H38 M14 32 H30 M14 38 H34" stroke="#3A5A40" stroke-width="1.8" stroke-linecap="round" opacity=".35"/></svg>
+            <span>Foto: Letní sešit</span>
+          </div>
+        </div>
+        <div class="sesit-body">
+          <span class="sesit-tag">☀️ Léto</span>
+          <h3>Letní pracovní sešit</h3>
+          <p>Sešit plný letního dobrodružství – stránky s úkoly zaměřenými na přírodu, zvířata a letní zážitky. Ideální společník na výlety a prázdniny.</p>
+          <div class="sesit-pricing">
+            <div class="sesit-price-row">
+              <span>🖨 Tištěný sešit</span>
+              <span class="price-val">450 Kč</span>
+            </div>
+            <div class="sesit-price-row">
+              <span>📄 PDF ke stažení</span>
+              <span class="price-val">100 Kč</span>
+            </div>
+          </div>
+          <a href="#objednat" class="btn btn-terra" style="width:100%;justify-content:center;">Objednat sešit</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Botanical divider -->
+<section id="o-mne">
+  <div class="section-inner">
+    <div class="section-heading">
+      <div class="section-label">Za kartičkami stojí</div>
+      <h2>O mně</h2>
+    </div>
+
+    <div class="about-inner">
+      <div class="about-avatar-wrap">
+        <div class="about-avatar">
+          <!-- Replace with real portrait photo -->
+          <div class="avatar-placeholder">
+            <svg viewBox="0 0 56 56" fill="none"><circle cx="28" cy="20" r="10" fill="#3A5A40" opacity=".3"/><path d="M8 48 C8 36 18 28 28 28 C38 28 48 36 48 48" fill="#C9B99A" opacity=".3"/></svg>
+            <span>Foto tvůrkyně</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <h2>Ahoj, jsem Tereza 🌿</h2>
+        <div class="about-subtitle">tvůrkyně Přírodních kartiček</div>
+
+        <p>Jsem maminka dvou malých průzkumníků a od malička miluji přírodu. Před třemi lety jsem začala tvořit kartičky pro naše děti – a to, co vzniklo ve sklepě s laminovačkou, se proměnilo v malou domácí dílnu s velkou duší.</p>
+
+        <p>Každou kartičku navrhuji, tisknu a laminuji s maximální péčí. Záleží mi na kvalitě i detailech – proto jsou moje kartičky ručně vystřižené a laminované, ne průmyslově vyrobené. Věřím, že děti si zaslouží krásné pomůcky, které odolají stovkám her.</p>
+
+        <p>Při tvorbě se inspiruji procházkami do lesa, návštěvami farem a vším, co příroda nabízí. Ráda vám pomůžu vybrat sadu na míru – napište mi!</p>
+
+        <div class="about-signature">S láskou, Tereza ♡</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Botanical divider -->
+<div class="botanical-divider" style="background:var(--green-pale); padding: 12px 24px;">
+  <svg viewBox="0 0 420 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="22" x2="130" y2="22" stroke="#C9B99A" stroke-width="1"/>
+    <path d="M138 22 C141 14 148 11 154 14 C158 16 160 19 161 22 C160 25 158 28 154 30 C148 33 141 30 138 22Z" fill="#3A5A40" opacity=".4"/>
+    <path d="M154 10 L154 34" stroke="#3A5A40" stroke-width="1.2" stroke-linecap="round" opacity=".38"/>
+    <path d="M165 22 C168 14 174 12 180 14 C184 16 186 19 186 22" fill="#3A5A40" opacity=".22"/>
+    <circle cx="210" cy="22" r="6" fill="none" stroke="#C9B99A" stroke-width="1.5" opacity=".6"/>
+    <circle cx="210" cy="22" r="2.5" fill="#C9B99A" opacity=".42"/>
+    <path d="M234 22 C234 22 238 14 244 22" fill="#3A5A40" opacity=".22"/>
+    <path d="M248 22 C251 14 258 11 264 14 C268 16 270 19 271 22 C270 25 268 28 264 30 C258 33 251 30 248 22Z" fill="#A0522D" opacity=".38"/>
+    <path d="M264 10 L264 34" stroke="#A0522D" stroke-width="1.2" stroke-linecap="round" opacity=".35"/>
+    <line x1="280" y1="22" x2="420" y2="22" stroke="#C9B99A" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- ░░░ OBJEDNÁVKOVÝ FORMULÁŘ ░░░ -->
+<section id="objednat" style="background:var(--green-pale);">
+  <div class="section-inner">
+    <div class="section-heading">
+      <div class="section-label">Mám zájem</div>
+      <h2>Objednat</h2>
+      <p>Vyplňte formulář a ozveme se vám do 24 hodin s potvrzením objednávky a platebními údaji.</p>
+    </div>
+
+    <div class="form-card">
+      <form id="order-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="f-name">Jméno a příjmení <span class="req">*</span></label>
+            <input type="text" id="f-name" name="entry.name" placeholder="Jana Nováková" required />
+          </div>
+          <div class="form-group">
+            <label for="f-email">E-mail <span class="req">*</span></label>
+            <input type="email" id="f-email" name="entry.email" placeholder="jana@email.cz" required />
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Telefon</label>
+            <input type="tel" id="f-phone" name="entry.phone" placeholder="+420 123 456 789" />
+          </div>
+          <div class="form-group">
+            <label for="f-qty">Počet kusů <span class="req">*</span></label>
+            <input type="number" id="f-qty" name="entry.qty" min="1" max="99" value="1" required />
+          </div>
+          <div class="form-group full">
+            <label for="f-product">Výběr produktu <span class="req">*</span></label>
+            <select id="f-product" name="entry.product" required>
+              <option value="" disabled selected>— Vyberte produkt —</option>
+              <optgroup label="🃏 Kartičky – typy">
+                <option value="Vystřižené kartičky (95 Kč)">Vystřižené kartičky – 95 Kč</option>
+                <option value="Nevystřižené kartičky (70 Kč)">Nevystřižené kartičky – 70 Kč</option>
+                <option value="PDF verze ke stažení (30 Kč)">PDF verze ke stažení – 30 Kč</option>
+              </optgroup>
+              <optgroup label="📦 Sady kartiček">
+                <option value="Sada: 8 prostředí + přiřazování ke stínům (700 Kč)">Sada: 8 prostředí + přiřazování ke stínům – 700 Kč</option>
+                <option value="Sada: Dopravní prostředky (250 Kč)">Sada: Dopravní prostředky – 250 Kč</option>
+              </optgroup>
+              <optgroup label="📒 Sešity">
+                <option value="Letní pracovní sešit – tištěný (450 Kč)">Letní pracovní sešit – tištěný 450 Kč</option>
+                <option value="Letní pracovní sešit – PDF (100 Kč)">Letní pracovní sešit – PDF 100 Kč</option>
+              </optgroup>
+              <optgroup label="🏷 Samolepky">
+                <option value="Samolepky Na stavbě">Samolepky – Na stavbě</option>
+                <option value="Samolepky Dopravní prostředky">Samolepky – Dopravní prostředky</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Způsob dopravy <span class="req">*</span></label>
+            <div class="radio-group" id="doprava-group">
+              <label class="radio-option" id="opt-alzabox">
+                <input type="radio" name="entry.doprava" value="Alzabox (49 Kč)" required />
+                <span class="radio-label">📦 Alzabox</span>
+                <span class="radio-price">49 Kč</span>
+              </label>
+              <label class="radio-option" id="opt-balikovna">
+                <input type="radio" name="entry.doprava" value="Balíkovna (79 Kč)" />
+                <span class="radio-label">📮 Balíkovna</span>
+                <span class="radio-price">79 Kč</span>
+              </label>
+              <label class="radio-option" id="opt-zasilkovna">
+                <input type="radio" name="entry.doprava" value="Zásilkovna (89 Kč)" />
+                <span class="radio-label">🚚 Zásilkovna</span>
+                <span class="radio-price">89 Kč</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label for="f-note">Poznámka / dotaz</label>
+            <textarea id="f-note" name="entry.note" placeholder="Např. přání k narozeninám, specifické požadavky, dotaz na dodání..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-submit-row">
+          <button type="submit" class="btn btn-primary">
+            <span>🌿</span> Odeslat objednávku
+          </button>
+        </div>
+      </form>
+
+      <div id="form-success">
+        <div class="success-icon">🌿</div>
+        <h3>Děkujeme!</h3>
+        <p>Vaše objednávka byla přijata. Ozveme se vám do 24 hodin s potvrzením a platebními údaji.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ PATIČKA ░░░ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>🌿 Přírodní kartičky</h3>
+        <p>Ručně laminované vzdělávací kartičky pro malé objevitele přírody. Tvořeno s láskou v České republice.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/prirodni_karticky" target="_blank" rel="noopener" class="social-link" aria-label="Instagram @prirodni_karticky">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://facebook.com/prirodni_karticky" target="_blank" rel="noopener" class="social-link" aria-label="Facebook @prirodni_karticky">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="mailto:info@prirodnikarticky.cz" class="social-link" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Produkty</h4>
+        <ul>
+          <li><a href="#novinky">Novinky</a></li>
+          <li><a href="#cenik">Kartičky</a></li>
+          <li><a href="#sady">Sady kartiček</a></li>
+          <li><a href="#sesity">Sešity</a></li>
+          <li><a href="#sady">Samolepky</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <div class="footer-contact-item">
+          <span>📧</span>
+          <a href="mailto:info@prirodnikarticky.cz">info@prirodnikarticky.cz</a>
+        </div>
+        <div class="footer-contact-item">
+          <span>📸</span>
+          <a href="https://instagram.com/prirodni_karticky" target="_blank" rel="noopener">@prirodni_karticky</a>
+        </div>
+        <div class="footer-contact-item">
+          <span>👤</span>
+          <a href="https://facebook.com/prirodni_karticky" target="_blank" rel="noopener">@prirodni_karticky</a>
+        </div>
+        <div class="footer-contact-item" style="margin-top:16px;">
+          <a href="#objednat" class="btn btn-sm" style="background:rgba(255,255,255,.15);color:var(--cream);border-radius:50px;padding:8px 18px;font-size:.85rem;border:1px solid rgba(255,255,255,.2);">Objednat →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Přírodní kartičky · Všechna práva vyhrazena</p>
+      <div class="footer-made-with">
+        <span>🌿</span>
+        <span>Tvořeno s láskou k přírodě</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ░░░ JAVASCRIPT ░░░ -->
+<script>
+(function () {
+  'use strict';
+
+  /* — Sidebar — */
+  const sidebar   = document.getElementById('sidebar');
+  const overlay   = document.getElementById('overlay');
+  const hamburger = document.getElementById('hamburger');
+  const closeBtn  = document.getElementById('close-btn');
+
+  function openMenu() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    hamburger.setAttribute('aria-expanded', 'true');
+  }
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+
+  hamburger.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  /* Close menu and smooth-scroll when a sidebar link is clicked */
+  sidebar.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      closeMenu();
+    });
+  });
+
+  /* — Submenu toggles — */
+  document.querySelectorAll('.submenu-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const targetId = btn.getAttribute('data-target');
+      const submenu  = document.getElementById(targetId);
+      if (!submenu) return;
+      const isOpen = submenu.classList.contains('open');
+      /* Close all others */
+      document.querySelectorAll('.submenu.open').forEach(function (m) { m.classList.remove('open'); });
+      document.querySelectorAll('.submenu-toggle.expanded').forEach(function (t) { t.classList.remove('expanded'); });
+      if (!isOpen) {
+        submenu.classList.add('open');
+        btn.classList.add('expanded');
+      }
+    });
+  });
+
+  /* — Order form — */
+  const form    = document.getElementById('order-form');
+  const success = document.getElementById('form-success');
+
+  /* Google Forms placeholder URL – replace YOUR_FORM_ID with the real form ID */
+  const GOOGLE_FORM_URL = 'https://docs.google.com/forms/YOUR_FORM_ID';
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    /* Basic validation */
+    const name    = document.getElementById('f-name').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const product = document.getElementById('f-product').value;
+    const doprava = form.querySelector('input[name="entry.doprava"]:checked');
+
+    if (!name || !email || !product || !doprava) {
+      [
+        { el: document.getElementById('f-name'),    val: name },
+        { el: document.getElementById('f-email'),   val: email },
+        { el: document.getElementById('f-product'), val: product }
+      ].forEach(function (item) {
+        if (!item.val) {
+          item.el.style.borderColor = '#C0392B';
+          item.el.addEventListener('input', function () {
+            item.el.style.borderColor = '';
+          }, { once: true });
         }
+      });
+      if (!doprava) {
+        const grp = document.getElementById('doprava-group');
+        grp.style.outline = '2px solid #C0392B';
+        grp.style.borderRadius = '8px';
+        grp.addEventListener('change', function () { grp.style.outline = ''; }, { once: true });
+      }
+      return;
+    }
 
-        // Zavření menu
-        function closeSidebar() {
-            sidebar.classList.remove('active');
-            sidebarOverlay.classList.remove('active');
-            document.body.style.overflow = ''; // Obnovení scrollování
-        }
+    /* Build form-data for Google Forms (no-CORS iframe trick) */
+    const formData = new FormData(form);
+    const params   = new URLSearchParams();
+    formData.forEach(function (value, key) { params.append(key, value); });
 
-        // Event listenery pro menu
-        hamburgerBtn.addEventListener('click', openSidebar);
-        sidebarClose.addEventListener('click', closeSidebar);
-        sidebarOverlay.addEventListener('click', closeSidebar);
+    /* Submit silently via hidden iframe (avoids redirect) */
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.name = 'hidden_submit_' + Date.now();
+    document.body.appendChild(iframe);
 
-        // Zavření menu při kliknutí na odkaz
-        navLinks.forEach(link => {
-            link.addEventListener('click', closeSidebar);
-        });
+    const tempForm = document.createElement('form');
+    tempForm.method = 'POST';
+    tempForm.action = GOOGLE_FORM_URL + '/formResponse';
+    tempForm.target = iframe.name;
+    tempForm.style.display = 'none';
 
-        // Zavření menu klávesou Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-                closeSidebar();
-            }
-        });
+    formData.forEach(function (value, key) {
+      const input = document.createElement('input');
+      input.type  = 'hidden';
+      input.name  = key;
+      input.value = value;
+      tempForm.appendChild(input);
+    });
 
-        // ========================================
-        // SCROLL-TO-TOP TLAČÍTKO
-        // ========================================
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
+    document.body.appendChild(tempForm);
+    tempForm.submit();
 
-        // Zobrazení/skrytí tlačítka podle pozice scrollu
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        });
+    /* Show success immediately (Google Forms response is irrelevant cross-origin) */
+    setTimeout(function () {
+      form.style.display = 'none';
+      success.style.display = 'block';
+      document.body.removeChild(tempForm);
+      setTimeout(function () { document.body.removeChild(iframe); }, 3000);
+    }, 400);
+  });
 
-        // Scroll nahoru při kliknutí
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+  /* — Smooth scroll for all anchor links — */
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = 72; /* topbar height */
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
 
-        // ========================================
-        // FORMULÁŘ - VALIDACE A ODESLÁNÍ
-        // ========================================
-        const contactForm = document.getElementById('contactForm');
-        const formSuccess = document.getElementById('formSuccess');
+  /* — Topbar shadow on scroll — */
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', function () {
+    topbar.style.boxShadow = window.scrollY > 10
+      ? '0 3px 20px rgba(58,90,64,.14)'
+      : '0 2px 12px rgba(58,90,64,.06)';
+  }, { passive: true });
 
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Reset chybových stavů
-            const formGroups = contactForm.querySelectorAll('.form-group');
-            formGroups.forEach(group => group.classList.remove('error'));
-            
-            // Získání hodnot
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const message = document.getElementById('message').value.trim();
-            
-            let isValid = true;
-            
-            // Validace jména
-            if (name === '') {
-                document.getElementById('name').parentElement.classList.add('error');
-                isValid = false;
-            }
-            
-            // Validace e-mailu
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                document.getElementById('email').parentElement.classList.add('error');
-                isValid = false;
-            }
-            
-            // Validace zprávy
-            if (message === '') {
-                document.getElementById('message').parentElement.classList.add('error');
-                isValid = false;
-            }
-            
-            // Pokud je vše v pořádku, zobrazíme úspěšnou zprávu
-            if (isValid) {
-                // Skrytí formuláře a zobrazení potvrzení
-                contactForm.querySelectorAll('.form-group, .form-submit').forEach(el => {
-                    el.style.display = 'none';
-                });
-                formSuccess.classList.add('show');
-                
-                // V reálném nasazení by zde bylo odeslání na server
-                console.log('Formulář odeslán:', { name, email, message });
-                
-                // Reset formuláře po 3 sekundách (pro demo)
-                setTimeout(() => {
-                    contactForm.reset();
-                    contactForm.querySelectorAll('.form-group, .form-submit').forEach(el => {
-                        el.style.display = '';
-                    });
-                    formSuccess.classList.remove('show');
-                }, 5000);
-            }
-        });
+  /* — Radio option highlight — */
+  document.querySelectorAll('.radio-option input[type="radio"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      document.querySelectorAll('.radio-option').forEach(function (opt) {
+        opt.classList.remove('selected');
+      });
+      if (this.checked) this.closest('.radio-option').classList.add('selected');
+    });
+  });
 
-        // ========================================
-        // SMOOTH SCROLL PRO INTERNÍ ODKAZY
-        // ========================================
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                
-                // Přeskočení prázdných odkazů
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    e.preventDefault();
-                    
-                    // Výpočet pozice s ohledem na header
-                    const headerHeight = document.querySelector('.header').offsetHeight;
-                    const targetPosition = targetElement.offsetTop - headerHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // ========================================
-        // ANIMACE PŘI SCROLLOVÁNÍ (Intersection Observer)
-        // ========================================
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Aplikace na karty kategorií
-        document.querySelectorAll('.category-card').forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-            observer.observe(card);
-        });
-    </script>
+})();
+</script>
 </body>
 </html>
