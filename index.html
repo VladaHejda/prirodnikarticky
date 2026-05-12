@@ -563,6 +563,108 @@
     @media (max-width: 600px) {
       .motifs-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 14px; }
     }
+    .motif-body .btn-group { display: flex; flex-direction: column; gap: 7px; }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(40, 30, 20, .56);
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(3px);
+    }
+    .modal-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      max-width: 480px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      padding: 28px 28px 32px;
+      box-shadow: 0 24px 64px rgba(40, 30, 20, .3);
+      animation: modal-in .2s ease;
+    }
+    @keyframes modal-in {
+      from { transform: translateY(16px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .modal-close-x {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: none; border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 4px 8px;
+      line-height: 1;
+      border-radius: 6px;
+      transition: color .2s, background .2s;
+    }
+    .modal-close-x:hover { color: var(--terra); background: var(--cream); }
+    .modal-img-wrap {
+      aspect-ratio: 4/3;
+      background: var(--green-pale);
+      border-radius: calc(var(--radius) - 4px);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .modal-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .modal-img-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%; height: 100%;
+    }
+    .modal-img-placeholder svg { width: 60px; height: 60px; opacity: .4; }
+    .modal-img-placeholder span { font-size: .8rem; font-style: italic; color: var(--text-light); }
+    .modal-box h3 { font-family: var(--font-head); font-size: 1.4rem; color: var(--text); margin-bottom: 10px; }
+    .modal-desc { font-size: .92rem; color: var(--text-light); line-height: 1.65; margin-bottom: 14px; }
+    .modal-age-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--green-pale); color: var(--green); font-size: .8rem; font-weight: 700; padding: 4px 14px; border-radius: 50px; margin-bottom: 22px; }
+    .modal-actions { display: flex; gap: 12px; }
+    .modal-actions .btn { flex: 1; text-align: center; justify-content: center; }
+
+    /* ─── VAZBA CHECKBOX ─── */
+    .vazba-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .87rem;
+      color: var(--text);
+      cursor: pointer;
+      padding: 9px 12px;
+      background: var(--green-pale);
+      border-radius: 8px;
+      border: 1.5px dashed var(--beige);
+      margin: 8px 0 14px;
+      transition: border-color .2s;
+    }
+    .vazba-option:hover { border-color: var(--green); }
+    .vazba-option input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--green); flex-shrink: 0; }
+    .form-check-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .9rem;
+      color: var(--text);
+      cursor: pointer;
+      padding: 13px 16px;
+      background: var(--green-pale);
+      border-radius: 10px;
+      border: 1.5px dashed var(--beige);
+      transition: border-color .2s;
+    }
+    .form-check-label:hover { border-color: var(--green); }
+    .form-check-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--green); flex-shrink: 0; }
     .pricing-card {
       background: var(--white);
       border-radius: var(--radius);
@@ -1384,7 +1486,10 @@
           <li>Připravené k použití</li>
           <li>Tiskové kvality A4/A5</li>
         </ul>
-        <a href="#objednat" class="btn btn-primary">Objednat</a>
+        <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:auto;">
+          <a href="#motifs-heading" class="btn btn-outline" style="text-align:center;">🌿 Vybrat motiv</a>
+          <a href="#objednat" class="btn btn-primary">Objednat</a>
+        </div>
       </div>
 
       <div class="pricing-card">
@@ -1400,7 +1505,10 @@
           <li>Vystřihněte si sami</li>
           <li>Variabilní použití</li>
         </ul>
-        <a href="#objednat" class="btn btn-outline">Objednat</a>
+        <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:auto;">
+          <a href="#motifs-heading" class="btn btn-outline" style="text-align:center;">🌿 Vybrat motiv</a>
+          <a href="#objednat" class="btn btn-outline">Objednat</a>
+        </div>
       </div>
 
       <div class="pricing-card">
@@ -1416,121 +1524,124 @@
           <li>Formát A4, 300 DPI</li>
           <li>Nejnižší cena</li>
         </ul>
-        <a href="#objednat" class="btn btn-outline">Objednat</a>
+        <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:auto;">
+          <a href="#motifs-heading" class="btn btn-outline" style="text-align:center;">🌿 Vybrat motiv</a>
+          <a href="#objednat" class="btn btn-outline">Objednat</a>
+        </div>
       </div>
 
     </div><!-- /pricing-grid -->
 
     <!-- Motif grid -->
-    <div class="motifs-heading">
+    <div class="motifs-heading" id="motifs-heading">
       <div class="section-label">Dostupné motivy</div>
       <h3>Vyberte si motiv</h3>
       <p>Každý motiv je k dispozici ve všech variantách – vystřižený, nevystřižený i PDF ke stažení.</p>
     </div>
     <div class="motifs-grid">
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="Ovoce" data-img="karticky-ovoce-detail.jpg" data-desc="Barevné ovoce z celého světa – jablka, hrušky, banány i exotické plody. Skvělé pro první pojmenovávání a třídění dle barvy či tvaru." data-age="2–5 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-ovoce.jpg" alt="Kartičky Ovoce" /> -->
           <svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="24" r="12" fill="#E8673A" opacity=".3"/><path d="M22 12 C22 8 26 6 28 8" stroke="#3A5A40" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="14" cy="28" r="7" fill="#F5A623" opacity=".35"/><circle cx="30" cy="30" r="7" fill="#C0392B" opacity=".28"/></svg>
           <span>Foto: Ovoce</span>
         </div>
-        <div class="motif-body"><h3>Ovoce</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>Ovoce</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="Zelenina" data-img="karticky-zelenina-detail.jpg" data-desc="Zelenina ze zahrádky i z obchodu. Děti poznávají tvary, barvy a vůně čerstvé zeleniny a učí se, co roste nad zemí a co pod ní." data-age="2–5 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-zelenina.jpg" alt="Kartičky Zelenina" /> -->
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="26" rx="10" ry="12" fill="#27AE60" opacity=".3"/><path d="M22 14 C20 10 16 10 14 14 C20 12 22 14 22 14Z" fill="#3A5A40" opacity=".4"/><ellipse cx="14" cy="30" rx="6" ry="8" fill="#E74C3C" opacity=".3"/></svg>
           <span>Foto: Zelenina</span>
         </div>
-        <div class="motif-body"><h3>Zelenina</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>Zelenina</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="Ovozel – přiřazování barev" data-img="karticky-ovozel-detail.jpg" data-desc="Kombinace ovoce a zeleniny s herním prvkem přiřazování ke správné barvě. Rozvíjí pozornost, logiku a znalost barev." data-age="3–6 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-ovozel.jpg" alt="Kartičky Ovozel – přiřazování barev" /> -->
           <svg viewBox="0 0 44 44" fill="none"><circle cx="16" cy="22" r="9" fill="#F5A623" opacity=".3"/><circle cx="28" cy="22" r="9" fill="#27AE60" opacity=".3"/><path d="M19 22 L25 22" stroke="#3A5A40" stroke-width="2" stroke-linecap="round"/></svg>
           <span>Foto: Ovozel – barvy</span>
         </div>
-        <div class="motif-body"><h3>Ovozel – přiřazování barev</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>Ovozel – přiřazování barev</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="Hmyzí rodinka" data-img="karticky-hmyzi-rodinka-detail.jpg" data-desc="Fascinující svět hmyzu – včely, motýli, broučci a jiní šestinožci. Ideální pro malé přírodovědce zvídavé po tajemstvích přírody." data-age="3–7 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-hmyzi-rodinka.jpg" alt="Kartičky Hmyzí rodinka" /> -->
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="24" rx="7" ry="9" fill="#8E44AD" opacity=".25"/><circle cx="22" cy="14" r="5" fill="#8E44AD" opacity=".3"/><path d="M14 20 C10 16 8 12 12 10 M30 20 C34 16 36 12 32 10" stroke="#3A5A40" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/><path d="M14 28 C10 30 8 34 12 36 M30 28 C34 30 36 34 32 36" stroke="#3A5A40" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/></svg>
           <span>Foto: Hmyzí rodinka</span>
         </div>
-        <div class="motif-body"><h3>Hmyzí rodinka</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>Hmyzí rodinka</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="Zvířata a zimní spánek" data-img="karticky-zimni-spanek-detail.jpg" data-desc="Která zvířata spí celou zimu? Děti poznávají ježky, medvědy, plchy a jejich útulné zimní úkryty. Krásné na podzim i v zimě." data-age="3–6 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-zimni-spanek.jpg" alt="Kartičky Zvířata a zimní spánek" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M10 32 C10 24 16 18 22 18 C28 18 34 24 34 32Z" fill="#C9B99A" opacity=".4"/><path d="M16 18 C16 12 20 10 22 10 C24 10 26 12 26 16" stroke="#3A5A40" stroke-width="1.8" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="14" r="4" fill="#F5F0E8" opacity=".6" stroke="#C9B99A" stroke-width="1"/></svg>
           <span>Foto: Zimní spánek</span>
         </div>
-        <div class="motif-body"><h3>Zvířata a zimní spánek</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>Zvířata a zimní spánek</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="V lese" data-img="karticky-v-lese-detail.jpg" data-desc="Lesní prostředí plné překvapení – stromy, houby, zvěř a vůně borovic. Kartičky pro malé lesní skřítky a budoucí lesníky." data-age="2–6 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-v-lese.jpg" alt="Kartičky V lese" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M22 8 L12 24 H32Z" fill="#3A5A40" opacity=".35"/><path d="M18 20 L10 32 H34L26 20" fill="#3A5A40" opacity=".25"/><rect x="19" y="32" width="6" height="8" rx="1" fill="#A0522D" opacity=".5"/></svg>
           <span>Foto: V lese</span>
         </div>
-        <div class="motif-body"><h3>V lese</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>V lese</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="Na farmě" data-img="karticky-na-farme-detail.jpg" data-desc="Slepice, kravičky, prasátka i traktor. Farmářský svět v kapse – krásné pro děti i rodiče z města. Učí se, odkud pochází jídlo." data-age="2–6 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-na-farme.jpg" alt="Kartičky Na farmě" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M8 24 L22 10 L36 24 H8Z" fill="#C9B99A" opacity=".4"/><rect x="12" y="24" width="20" height="14" rx="1" fill="#A0522D" opacity=".3"/><rect x="18" y="28" width="8" height="10" rx="1" fill="#3A5A40" opacity=".3"/></svg>
           <span>Foto: Na farmě</span>
         </div>
-        <div class="motif-body"><h3>Na farmě</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>Na farmě</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="V savaně" data-img="karticky-v-savane-detail.jpg" data-desc="Lvi, sloni, žirafy a baobaby. Africká savana jako ilustrovaná dobrodružná výprava plná úžasných zvířat a barev západu slunce." data-age="3–7 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-v-savane.jpg" alt="Kartičky V savaně" /> -->
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="34" rx="18" ry="4" fill="#F5C842" opacity=".2"/><path d="M10 34 C10 26 14 20 18 20 C16 16 18 12 22 12 C26 12 28 16 26 20 C30 20 34 26 34 34" fill="#F5C842" opacity=".3"/><circle cx="22" cy="22" r="6" fill="#E8673A" opacity=".2"/></svg>
           <span>Foto: V savaně</span>
         </div>
-        <div class="motif-body"><h3>V savaně</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>V savaně</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="V mořích a oceánech" data-img="karticky-more-oceany-detail.jpg" data-desc="Hlubiny i mělčiny oceánů – od delfínů přes chobotnice až po korálové útesy. Dobrodružná cesta podmořským světem." data-age="3–7 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-more-oceany.jpg" alt="Kartičky V mořích a oceánech" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M6 28 C12 24 18 32 24 28 C30 24 36 32 42 28" stroke="#2980B9" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".4"/><path d="M6 34 C12 30 18 38 24 34 C30 30 36 38 42 34" stroke="#2980B9" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".3"/><path d="M18 20 C20 16 24 14 26 18 C22 16 20 20 18 20Z" fill="#2980B9" opacity=".35"/></svg>
           <span>Foto: Moře a oceány</span>
         </div>
-        <div class="motif-body"><h3>V mořích a oceánech</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>V mořích a oceánech</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="Na horách" data-img="karticky-na-horach-detail.jpg" data-desc="Kamzíci, ledovce, alpské louky a horská jezera. Kartičky pro budoucí horolezce a milovníky hor. Krásné i jako dekorace pokojíčku." data-age="3–7 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-na-horach.jpg" alt="Kartičky Na horách" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M6 36 L18 14 L26 26 L30 20 L40 36Z" fill="#7F8C8D" opacity=".3"/><path d="M14 14 L18 10 L22 14" fill="#F5F0E8" opacity=".7"/><path d="M28 20 L30 16 L32 20" fill="#F5F0E8" opacity=".7"/></svg>
           <span>Foto: Na horách</span>
         </div>
-        <div class="motif-body"><h3>Na horách</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>Na horách</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="Doma" data-img="karticky-doma-detail.jpg" data-desc="Každodenní svět dítěte – nábytek, kuchyňské nádobí, hračky i domácí mazlíčci. Skvělé pro pojmenovávání věcí v domácnosti." data-age="2–5 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-doma.jpg" alt="Kartičky Doma" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M8 22 L22 8 L36 22 H8Z" fill="#C9B99A" opacity=".4"/><rect x="12" y="22" width="20" height="16" rx="1" fill="#A0522D" opacity=".3"/><rect x="16" y="26" width="6" height="6" rx="1" fill="#2980B9" opacity=".35"/><rect x="24" y="28" width="5" height="10" rx="1" fill="#3A5A40" opacity=".35"/></svg>
           <span>Foto: Doma</span>
         </div>
-        <div class="motif-body"><h3>Doma</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>Doma</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="V džungli" data-img="karticky-v-dzungli-detail.jpg" data-desc="Tropický deštný les plný barev a zvuků – papoušci, leguáni, orchideje a hustá zeleň. Malí průzkumníci se budou cítit jako v dobrodružném filmu." data-age="3–7 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-v-dzungli.jpg" alt="Kartičky V džungli" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M8 36 C8 26 14 16 22 14 C30 16 36 26 36 36" fill="#1E8449" opacity=".2"/><path d="M14 36 C12 28 16 20 22 18" stroke="#27AE60" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".5"/><path d="M30 36 C32 28 28 20 22 18" stroke="#27AE60" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".4"/><ellipse cx="22" cy="16" rx="5" ry="3" fill="#1E8449" opacity=".4"/></svg>
           <span>Foto: V džungli</span>
         </div>
-        <div class="motif-body"><h3>V džungli</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>V džungli</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-      <div class="motif-card">
+      <div class="motif-card" data-name="Za polárním kruhem" data-img="karticky-polarni-kruh-detail.jpg" data-desc="Ledový svět tučňáků, polárních medvědů, sobů a severního světla. Chladný, ale nádherný – děti ho milují!" data-age="4–8 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-polarni-kruh.jpg" alt="Kartičky Za polárním kruhem" /> -->
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="30" rx="16" ry="8" fill="#AED6F1" opacity=".3"/><circle cx="22" cy="18" r="8" fill="#F5F0E8" opacity=".5" stroke="#AED6F1" stroke-width="1.5"/><path d="M14 30 C14 24 18 20 22 20 C26 20 30 24 30 30" fill="#AED6F1" opacity=".4"/></svg>
           <span>Foto: Za polárním kruhem</span>
         </div>
-        <div class="motif-body"><h3>Za polárním kruhem</h3><a href="#objednat" class="btn btn-outline">Objednat</a></div>
+        <div class="motif-body"><h3>Za polárním kruhem</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
     </div><!-- /motifs-grid -->
@@ -1565,7 +1676,7 @@
       <p>Sady jsou navrženy pro zábavné učení – každá přináší unikátní téma i herní prvky.</p>
     </div>
 
-    <div class="sets-grid" style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); max-width: 800px; margin: 0 auto;">
+    <div class="sets-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
 
       <div class="set-card">
         <div class="set-img">
@@ -1579,6 +1690,7 @@
           <span class="set-tag">🌍 8 prostředí</span>
           <h3>8 různých prostředí + přiřazování ke stínům</h3>
           <p>Komplexní sada pro starší děti – 8 kartiček ze zcela odlišných prostředí světa doplněná o hru přiřazování siluet ke stínům. Rozvíjí pozornost a logické myšlení.</p>
+          <label class="vazba-option"><input type="checkbox" name="vazba-sada-8" value="Kroužková vazba +10 Kč" /><span>+ Kroužková vazba (sešití do sešitu) <strong>+10 Kč</strong></span></label>
           <div class="set-footer">
             <div>
               <div class="set-price">700 Kč</div>
@@ -1601,10 +1713,34 @@
           <span class="set-tag">🚗 Doprava</span>
           <h3>Dopravní prostředky</h3>
           <p>Sada 3 kartiček s oblíbenými dopravními prostředky – auto, vlak, letadlo. Krásný úvod do světa dopravy pro nejmenší objevitele.</p>
+          <label class="vazba-option"><input type="checkbox" name="vazba-sada-doprava" value="Kroužková vazba +10 Kč" /><span>+ Kroužková vazba (sešití do sešitu) <strong>+10 Kč</strong></span></label>
           <div class="set-footer">
             <div>
               <div class="set-price">250 Kč</div>
               <div class="set-count">3 kartičky v sadě</div>
+            </div>
+            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="set-card">
+        <div class="set-img">
+          <!-- Replace src: sada vlastní výběr – vlastni-vyber.jpg -->
+          <div class="set-img-placeholder">
+            <svg viewBox="0 0 52 52" fill="none"><rect x="6" y="8" width="14" height="18" rx="2" fill="#3A5A40" opacity=".25"/><rect x="24" y="8" width="14" height="18" rx="2" fill="#A0522D" opacity=".25"/><rect x="6" y="30" width="14" height="14" rx="2" fill="#C9B99A" opacity=".35"/><rect x="24" y="30" width="14" height="14" rx="2" fill="#3A5A40" opacity=".2"/><path d="M42 18 L46 22 L38 30" stroke="#3A5A40" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".6"/></svg>
+            <span>Foto: Sada vlastní výběr</span>
+          </div>
+        </div>
+        <div class="set-body">
+          <span class="set-tag">✨ Vlastní výběr</span>
+          <h3>5 kartiček dle vlastního výběru</h3>
+          <p>Sestavte si sadu přesně podle svého! Vyberte libovolných 5 motivů z celé nabídky – skvělý dárek i způsob, jak si rozšířit sbírku.</p>
+          <label class="vazba-option"><input type="checkbox" name="vazba-sada-vyber" value="Kroužková vazba +10 Kč" /><span>+ Kroužková vazba (sešití do sešitu) <strong>+10 Kč</strong></span></label>
+          <div class="set-footer">
+            <div>
+              <div class="set-price">420 Kč</div>
+              <div class="set-count">5 kartiček dle výběru</div>
             </div>
             <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
           </div>
@@ -1802,6 +1938,7 @@
               <optgroup label="📦 Sady kartiček">
                 <option value="Sada: 8 prostředí + přiřazování ke stínům (700 Kč)">Sada: 8 prostředí + přiřazování ke stínům – 700 Kč</option>
                 <option value="Sada: Dopravní prostředky (250 Kč)">Sada: Dopravní prostředky – 250 Kč</option>
+                <option value="Sada: 5 kartiček dle vlastního výběru (420 Kč)">Sada: 5 kartiček dle vlastního výběru – 420 Kč</option>
               </optgroup>
               <optgroup label="📒 Sešity">
                 <option value="Jarní pracovní sešit – tištěný (450 Kč)">Jarní pracovní sešit – tištěný 450 Kč</option>
@@ -1814,6 +1951,12 @@
                 <option value="Samolepky Dopravní prostředky">Samolepky – Dopravní prostředky</option>
               </optgroup>
             </select>
+          </div>
+          <div class="form-group full" id="vazba-wrap" style="display:none;">
+            <label class="form-check-label">
+              <input type="checkbox" id="f-vazba" name="entry.vazba" value="Kroužková vazba +10 Kč" />
+              <span>Svázat do sešitu kroužkovou vazbou <strong>+10 Kč</strong></span>
+            </label>
           </div>
           <div class="form-group full">
             <label>Způsob dopravy <span class="req">*</span></label>
@@ -2107,7 +2250,90 @@
     });
   });
 
+  /* — Motif modal — */
+  const motifModal   = document.getElementById('motif-modal');
+  const modalImg     = document.getElementById('modal-img');
+  const modalName    = document.getElementById('modal-name');
+  const modalDesc    = document.getElementById('modal-desc');
+  const modalAge     = document.getElementById('modal-age');
+
+  function openMotifModal(card) {
+    modalName.textContent = card.dataset.name || '';
+    modalDesc.textContent = card.dataset.desc || '';
+    modalAge.textContent  = card.dataset.age  || '';
+    modalImg.src = card.dataset.img || '';
+    modalImg.alt = 'Kartičky ' + (card.dataset.name || '');
+    motifModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMotifModal() {
+    motifModal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.btn-detail').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      openMotifModal(btn.closest('.motif-card'));
+    });
+  });
+
+  document.getElementById('modal-close-x').addEventListener('click', closeMotifModal);
+  document.getElementById('modal-btn-close').addEventListener('click', closeMotifModal);
+  document.getElementById('modal-btn-order').addEventListener('click', function () {
+    closeMotifModal();
+    const target = document.querySelector('#objednat');
+    if (target) {
+      const top = target.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  });
+
+  motifModal.addEventListener('click', function (e) {
+    if (e.target === motifModal) closeMotifModal();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && motifModal.style.display !== 'none') closeMotifModal();
+  });
+
+  /* — Kroužková vazba checkbox in form — */
+  const vazbaWrap = document.getElementById('vazba-wrap');
+  const fProduct  = document.getElementById('f-product');
+  const fQty      = document.getElementById('f-qty');
+  const fVazba    = document.getElementById('f-vazba');
+
+  function updateVazbaVisibility() {
+    const val = fProduct.value;
+    const qty = parseInt(fQty.value, 10) || 0;
+    const isSada       = val.startsWith('Sada:');
+    const isKarticky   = /^(Vystřižené|Nevystřižené|PDF verze|Motiv:)/.test(val);
+    const shouldShow   = isSada || (isKarticky && qty >= 5);
+    vazbaWrap.style.display = shouldShow ? 'flex' : 'none';
+    if (!shouldShow) fVazba.checked = false;
+  }
+
+  fProduct.addEventListener('change', updateVazbaVisibility);
+  fQty.addEventListener('input', updateVazbaVisibility);
+
 })();
 </script>
+<!-- ░░░ MOTIF DETAIL MODAL ░░░ -->
+<div id="motif-modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+  <div class="modal-box">
+    <button class="modal-close-x" id="modal-close-x" aria-label="Zavřít">✕</button>
+    <div class="modal-img-wrap">
+      <img id="modal-img" src="" alt="" />
+    </div>
+    <h3 id="modal-name"></h3>
+    <p class="modal-desc" id="modal-desc"></p>
+    <div class="modal-age-badge">👶 Věk: <span id="modal-age"></span></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="modal-btn-close">Zavřít</button>
+      <a href="#objednat" class="btn btn-terra" id="modal-btn-order">Objednat</a>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
