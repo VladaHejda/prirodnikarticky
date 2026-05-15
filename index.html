@@ -528,6 +528,25 @@
       gap: 20px;
       margin-top: 32px;
     }
+    /* When motifs-grid is inside carousel-track, use flex layout */
+    .carousel-track.motifs-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 24px;
+      margin-top: 0;
+    }
+    .carousel-track.motifs-grid .motif-card {
+      flex: 0 0 200px;
+      min-width: 180px;
+      max-width: 220px;
+    }
+    @media (max-width: 600px) {
+      .carousel-track.motifs-grid .motif-card {
+        flex: 0 0 160px;
+        min-width: 145px;
+        max-width: 180px;
+      }
+    }
     .motif-card {
       background: var(--white);
       border-radius: var(--radius);
@@ -1229,6 +1248,196 @@
       .hero-mosaic { max-width: 300px; gap: 7px; }
       .radio-group { gap: 8px; }
     }
+
+    /* ─── Carousel ─── */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.4s ease;
+      padding: 10px 0;
+    }
+    .carousel-track > * {
+      flex: 0 0 calc(25% - 18px);
+      min-width: 280px;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--beige);
+      color: var(--green);
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 3px 12px rgba(58,90,64,.15);
+      transition: all var(--transition);
+    }
+    .carousel-btn:hover {
+      background: var(--green);
+      color: var(--white);
+      border-color: var(--green);
+    }
+    .carousel-btn.prev { left: 8px; }
+    .carousel-btn.next { right: 8px; }
+    .carousel-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    @media (max-width: 900px) {
+      .carousel-track > * {
+        flex: 0 0 calc(50% - 12px);
+        min-width: 260px;
+      }
+    }
+    @media (max-width: 600px) {
+      .carousel-track > * {
+        flex: 0 0 calc(100% - 20px);
+        min-width: 240px;
+      }
+      .carousel-btn { width: 38px; height: 38px; font-size: 1rem; }
+    }
+
+    /* ─── Detail Modal with Carousel ─── */
+    .modal-carousel {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .modal-carousel-track {
+      display: flex;
+      overflow: hidden;
+      border-radius: calc(var(--radius) - 4px);
+    }
+    .modal-carousel-slide {
+      flex: 0 0 100%;
+      aspect-ratio: 4/3;
+      background: var(--green-pale);
+    }
+    .modal-carousel-slide img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .modal-carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.9);
+      border: none;
+      color: var(--green);
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+      transition: all .2s;
+    }
+    .modal-carousel-btn:hover { background: var(--white); }
+    .modal-carousel-btn.prev { left: 8px; }
+    .modal-carousel-btn.next { right: 8px; }
+    .modal-carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .modal-carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--beige);
+      border: none;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .modal-carousel-dot.active { background: var(--green); }
+
+    /* ─── Price Variants in Modal ─── */
+    .modal-price-variants, .modal-prices {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 16px 0;
+      padding: 14px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+    }
+    .modal-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .9rem;
+    }
+    .modal-price-row .label { color: var(--text-light); }
+    .modal-price-row .price {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    /* ─── Dynamic Product Rows ─── */
+    .product-rows { display: flex; flex-direction: column; gap: 16px; }
+    .product-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      align-items: end;
+      padding: 16px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--beige-light);
+    }
+    .product-row .form-group { margin: 0; }
+    .product-row .qty-input { width: 70px; }
+    .remove-row-btn {
+      background: none;
+      border: none;
+      color: var(--terra);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background .2s;
+    }
+    .remove-row-btn:hover { background: rgba(160,82,45,.1); }
+    .add-product-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--green-pale);
+      border: 2px dashed var(--green);
+      border-radius: var(--radius-sm);
+      color: var(--green);
+      font-weight: 600;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: all .2s;
+      width: 100%;
+      justify-content: center;
+    }
+    .add-product-btn:hover {
+      background: var(--green);
+      color: var(--white);
+      border-style: solid;
+    }
+    @media (max-width: 600px) {
+      .product-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .product-row .qty-input { width: 100%; }
+    }
   </style>
 </head>
 
@@ -1315,9 +1524,9 @@
     <div class="hero-content">
       <div class="hero-eyebrow">Ručně tvořeno s láskou</div>
       <h1>Přírodní<br /><em>kartičky</em></h1>
-      <p>Ručně laminované vzdělávací kartičky pro malé objevitele přírody. Každá kartička je originální – tvořená s láskou a úctou k přírodnímu světu.</p>
+      <p>Ručně tvořené vzdělávací kartičky pro malé objevitele přírody. Vznikají s láskou k dětem, lesům, horám a světu kolem nás – aby děti poznávaly přírodu hrou a s respektem 🌿</p>
       <div class="hero-actions">
-        <a href="#cenik" class="btn btn-primary">🌿 Prohlédnout kartičky</a>
+        <a href="#motifs-heading" class="btn btn-primary">🌿 Prohlédnout kartičky</a>
         <a href="#o-mne" class="btn btn-outline">O tvůrkyni</a>
       </div>
     </div>
@@ -1379,12 +1588,14 @@
     <div class="section-heading">
       <div class="section-label">Čerstvě přidáno</div>
       <h2>Novinky</h2>
-      <p>Nové kartičky a sady, které na vás čekají – čerstvě z pracovního stolu.</p>
+      <p>Nové produkty právě přibyly 🌿 Listy, sešity, sady i samolepky připravené na společné objevování.</p>
     </div>
 
-    <div class="products-grid">
+    <div class="carousel-container" id="novinky-carousel">
+      <button class="carousel-btn prev" aria-label="Předchozí">‹</button>
+      <div class="carousel-track">
 
-      <div class="product-card">
+      <div class="product-card" data-name="Kartičky: Na stavbě" data-desc="Bagry, jeřáby, míchačky a pracovní stroje – kartičky pro malé stavbaře a techniky. Ideální pro děti 2–5 let." data-age="2–5 let" data-prices='[{"label":"Vystřižené","price":"95 Kč"},{"label":"Nevystřižené","price":"70 Kč"},{"label":"PDF","price":"30 Kč"}]'>
         <div class="card-img">
           <!-- Replace src with real product photo: kartičky Na stavbě -->
           <div class="card-img-placeholder">
@@ -1399,12 +1610,15 @@
           <p class="card-desc">Bagry, jeřáby, míchačky a pracovní stroje – kartičky pro malé stavbaře a techniky.</p>
           <div class="card-footer">
             <div class="card-price">od 30 Kč</div>
-            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            <div class="btn-group" style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-sm btn-outline btn-product-detail">Detail</button>
+              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-name="Sada: Dopravní prostředky" data-desc="Sada 3 kartiček s oblíbenými dopravními prostředky a přiřazováním obrázků ke stínům. Krásný úvod do světa dopravy pro nejmenší objevitele." data-age="1,5–4 roky" data-prices='[{"label":"Kompletní sada","price":"250 Kč"}]'>
         <div class="card-img">
           <!-- Replace src with real product photo: sada Dopravní prostředky -->
           <div class="card-img-placeholder">
@@ -1419,12 +1633,15 @@
           <p class="card-desc">Sada 3 kartiček – auto, vlak, letadlo. Hravý úvod do světa dopravy pro nejmenší.</p>
           <div class="card-footer">
             <div class="card-price">250 Kč</div>
-            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            <div class="btn-group" style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-sm btn-outline btn-product-detail">Detail</button>
+              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-name="Letní pracovní sešit" data-desc="Sešit plný letních dobrodružství – aktivity, omalovánky a hádanky na prázdniny. Ideální pro děti přibližně od 1,5 do 3 let." data-age="1,5–3 roky" data-prices='[{"label":"Tištěný sešit","price":"450 Kč"},{"label":"PDF ke stažení","price":"100 Kč"}]'>
         <div class="card-img">
           <!-- Replace src with real product photo: letní sešit -->
           <div class="card-img-placeholder">
@@ -1439,11 +1656,16 @@
           <p class="card-desc">Sešit plný letních dobrodružství – aktivity, omalovánky a hádanky na prázdniny.</p>
           <div class="card-footer">
             <div class="card-price">450 Kč <span style="font-size:.8rem;color:var(--text-light);font-weight:400;">/ PDF 100 Kč</span></div>
-            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            <div class="btn-group" style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-sm btn-outline btn-product-detail">Detail</button>
+              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            </div>
           </div>
         </div>
       </div>
 
+      </div>
+      <button class="carousel-btn next" aria-label="Další">›</button>
     </div>
   </div>
 </section>
@@ -1478,13 +1700,12 @@
           <svg viewBox="0 0 36 36" fill="none"><rect x="4" y="6" width="28" height="24" rx="3" fill="#3A5A40"/><rect x="7" y="10" width="10" height="8" rx="2" fill="#F5F0E8" opacity=".6"/><path d="M20 12 H29 M20 16 H26 M7 22 H29" stroke="#F5F0E8" stroke-width="1.5" stroke-linecap="round" opacity=".6"/></svg>
         </div>
         <h3>Vystřižené kartičky</h3>
-        <div class="pricing-price">95 <span>Kč/set</span></div>
+        <div class="pricing-price">95 <span>Kč/kus</span></div>
         <p>Kartičky připravené k okamžitému použití – pečlivě vystřižené, ručně laminované a zaoblené.</p>
         <ul class="pricing-features">
           <li>Ručně laminované</li>
           <li>Vystřižené a zaoblené</li>
           <li>Připravené k použití</li>
-          <li>Tiskové kvality A4/A5</li>
         </ul>
         <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:auto;">
           <a href="#motifs-heading" class="btn btn-outline" style="text-align:center;">🌿 Vybrat motiv</a>
@@ -1503,7 +1724,7 @@
           <li>Ručně laminované</li>
           <li>Nevystřižené archy</li>
           <li>Vystřihněte si sami</li>
-          <li>Variabilní použití</li>
+          <li>Suché zipy jsou součástí listu</li>
         </ul>
         <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:auto;">
           <a href="#motifs-heading" class="btn btn-outline" style="text-align:center;">🌿 Vybrat motiv</a>
@@ -1517,11 +1738,10 @@
         </div>
         <h3>PDF verze ke stažení</h3>
         <div class="pricing-price">30 <span>Kč/set</span></div>
-        <p>Stáhněte, vytiskněte a laminujte doma. Ideální pro opakovaný tisk nebo větší množství.</p>
+        <p>Stáhněte, tiskněte, laminujte a vystřihujte doma. PDF Print kvalita.</p>
         <ul class="pricing-features">
           <li>Okamžité stažení po platbě</li>
           <li>Tiskněte kolikrát chcete</li>
-          <li>Formát A4, 300 DPI</li>
           <li>Nejnižší cena</li>
         </ul>
         <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:auto;">
@@ -1534,11 +1754,13 @@
 
     <!-- Motif grid -->
     <div class="motifs-heading" id="motifs-heading">
-      <div class="section-label">Dostupné motivy</div>
-      <h3>Vyberte si motiv</h3>
+      <div class="section-label">Dostupné kartičky</div>
+      <h3>Vyberte si kartičky</h3>
       <p>Každý motiv je k dispozici ve všech variantách – vystřižený, nevystřižený i PDF ke stažení.</p>
     </div>
-    <div class="motifs-grid">
+    <div class="carousel-container" id="motifs-carousel">
+      <button class="carousel-btn prev" aria-label="Předchozí">‹</button>
+      <div class="carousel-track motifs-grid">
 
       <div class="motif-card" data-name="Ovoce" data-img="karticky-ovoce-detail.jpg" data-desc="Barevné ovoce z celého světa – jablka, hrušky, banány i exotické plody. Skvělé pro první pojmenovávání a třídění dle barvy či tvaru." data-age="2–5 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-ovoce.jpg" alt="Kartičky Ovoce" /> -->
@@ -1644,7 +1866,9 @@
         <div class="motif-body"><h3>Za polárním kruhem</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
-    </div><!-- /motifs-grid -->
+      </div><!-- /carousel-track -->
+      <button class="carousel-btn next" aria-label="Další">›</button>
+    </div><!-- /carousel-container -->
 
   </div><!-- /section-inner -->
 </section>
@@ -1678,7 +1902,7 @@
 
     <div class="sets-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
 
-      <div class="set-card">
+      <div class="set-card" data-name="8 různých prostředí + přiřazování ke stínům" data-desc="Komplexní sada pro děti od 1,5 roku – 8 kartiček ze zcela odlišných prostředí světa doplněná o hru přiřazování obrázků ke stínům. Rozvíjí pozornost a logické myšlení." data-age="od 1,5 roku" data-prices='[{"label":"Kompletní sada","price":"700 Kč"},{"label":"S kroužkovou vazbou","price":"710 Kč"}]'>
         <div class="set-img">
           <!-- Replace src: sada 8 prostředí -->
           <div class="set-img-placeholder">
@@ -1689,19 +1913,22 @@
         <div class="set-body">
           <span class="set-tag">🌍 8 prostředí</span>
           <h3>8 různých prostředí + přiřazování ke stínům</h3>
-          <p>Komplexní sada pro starší děti – 8 kartiček ze zcela odlišných prostředí světa doplněná o hru přiřazování siluet ke stínům. Rozvíjí pozornost a logické myšlení.</p>
+          <p>Komplexní sada pro děti od 1,5 roku – 8 kartiček ze zcela odlišných prostředí světa doplněná o hru přiřazování obrázků ke stínům. Rozvíjí pozornost a logické myšlení.</p>
           <label class="vazba-option"><input type="checkbox" name="vazba-sada-8" value="Kroužková vazba +10 Kč" /><span>+ Kroužková vazba (sešití do sešitu) <strong>+10 Kč</strong></span></label>
           <div class="set-footer">
             <div>
               <div class="set-price">700 Kč</div>
               <div class="set-count">8 kartiček v sadě</div>
             </div>
-            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-sm btn-outline btn-set-detail">Detail</button>
+              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="set-card">
+      <div class="set-card" data-name="Dopravní prostředky" data-desc="Sada 3 kartiček s oblíbenými dopravními prostředky a přiřazováním obrázků ke stínům. Krásný úvod do světa dopravy pro nejmenší objevitele." data-age="od 1,5 roku" data-prices='[{"label":"Kompletní sada","price":"250 Kč"},{"label":"S kroužkovou vazbou","price":"260 Kč"}]'>
         <div class="set-img">
           <!-- Replace src: sada Dopravní prostředky -->
           <div class="set-img-placeholder">
@@ -1712,19 +1939,22 @@
         <div class="set-body">
           <span class="set-tag">🚗 Doprava</span>
           <h3>Dopravní prostředky</h3>
-          <p>Sada 3 kartiček s oblíbenými dopravními prostředky – auto, vlak, letadlo. Krásný úvod do světa dopravy pro nejmenší objevitele.</p>
+          <p>Sada 3 kartiček s oblíbenými dopravními prostředky a přiřazováním obrázků ke stínům. Krásný úvod do světa dopravy pro nejmenší objevitele.</p>
           <label class="vazba-option"><input type="checkbox" name="vazba-sada-doprava" value="Kroužková vazba +10 Kč" /><span>+ Kroužková vazba (sešití do sešitu) <strong>+10 Kč</strong></span></label>
           <div class="set-footer">
             <div>
               <div class="set-price">250 Kč</div>
               <div class="set-count">3 kartičky v sadě</div>
             </div>
-            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-sm btn-outline btn-set-detail">Detail</button>
+              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="set-card">
+      <div class="set-card" data-name="5 kartiček dle vlastního výběru" data-desc="Sestavte si sadu přesně podle svého! Vyberte libovolných 5 motivů z celé nabídky – skvělý dárek i způsob, jak si rozšířit sbírku." data-age="dle výběru" data-prices='[{"label":"Kompletní sada","price":"420 Kč"},{"label":"S kroužkovou vazbou","price":"430 Kč"}]'>
         <div class="set-img">
           <!-- Replace src: sada vlastní výběr – vlastni-vyber.jpg -->
           <div class="set-img-placeholder">
@@ -1742,7 +1972,10 @@
               <div class="set-price">420 Kč</div>
               <div class="set-count">5 kartiček dle výběru</div>
             </div>
-            <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-sm btn-outline btn-set-detail">Detail</button>
+              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+            </div>
           </div>
         </div>
       </div>
@@ -1771,12 +2004,12 @@
     <div class="section-heading">
       <div class="section-label">Pracovní sešity</div>
       <h2>Sešity</h2>
-      <p>Tematické pracovní sešity s úkoly, omalovánkami a hádankami – zábava pro zvídavé děti na celé prázdniny.</p>
+      <p>Tematické laminované sešity pro nejmenší děti plné jednoduchých aktivit, přiřazování a objevování 🌲 Uvnitř najdete úkoly zaměřené na barvy, tvary, stíny, puzzle i jemnou motoriku – ideální pro děti přibližně od 1,5 do 3 let.</p>
     </div>
 
     <div class="sesity-grid">
 
-      <div class="sesit-card">
+      <div class="sesit-card" data-name="Jarní pracovní sešit" data-desc="Sešit plný jarního probouzení – úkoly o přírodě, rostlinách a zvířatech, která se vrací po zimě. Krásný start do nové sezóny. Uvnitř najdete úkoly zaměřené na barvy, tvary, stíny, puzzle i jemnou motoriku." data-age="1,5–3 roky" data-prices='[{"label":"Tištěný sešit","price":"450 Kč"},{"label":"PDF ke stažení","price":"100 Kč"}]'>
         <div class="sesit-img">
           <!-- Replace src with real photo: jarni-sesit.jpg -->
           <div class="sesit-img-placeholder">
@@ -1798,11 +2031,14 @@
               <span class="price-val">100 Kč</span>
             </div>
           </div>
-          <a href="#objednat" class="btn btn-terra" style="width:100%;justify-content:center;">Objednat sešit</a>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <button class="btn btn-outline btn-sesit-detail" style="width:100%;justify-content:center;">Detail</button>
+            <a href="#objednat" class="btn btn-terra" style="width:100%;justify-content:center;">Objednat sešit</a>
+          </div>
         </div>
       </div>
 
-      <div class="sesit-card">
+      <div class="sesit-card" data-name="Letní pracovní sešit" data-desc="Sešit plný letního dobrodružství – stránky s úkoly zaměřenými na přírodu, zvířata a letní zážitky. Ideální společník na výlety a prázdniny. Uvnitř najdete úkoly zaměřené na barvy, tvary, stíny, puzzle i jemnou motoriku." data-age="1,5–3 roky" data-prices='[{"label":"Tištěný sešit","price":"450 Kč"},{"label":"PDF ke stažení","price":"100 Kč"}]'>
         <div class="sesit-img">
           <!-- Replace src with real photo: letni-sesit.jpg -->
           <div class="sesit-img-placeholder">
@@ -1824,7 +2060,10 @@
               <span class="price-val">100 Kč</span>
             </div>
           </div>
-          <a href="#objednat" class="btn btn-terra" style="width:100%;justify-content:center;">Objednat sešit</a>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <button class="btn btn-outline btn-sesit-detail" style="width:100%;justify-content:center;">Detail</button>
+            <a href="#objednat" class="btn btn-terra" style="width:100%;justify-content:center;">Objednat sešit</a>
+          </div>
         </div>
       </div>
 
@@ -1852,16 +2091,18 @@
       </div>
 
       <div class="about-content">
-        <h2>Ahoj, jsem Tereza 🌿</h2>
+        <h2>Ahoj, jsem Patricie 🌿</h2>
         <div class="about-subtitle">tvůrkyně Přírodních kartiček</div>
 
-        <p>Jsem maminka dvou malých průzkumníků a od malička miluji přírodu. Před třemi lety jsem začala tvořit kartičky pro naše děti – a to, co vzniklo ve sklepě s laminovačkou, se proměnilo v malou domácí dílnu s velkou duší.</p>
+        <p>Ahoj, jsem Patricie, tvůrkyně Přírodních kartiček. Jsem maminka malé holčičky a tvorbě dětských kartiček se věnuji už několik měsíců. Všechno začalo úplně jednoduše – nápadem, který jsem začala postupně přetvářet v realitu. Dnes kartičky vznikají u nás doma, kde mám svou malou „dílnu" i malou pomocnici.</p>
 
-        <p>Každou kartičku navrhuji, tisknu a laminuji s maximální péčí. Záleží mi na kvalitě i detailech – proto jsou moje kartičky ručně vystřižené a laminované, ne průmyslově vyrobené. Věřím, že děti si zaslouží krásné pomůcky, které odolají stovkám her.</p>
+        <p>Každou kartičku navrhuji, tisknu, laminuji a pečlivě dokončuji ručně. Záleží mi na tom, aby byly odolné, praktické a zároveň krásné – takové, které vydrží dětské objevování, hraní i každodenní používání.</p>
 
-        <p>Při tvorbě se inspiruji procházkami do lesa, návštěvami farem a vším, co příroda nabízí. Ráda vám pomůžu vybrat sadu na míru – napište mi!</p>
+        <p>Inspiraci čerpám hlavně z běžného života s dětmi a z přírody, která nás obklopuje. Procházky, zvířata, roční období i drobné detaily všedních dnů se často promítají do nových sad.</p>
 
-        <div class="about-signature">S láskou, Tereza ♡</div>
+        <p>Pokud si nejste jistí výběrem, klidně mi napište – ráda vám pomůžu najít kartičky přesně pro vás a vaše děti.</p>
+
+        <div class="about-signature">S láskou, Patricie ♡</div>
       </div>
     </div>
   </div>
@@ -1907,50 +2148,62 @@
             <label for="f-phone">Telefon</label>
             <input type="tel" id="f-phone" name="entry.phone" placeholder="+420 123 456 789" />
           </div>
-          <div class="form-group">
-            <label for="f-qty">Počet kusů <span class="req">*</span></label>
-            <input type="number" id="f-qty" name="entry.qty" min="1" max="99" value="1" required />
-          </div>
           <div class="form-group full">
-            <label for="f-product">Výběr produktu <span class="req">*</span></label>
-            <select id="f-product" name="entry.product" required>
-              <option value="" disabled selected>— Vyberte produkt —</option>
-              <optgroup label="🃏 Kartičky – typ">
-                <option value="Vystřižené kartičky (95 Kč)">Vystřižené kartičky – 95 Kč</option>
-                <option value="Nevystřižené kartičky (70 Kč)">Nevystřižené kartičky – 70 Kč</option>
-                <option value="PDF verze ke stažení (30 Kč)">PDF verze ke stažení – 30 Kč</option>
-              </optgroup>
-              <optgroup label="🃏 Kartičky – motiv">
-                <option value="Motiv: Ovoce">Ovoce</option>
-                <option value="Motiv: Zelenina">Zelenina</option>
-                <option value="Motiv: Ovozel – přiřazování barev">Ovozel – přiřazování barev</option>
-                <option value="Motiv: Hmyzí rodinka">Hmyzí rodinka</option>
-                <option value="Motiv: Zvířata a zimní spánek">Zvířata a zimní spánek</option>
-                <option value="Motiv: V lese">V lese</option>
-                <option value="Motiv: Na farmě">Na farmě</option>
-                <option value="Motiv: V savaně">V savaně</option>
-                <option value="Motiv: V mořích a oceánech">V mořích a oceánech</option>
-                <option value="Motiv: Na horách">Na horách</option>
-                <option value="Motiv: Doma">Doma</option>
-                <option value="Motiv: V džungli">V džungli</option>
-                <option value="Motiv: Za polárním kruhem">Za polárním kruhem</option>
-              </optgroup>
-              <optgroup label="📦 Sady kartiček">
-                <option value="Sada: 8 prostředí + přiřazování ke stínům (700 Kč)">Sada: 8 prostředí + přiřazování ke stínům – 700 Kč</option>
-                <option value="Sada: Dopravní prostředky (250 Kč)">Sada: Dopravní prostředky – 250 Kč</option>
-                <option value="Sada: 5 kartiček dle vlastního výběru (420 Kč)">Sada: 5 kartiček dle vlastního výběru – 420 Kč</option>
-              </optgroup>
-              <optgroup label="📒 Sešity">
-                <option value="Jarní pracovní sešit – tištěný (450 Kč)">Jarní pracovní sešit – tištěný 450 Kč</option>
-                <option value="Jarní pracovní sešit – PDF (100 Kč)">Jarní pracovní sešit – PDF 100 Kč</option>
-                <option value="Letní pracovní sešit – tištěný (450 Kč)">Letní pracovní sešit – tištěný 450 Kč</option>
-                <option value="Letní pracovní sešit – PDF (100 Kč)">Letní pracovní sešit – PDF 100 Kč</option>
-              </optgroup>
-              <optgroup label="🏷 Samolepky">
-                <option value="Samolepky Na stavbě">Samolepky – Na stavbě</option>
-                <option value="Samolepky Dopravní prostředky">Samolepky – Dopravní prostředky</option>
-              </optgroup>
-            </select>
+            <label>Výběr produktů <span class="req">*</span></label>
+            <p style="font-size:.85rem;color:var(--text-light);margin-bottom:12px;">Můžete objednat až 30 různých produktů, každý v množství 1–10 ks.</p>
+            <div class="product-rows" id="product-rows">
+              <div class="product-row" data-row="0">
+                <div class="form-group">
+                  <label>Produkt</label>
+                  <select class="product-select" name="entry.product_0" required>
+                    <option value="" disabled selected>— Vyberte produkt —</option>
+                    <optgroup label="🃏 Kartičky – typ">
+                      <option value="Vystřižené kartičky (95 Kč)">Vystřižené kartičky – 95 Kč</option>
+                      <option value="Nevystřižené kartičky (70 Kč)">Nevystřižené kartičky – 70 Kč</option>
+                      <option value="PDF verze ke stažení (30 Kč)">PDF verze ke stažení – 30 Kč</option>
+                    </optgroup>
+                    <optgroup label="🃏 Kartičky – motiv">
+                      <option value="Motiv: Ovoce">Ovoce</option>
+                      <option value="Motiv: Zelenina">Zelenina</option>
+                      <option value="Motiv: Ovozel – přiřazování barev">Ovozel – přiřazování barev</option>
+                      <option value="Motiv: Hmyzí rodinka">Hmyzí rodinka</option>
+                      <option value="Motiv: Zvířata a zimní spánek">Zvířata a zimní spánek</option>
+                      <option value="Motiv: V lese">V lese</option>
+                      <option value="Motiv: Na farmě">Na farmě</option>
+                      <option value="Motiv: V savaně">V savaně</option>
+                      <option value="Motiv: V mořích a oceánech">V mořích a oceánech</option>
+                      <option value="Motiv: Na horách">Na horách</option>
+                      <option value="Motiv: Doma">Doma</option>
+                      <option value="Motiv: V džungli">V džungli</option>
+                      <option value="Motiv: Za polárním kruhem">Za polárním kruhem</option>
+                    </optgroup>
+                    <optgroup label="📦 Sady kartiček">
+                      <option value="Sada: 8 prostředí + přiřazování ke stínům (700 Kč)">Sada: 8 prostředí + přiřazování ke stínům – 700 Kč</option>
+                      <option value="Sada: Dopravní prostředky (250 Kč)">Sada: Dopravní prostředky – 250 Kč</option>
+                      <option value="Sada: 5 kartiček dle vlastního výběru (420 Kč)">Sada: 5 kartiček dle vlastního výběru – 420 Kč</option>
+                    </optgroup>
+                    <optgroup label="📒 Sešity">
+                      <option value="Jarní pracovní sešit – tištěný (450 Kč)">Jarní pracovní sešit – tištěný 450 Kč</option>
+                      <option value="Jarní pracovní sešit – PDF (100 Kč)">Jarní pracovní sešit – PDF 100 Kč</option>
+                      <option value="Letní pracovní sešit – tištěný (450 Kč)">Letní pracovní sešit – tištěný 450 Kč</option>
+                      <option value="Letní pracovní sešit – PDF (100 Kč)">Letní pracovní sešit – PDF 100 Kč</option>
+                    </optgroup>
+                    <optgroup label="🏷 Samolepky">
+                      <option value="Samolepky Na stavbě">Samolepky – Na stavbě</option>
+                      <option value="Samolepky Dopravní prostředky">Samolepky – Dopravní prostředky</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Počet ks</label>
+                  <input type="number" class="qty-input" name="entry.qty_0" min="1" max="10" value="1" required />
+                </div>
+                <button type="button" class="remove-row-btn" title="Odebrat" style="visibility:hidden;">✕</button>
+              </div>
+            </div>
+            <button type="button" class="add-product-btn" id="add-product-btn">
+              <span>＋</span> Přidat další produkt
+            </button>
           </div>
           <div class="form-group full" id="vazba-wrap" style="display:none;">
             <label class="form-check-label">
@@ -2100,7 +2353,6 @@
     if (e.key === 'Escape') closeMenu();
   });
 
-  /* Close menu and smooth-scroll when a sidebar link is clicked */
   sidebar.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener('click', function () {
       closeMenu();
@@ -2114,7 +2366,6 @@
       const submenu  = document.getElementById(targetId);
       if (!submenu) return;
       const isOpen = submenu.classList.contains('open');
-      /* Close all others */
       document.querySelectorAll('.submenu.open').forEach(function (m) { m.classList.remove('open'); });
       document.querySelectorAll('.submenu-toggle.expanded').forEach(function (t) { t.classList.remove('expanded'); });
       if (!isOpen) {
@@ -2124,31 +2375,177 @@
     });
   });
 
+  /* — Carousel functionality — */
+  function initCarousel(container) {
+    if (!container) return;
+    const track = container.querySelector('.carousel-track');
+    const prevBtn = container.querySelector('.carousel-btn.prev');
+    const nextBtn = container.querySelector('.carousel-btn.next');
+    if (!track || !prevBtn || !nextBtn) return;
+
+    let position = 0;
+    const items = track.children;
+    
+    function getItemWidth() {
+      if (!items[0]) return 300;
+      const style = getComputedStyle(items[0]);
+      return items[0].offsetWidth + parseInt(style.marginRight || 0) + 24;
+    }
+    
+    function getVisibleItems() {
+      const containerWidth = container.offsetWidth - 100;
+      const itemWidth = getItemWidth();
+      return Math.floor(containerWidth / itemWidth) || 1;
+    }
+    
+    function updateButtons() {
+      const maxPos = Math.max(0, items.length - getVisibleItems());
+      prevBtn.disabled = position <= 0;
+      nextBtn.disabled = position >= maxPos;
+    }
+    
+    function slide(dir) {
+      const maxPos = Math.max(0, items.length - getVisibleItems());
+      position = Math.max(0, Math.min(maxPos, position + dir));
+      const offset = position * getItemWidth();
+      track.style.transform = 'translateX(-' + offset + 'px)';
+      updateButtons();
+    }
+    
+    prevBtn.addEventListener('click', function() { slide(-1); });
+    nextBtn.addEventListener('click', function() { slide(1); });
+    window.addEventListener('resize', updateButtons);
+    updateButtons();
+  }
+
+  initCarousel(document.getElementById('novinky-carousel'));
+  initCarousel(document.getElementById('motifs-carousel'));
+
   /* — Order form — */
   const form    = document.getElementById('order-form');
   const success = document.getElementById('form-success');
+  const pobockaWrap  = document.getElementById('pobocka-wrap');
+  const pobockaInput = document.getElementById('f-pobocka');
+  const pobockaLink  = document.getElementById('pobocka-link');
 
   /* Google Forms placeholder URL – replace YOUR_FORM_ID with the real form ID */
   const GOOGLE_FORM_URL = 'https://docs.google.com/forms/YOUR_FORM_ID';
+
+  /* — Dynamic product rows — */
+  const productRowsContainer = document.getElementById('product-rows');
+  const addProductBtn = document.getElementById('add-product-btn');
+  let rowCount = 1;
+  const MAX_PRODUCTS = 30;
+
+  function getProductSelectHTML(index) {
+    return '<select class="product-select" name="entry.product_' + index + '" required>' +
+      '<option value="" disabled selected>— Vyberte produkt —</option>' +
+      '<optgroup label="🃏 Kartičky – typ">' +
+        '<option value="Vystřižené kartičky (95 Kč)">Vystřižené kartičky – 95 Kč</option>' +
+        '<option value="Nevystřižené kartičky (70 Kč)">Nevystřižené kartičky – 70 Kč</option>' +
+        '<option value="PDF verze ke stažení (30 Kč)">PDF verze ke stažení – 30 Kč</option>' +
+      '</optgroup>' +
+      '<optgroup label="🃏 Kartičky – motiv">' +
+        '<option value="Motiv: Ovoce">Ovoce</option>' +
+        '<option value="Motiv: Zelenina">Zelenina</option>' +
+        '<option value="Motiv: Ovozel – přiřazování barev">Ovozel – přiřazování barev</option>' +
+        '<option value="Motiv: Hmyzí rodinka">Hmyzí rodinka</option>' +
+        '<option value="Motiv: Zvířata a zimní spánek">Zvířata a zimní spánek</option>' +
+        '<option value="Motiv: V lese">V lese</option>' +
+        '<option value="Motiv: Na farmě">Na farmě</option>' +
+        '<option value="Motiv: V savaně">V savaně</option>' +
+        '<option value="Motiv: V mořích a oceánech">V mořích a oceánech</option>' +
+        '<option value="Motiv: Na horách">Na horách</option>' +
+        '<option value="Motiv: Doma">Doma</option>' +
+        '<option value="Motiv: V džungli">V džungli</option>' +
+        '<option value="Motiv: Za polárním kruhem">Za polárním kruhem</option>' +
+      '</optgroup>' +
+      '<optgroup label="📦 Sady kartiček">' +
+        '<option value="Sada: 8 prostředí + přiřazování ke stínům (700 Kč)">Sada: 8 prostředí + stíny – 700 Kč</option>' +
+        '<option value="Sada: Dopravní prostředky (250 Kč)">Sada: Dopravní prostředky – 250 Kč</option>' +
+        '<option value="Sada: 5 kartiček dle vlastního výběru (420 Kč)">Sada: 5 kartiček dle výběru – 420 Kč</option>' +
+      '</optgroup>' +
+      '<optgroup label="📒 Sešity">' +
+        '<option value="Jarní pracovní sešit – tištěný (450 Kč)">Jarní sešit – tištěný 450 Kč</option>' +
+        '<option value="Jarní pracovní sešit – PDF (100 Kč)">Jarní sešit – PDF 100 Kč</option>' +
+        '<option value="Letní pracovní sešit – tištěný (450 Kč)">Letní sešit – tištěný 450 Kč</option>' +
+        '<option value="Letní pracovní sešit – PDF (100 Kč)">Letní sešit – PDF 100 Kč</option>' +
+      '</optgroup>' +
+      '<optgroup label="🏷 Samolepky">' +
+        '<option value="Samolepky Na stavbě">Samolepky – Na stavbě</option>' +
+        '<option value="Samolepky Dopravní prostředky">Samolepky – Dopravní prostředky</option>' +
+      '</optgroup>' +
+    '</select>';
+  }
+
+  function addProductRow() {
+    if (rowCount >= MAX_PRODUCTS) {
+      alert('Můžete přidat maximálně ' + MAX_PRODUCTS + ' produktů.');
+      return;
+    }
+    var newRow = document.createElement('div');
+    newRow.className = 'product-row';
+    newRow.dataset.row = rowCount;
+    newRow.innerHTML = '<div class="form-group"><label>Produkt</label>' +
+      getProductSelectHTML(rowCount) + '</div>' +
+      '<div class="form-group"><label>Počet ks</label>' +
+      '<input type="number" class="qty-input" name="entry.qty_' + rowCount + '" min="1" max="10" value="1" required /></div>' +
+      '<button type="button" class="remove-row-btn" title="Odebrat">✕</button>';
+    productRowsContainer.appendChild(newRow);
+    rowCount++;
+    updateRemoveButtons();
+    updateVazbaVisibility();
+  }
+
+  function removeProductRow(row) {
+    row.remove();
+    updateRemoveButtons();
+    updateVazbaVisibility();
+  }
+
+  function updateRemoveButtons() {
+    var rows = productRowsContainer.querySelectorAll('.product-row');
+    rows.forEach(function (row) {
+      var removeBtn = row.querySelector('.remove-row-btn');
+      if (removeBtn) removeBtn.style.visibility = rows.length > 1 ? 'visible' : 'hidden';
+    });
+  }
+
+  if (addProductBtn) {
+    addProductBtn.addEventListener('click', addProductRow);
+  }
+
+  if (productRowsContainer) {
+    productRowsContainer.addEventListener('click', function(e) {
+      if (e.target.classList.contains('remove-row-btn')) {
+        removeProductRow(e.target.closest('.product-row'));
+      }
+    });
+    productRowsContainer.addEventListener('change', function(e) {
+      if (e.target.classList.contains('product-select') || e.target.classList.contains('qty-input')) {
+        updateVazbaVisibility();
+      }
+    });
+  }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     /* Basic validation */
-    const name    = document.getElementById('f-name').value.trim();
-    const email   = document.getElementById('f-email').value.trim();
-    const product = document.getElementById('f-product').value;
-    const doprava = form.querySelector('input[name="entry.doprava"]:checked');
-    const pobockaVisible = pobockaWrap.style.display !== 'none';
-    const pobocka = pobockaVisible ? pobockaInput.value.trim() : 'n/a';
+    var name    = document.getElementById('f-name').value.trim();
+    var email   = document.getElementById('f-email').value.trim();
+    var productSelects = productRowsContainer ? productRowsContainer.querySelectorAll('.product-select') : [];
+    var hasProduct = Array.from(productSelects).some(function(sel) { return sel.value; });
+    var doprava = form.querySelector('input[name="entry.doprava"]:checked');
+    var pobockaVisible = pobockaWrap && pobockaWrap.style.display !== 'none';
+    var pobocka = pobockaVisible && pobockaInput ? pobockaInput.value.trim() : 'n/a';
 
-    if (!name || !email || !product || !doprava || (pobockaVisible && !pobocka)) {
+    if (!name || !email || !hasProduct || !doprava || (pobockaVisible && !pobocka)) {
       [
-        { el: document.getElementById('f-name'),    val: name },
-        { el: document.getElementById('f-email'),   val: email },
-        { el: document.getElementById('f-product'), val: product },
-        ...(pobockaVisible ? [{ el: pobockaInput, val: pobocka }] : [])
-      ].forEach(function (item) {
+        { el: document.getElementById('f-name'), val: name },
+        { el: document.getElementById('f-email'), val: email }
+      ].concat(pobockaVisible && pobockaInput ? [{ el: pobockaInput, val: pobocka }] : [])
+      .forEach(function (item) {
         if (!item.val) {
           item.el.style.borderColor = '#C0392B';
           item.el.addEventListener('input', function () {
@@ -2156,8 +2553,14 @@
           }, { once: true });
         }
       });
+      if (!hasProduct && productSelects[0]) {
+        productSelects[0].style.borderColor = '#C0392B';
+        productSelects[0].addEventListener('change', function () {
+          productSelects[0].style.borderColor = '';
+        }, { once: true });
+      }
       if (!doprava) {
-        const grp = document.getElementById('doprava-group');
+        var grp = document.getElementById('doprava-group');
         grp.style.outline = '2px solid #C0392B';
         grp.style.borderRadius = '8px';
         grp.addEventListener('change', function () { grp.style.outline = ''; }, { once: true });
@@ -2224,13 +2627,9 @@
   }, { passive: true });
 
   /* — Radio option highlight + dynamic pobočka field — */
-  const pobockaWrap  = document.getElementById('pobocka-wrap');
-  const pobockaInput = document.getElementById('f-pobocka');
-  const pobockaLink  = document.getElementById('pobocka-link');
-
-  const CARRIER_URLS = {
+  var CARRIER_URLS = {
     'Alzabox (49 Kč)':    'https://www.alza.cz/alzabox',
-    'Balíkovna (79 Kč)':  'https://www.zasilkovna.cz/pobocky',
+    'Balíkovna (79 Kč)':  'https://www.balikovna.cz/cs/pobocky',
     'Zásilkovna (89 Kč)': 'https://www.zasilkovna.cz/pobocky'
   };
 
@@ -2241,7 +2640,7 @@
       });
       if (this.checked) {
         this.closest('.radio-option').classList.add('selected');
-        if (this.name === 'entry.doprava') {
+        if (this.name === 'entry.doprava' && pobockaWrap && pobockaInput && pobockaLink) {
           pobockaWrap.style.display = 'flex';
           pobockaInput.required = true;
           pobockaLink.href = CARRIER_URLS[this.value] || '#';
@@ -2250,14 +2649,15 @@
     });
   });
 
-  /* — Motif modal — */
-  const motifModal   = document.getElementById('motif-modal');
-  const modalImg     = document.getElementById('modal-img');
-  const modalName    = document.getElementById('modal-name');
-  const modalDesc    = document.getElementById('modal-desc');
-  const modalAge     = document.getElementById('modal-age');
+  /* — Motif modal (kartičky) — */
+  var motifModal = document.getElementById('motif-modal');
+  var modalImg   = document.getElementById('modal-img');
+  var modalName  = document.getElementById('modal-name');
+  var modalDesc  = document.getElementById('modal-desc');
+  var modalAge   = document.getElementById('modal-age');
 
   function openMotifModal(card) {
+    if (!motifModal) return;
     modalName.textContent = card.dataset.name || '';
     modalDesc.textContent = card.dataset.desc || '';
     modalAge.textContent  = card.dataset.age  || '';
@@ -2268,6 +2668,7 @@
   }
 
   function closeMotifModal() {
+    if (!motifModal) return;
     motifModal.style.display = 'none';
     document.body.style.overflow = '';
   }
@@ -2278,43 +2679,140 @@
     });
   });
 
-  document.getElementById('modal-close-x').addEventListener('click', closeMotifModal);
-  document.getElementById('modal-btn-close').addEventListener('click', closeMotifModal);
-  document.getElementById('modal-btn-order').addEventListener('click', function () {
-    closeMotifModal();
-    const target = document.querySelector('#objednat');
-    if (target) {
-      const top = target.getBoundingClientRect().top + window.scrollY - 72;
-      window.scrollTo({ top: top, behavior: 'smooth' });
+  var modalCloseX = document.getElementById('modal-close-x');
+  var modalBtnClose = document.getElementById('modal-btn-close');
+  var modalBtnOrder = document.getElementById('modal-btn-order');
+  if (modalCloseX) modalCloseX.addEventListener('click', closeMotifModal);
+  if (modalBtnClose) modalBtnClose.addEventListener('click', closeMotifModal);
+  if (modalBtnOrder) {
+    modalBtnOrder.addEventListener('click', function () {
+      closeMotifModal();
+      var target = document.querySelector('#objednat');
+      if (target) {
+        var top = target.getBoundingClientRect().top + window.scrollY - 72;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  }
+
+  if (motifModal) {
+    motifModal.addEventListener('click', function (e) {
+      if (e.target === motifModal) closeMotifModal();
+    });
+  }
+
+  /* — Universal Detail Modal (products, sets, notebooks) — */
+  var detailModal = document.getElementById('detail-modal');
+  var detailModalName = document.getElementById('detail-modal-name');
+  var detailModalDesc = document.getElementById('detail-modal-desc');
+  var detailModalAge = document.getElementById('detail-modal-age');
+  var detailModalPrices = document.getElementById('detail-modal-prices');
+
+  function openDetailModal(card) {
+    if (!detailModal) return;
+    var name = card.dataset.name || '';
+    var desc = card.dataset.desc || '';
+    var age = card.dataset.age || '';
+    var prices = [];
+    try { prices = JSON.parse(card.dataset.prices || '[]'); } catch(e) {}
+    
+    detailModalName.textContent = name;
+    detailModalDesc.textContent = desc;
+    if (detailModalAge) {
+      detailModalAge.textContent = age;
+      detailModalAge.parentElement.style.display = age ? 'block' : 'none';
+    }
+    
+    if (detailModalPrices) {
+      detailModalPrices.innerHTML = prices.map(function(p) {
+        return '<div class="modal-price-row"><span class="label">' + p.label + '</span><span class="price">' + p.price + '</span></div>';
+      }).join('');
+    }
+    
+    detailModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDetailModal() {
+    if (!detailModal) return;
+    detailModal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // Bind detail buttons for products, sets, notebooks
+  document.querySelectorAll('.btn-product-detail').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      openDetailModal(btn.closest('.product-card'));
+    });
+  });
+  document.querySelectorAll('.btn-set-detail').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      openDetailModal(btn.closest('.set-card'));
+    });
+  });
+  document.querySelectorAll('.btn-sesit-detail').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      openDetailModal(btn.closest('.sesit-card'));
+    });
+  });
+
+  if (detailModal) {
+    var detailCloseX = document.getElementById('detail-modal-close-x');
+    var detailBtnClose = document.getElementById('detail-modal-btn-close');
+    var detailBtnOrder = document.getElementById('detail-modal-btn-order');
+    if (detailCloseX) detailCloseX.addEventListener('click', closeDetailModal);
+    if (detailBtnClose) detailBtnClose.addEventListener('click', closeDetailModal);
+    if (detailBtnOrder) {
+      detailBtnOrder.addEventListener('click', function () {
+        closeDetailModal();
+        var target = document.querySelector('#objednat');
+        if (target) {
+          var top = target.getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      });
+    }
+    detailModal.addEventListener('click', function (e) {
+      if (e.target === detailModal) closeDetailModal();
+    });
+  }
+
+  /* — Escape key closes modals — */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (motifModal && motifModal.style.display !== 'none') closeMotifModal();
+      if (detailModal && detailModal.style.display !== 'none') closeDetailModal();
     }
   });
 
-  motifModal.addEventListener('click', function (e) {
-    if (e.target === motifModal) closeMotifModal();
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && motifModal.style.display !== 'none') closeMotifModal();
-  });
-
   /* — Kroužková vazba checkbox in form — */
-  const vazbaWrap = document.getElementById('vazba-wrap');
-  const fProduct  = document.getElementById('f-product');
-  const fQty      = document.getElementById('f-qty');
-  const fVazba    = document.getElementById('f-vazba');
+  var vazbaWrap = document.getElementById('vazba-wrap');
+  var fVazba = document.getElementById('f-vazba');
 
   function updateVazbaVisibility() {
-    const val = fProduct.value;
-    const qty = parseInt(fQty.value, 10) || 0;
-    const isSada       = val.startsWith('Sada:');
-    const isKarticky   = /^(Vystřižené|Nevystřižené|PDF verze|Motiv:)/.test(val);
-    const shouldShow   = isSada || (isKarticky && qty >= 5);
+    if (!productRowsContainer || !vazbaWrap) return;
+    var productSelects = productRowsContainer.querySelectorAll('.product-select');
+    var qtyInputs = productRowsContainer.querySelectorAll('.qty-input');
+    
+    var hasSada = false;
+    var totalKarticky = 0;
+    
+    productSelects.forEach(function(sel, index) {
+      var val = sel.value;
+      var qty = parseInt(qtyInputs[index] ? qtyInputs[index].value : 0, 10) || 0;
+      
+      if (val.indexOf('Sada:') === 0) {
+        hasSada = true;
+      }
+      if (/^(Vystřižené|Nevystřižené|PDF verze|Motiv:)/.test(val)) {
+        totalKarticky += qty;
+      }
+    });
+    
+    var shouldShow = hasSada || totalKarticky >= 5;
     vazbaWrap.style.display = shouldShow ? 'flex' : 'none';
-    if (!shouldShow) fVazba.checked = false;
+    if (!shouldShow && fVazba) fVazba.checked = false;
   }
-
-  fProduct.addEventListener('change', updateVazbaVisibility);
-  fQty.addEventListener('input', updateVazbaVisibility);
 
 })();
 </script>
@@ -2331,6 +2829,21 @@
     <div class="modal-actions">
       <button class="btn btn-outline" id="modal-btn-close">Zavřít</button>
       <a href="#objednat" class="btn btn-terra" id="modal-btn-order">Objednat</a>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ UNIVERSAL DETAIL MODAL (products, sets, notebooks) ░░░ -->
+<div id="detail-modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="detail-modal-name">
+  <div class="modal-box">
+    <button class="modal-close-x" id="detail-modal-close-x" aria-label="Zavřít">✕</button>
+    <h3 id="detail-modal-name"></h3>
+    <p class="modal-desc" id="detail-modal-desc"></p>
+    <div class="modal-age-badge" id="detail-modal-age-wrap">👶 Věk: <span id="detail-modal-age"></span></div>
+    <div class="modal-prices" id="detail-modal-prices"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="detail-modal-btn-close">Zavřít</button>
+      <a href="#objednat" class="btn btn-terra" id="detail-modal-btn-order">Objednat</a>
     </div>
   </div>
 </div>
