@@ -599,17 +599,17 @@
     .modal-box {
       background: var(--white);
       border-radius: var(--radius);
-      max-width: 480px;
+      max-width: 520px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
       position: relative;
       padding: 28px 28px 32px;
       box-shadow: 0 24px 64px rgba(40, 30, 20, .3);
-      animation: modal-in .2s ease;
+      animation: modal-in .22s ease;
     }
     @keyframes modal-in {
-      from { transform: translateY(16px); opacity: 0; }
+      from { transform: translateY(18px); opacity: 0; }
       to   { transform: translateY(0);    opacity: 1; }
     }
     .modal-close-x {
@@ -625,32 +625,80 @@
       transition: color .2s, background .2s;
     }
     .modal-close-x:hover { color: var(--terra); background: var(--cream); }
-    .modal-img-wrap {
+    /* Carousel */
+    .modal-carousel {
+      position: relative;
       aspect-ratio: 4/3;
       background: var(--green-pale);
       border-radius: calc(var(--radius) - 4px);
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
     }
-    .modal-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .modal-img-placeholder {
+    .modal-carousel img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .modal-carousel-placeholder {
+      position: absolute;
+      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      width: 100%; height: 100%;
     }
-    .modal-img-placeholder svg { width: 60px; height: 60px; opacity: .4; }
-    .modal-img-placeholder span { font-size: .8rem; font-style: italic; color: var(--text-light); }
-    .modal-box h3 { font-family: var(--font-head); font-size: 1.4rem; color: var(--text); margin-bottom: 10px; }
+    .modal-carousel-placeholder svg { width: 60px; height: 60px; opacity: .4; }
+    .modal-carousel-placeholder span { font-size: .78rem; font-style: italic; color: var(--text-light); text-align: center; padding: 0 16px; }
+    .carousel-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,.88);
+      border: none; border-radius: 50%;
+      width: 36px; height: 36px;
+      font-size: 1.5rem; line-height: 1;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 2;
+      padding: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,.18);
+      transition: background .15s;
+    }
+    .carousel-arrow:hover { background: var(--white); }
+    .carousel-arrow.prev { left: 8px; }
+    .carousel-arrow.next { right: 8px; }
+    .carousel-arrow:disabled { opacity: .3; cursor: default; }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-bottom: 18px;
+      padding-top: 2px;
+    }
+    .carousel-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--beige);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background .2s, transform .18s;
+    }
+    .carousel-dot.active { background: var(--green); transform: scale(1.35); }
+    /* Modal content */
+    .modal-box h3 { font-family: var(--font-head); font-size: 1.35rem; color: var(--text); margin-bottom: 10px; }
     .modal-desc { font-size: .92rem; color: var(--text-light); line-height: 1.65; margin-bottom: 14px; }
-    .modal-age-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--green-pale); color: var(--green); font-size: .8rem; font-weight: 700; padding: 4px 14px; border-radius: 50px; margin-bottom: 22px; }
-    .modal-actions { display: flex; gap: 12px; }
+    .modal-age-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--green-pale); color: var(--green); font-size: .8rem; font-weight: 700; padding: 4px 14px; border-radius: 50px; margin-bottom: 14px; }
+    .modal-prices { margin-bottom: 20px; }
+    .modal-price-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--cream-dark); font-size: .9rem; }
+    .modal-price-row:last-child { border-bottom: none; }
+    .modal-price-row .label { color: var(--text-light); }
+    .modal-price-row .price { font-weight: 700; color: var(--terra); }
+    .modal-actions { display: flex; gap: 12px; margin-top: 4px; }
     .modal-actions .btn { flex: 1; text-align: center; justify-content: center; }
+    body.modal-open { overflow: hidden; }
 
     /* ─── VAZBA CHECKBOX ─── */
     .vazba-option {
@@ -1307,82 +1355,6 @@
         min-width: 240px;
       }
       .carousel-btn { width: 38px; height: 38px; font-size: 1rem; }
-    }
-
-    /* ─── Detail Modal with Carousel ─── */
-    .modal-carousel {
-      position: relative;
-      margin-bottom: 20px;
-    }
-    .modal-carousel-track {
-      display: flex;
-      overflow: hidden;
-      border-radius: calc(var(--radius) - 4px);
-    }
-    .modal-carousel-slide {
-      flex: 0 0 100%;
-      aspect-ratio: 4/3;
-      background: var(--green-pale);
-    }
-    .modal-carousel-slide img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .modal-carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.9);
-      border: none;
-      color: var(--green);
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,.15);
-      transition: all .2s;
-    }
-    .modal-carousel-btn:hover { background: var(--white); }
-    .modal-carousel-btn.prev { left: 8px; }
-    .modal-carousel-btn.next { right: 8px; }
-    .modal-carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .modal-carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--beige);
-      border: none;
-      cursor: pointer;
-      transition: background .2s;
-    }
-    .modal-carousel-dot.active { background: var(--green); }
-
-    /* ─── Price Variants in Modal ─── */
-    .modal-price-variants, .modal-prices {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin: 16px 0;
-      padding: 14px;
-      background: var(--cream);
-      border-radius: var(--radius-sm);
-    }
-    .modal-price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: .9rem;
-    }
-    .modal-price-row .label { color: var(--text-light); }
-    .modal-price-row .price {
-      font-family: 'Lora', serif;
-      font-weight: 700;
-      color: var(--green);
     }
 
     /* ─── Dynamic Product Rows ─── */
@@ -2350,7 +2322,15 @@
   overlay.addEventListener('click', closeMenu);
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeMenu();
+    if (e.key === 'Escape') {
+      var m = document.getElementById('modal');
+      if (m && m.style.display !== 'none') {
+        m.style.display = 'none';
+        document.body.classList.remove('modal-open');
+      } else {
+        closeMenu();
+      }
+    }
   });
 
   sidebar.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -2649,166 +2629,165 @@
     });
   });
 
-  /* — Motif modal (kartičky) — */
-  var motifModal = document.getElementById('motif-modal');
-  var modalImg   = document.getElementById('modal-img');
-  var modalName  = document.getElementById('modal-name');
-  var modalDesc  = document.getElementById('modal-desc');
-  var modalAge   = document.getElementById('modal-age');
+  /* ─── Products data ─── */
+  var products = {
+    /* Motiv kartičky */
+    'Ovoce': { images: ['karticky-ovoce.jpg','karticky-ovoce-detail.jpg'], desc: 'Barevné ovoce z celého světa – jablka, hrušky, banány i exotické plody. Skvělé pro první pojmenovávání a třídění dle barvy či tvaru.', age: '2–5 let', formValue: 'Motiv: Ovoce', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'Zelenina': { images: ['karticky-zelenina.jpg','karticky-zelenina-detail.jpg'], desc: 'Zelenina ze zahrádky i z obchodu. Děti poznávají tvary, barvy a vůně čerstvé zeleniny a učí se, co roste nad zemí a co pod ní.', age: '2–5 let', formValue: 'Motiv: Zelenina', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'Ovozel \u2013 p\u0159i\u0159azov\u00e1n\u00ed barev': { images: ['karticky-ovozel.jpg','karticky-ovozel-detail.jpg'], desc: 'Kombinace ovoce a zeleniny s herním prvkem přiřazování ke správné barvě. Rozvíjí pozornost, logiku a znalost barev.', age: '3–6 let', formValue: 'Motiv: Ovozel \u2013 p\u0159i\u0159azov\u00e1n\u00ed barev', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'Hmyz\u00ed rodinka': { images: ['karticky-hmyzi-rodinka.jpg','karticky-hmyzi-rodinka-detail.jpg'], desc: 'Fascinující svět hmyzu – včely, motýli, broučci a jiní šestinožci. Ideální pro malé přírodovědce zvídavé po tajemstvích přírody.', age: '3–7 let', formValue: 'Motiv: Hmyz\u00ed rodinka', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'Zv\u00ed\u0159ata a zimn\u00ed sp\u00e1nek': { images: ['karticky-zimni-spanek.jpg','karticky-zimni-spanek-detail.jpg'], desc: 'Která zvířata spí celou zimu? Děti poznávají ježky, medvědy, plchy a jejich útulné zimní úkryty. Krásné na podzim i v zimě.', age: '3–6 let', formValue: 'Motiv: Zv\u00ed\u0159ata a zimn\u00ed sp\u00e1nek', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'V lese': { images: ['karticky-v-lese.jpg','karticky-v-lese-detail.jpg'], desc: 'Lesní prostředí plné překvapení – stromy, houby, zvěř a vůně borovic. Kartičky pro malé lesní skřítky a budoucí lesníky.', age: '2–6 let', formValue: 'Motiv: V lese', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'Na farm\u011b': { images: ['karticky-na-farme.jpg','karticky-na-farme-detail.jpg'], desc: 'Slepice, kravičky, prasátka i traktor. Farmářský svět v kapse – krásné pro děti i rodiče z města. Učí se, odkud pochází jídlo.', age: '2–6 let', formValue: 'Motiv: Na farm\u011b', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'V savan\u011b': { images: ['karticky-v-savane.jpg','karticky-v-savane-detail.jpg'], desc: 'Lvi, sloni, žirafy a baobaby. Africká savana jako ilustrovaná dobrodružná výprava plná úžasných zvířat a barev západu slunce.', age: '3–7 let', formValue: 'Motiv: V savan\u011b', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'V mo\u0159\u00edch a oce\u00e1nech': { images: ['karticky-more-oceany.jpg','karticky-more-oceany-detail.jpg'], desc: 'Hlubiny i mělčiny oceánů – od delfínů přes chobotnice až po korálové útesy. Dobrodružná cesta podmořským světem.', age: '3–7 let', formValue: 'Motiv: V mo\u0159\u00edch a oce\u00e1nech', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'Na hor\u00e1ch': { images: ['karticky-na-horach.jpg','karticky-na-horach-detail.jpg'], desc: 'Kamzíci, ledovce, alpské louky a horská jezera. Kartičky pro budoucí horolezce a milovníky hor. Krásné i jako dekorace pokojíčku.', age: '3–7 let', formValue: 'Motiv: Na hor\u00e1ch', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'Doma': { images: ['karticky-doma.jpg','karticky-doma-detail.jpg'], desc: 'Každodenní svět dítěte – nábytek, kuchyňské nádobí, hračky i domácí mazlíčci. Skvělé pro pojmenovávání věcí v domácnosti.', age: '2–5 let', formValue: 'Motiv: Doma', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'V d\u017eungli': { images: ['karticky-v-dzungli.jpg','karticky-v-dzungli-detail.jpg'], desc: 'Tropický deštný les plný barev a zvuků – papoušci, leguáni, orchideje a hustá zeleň. Malí průzkumníci se budou cítit jako v dobrodružném filmu.', age: '3–7 let', formValue: 'Motiv: V d\u017eungli', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'Za pol\u00e1rn\u00edm kruhem': { images: ['karticky-polarni-kruh.jpg','karticky-polarni-kruh-detail.jpg'], desc: 'Ledový svět tučňáků, polárních medvědů, sobů a severního světla. Chladný, ale nádherný – děti ho milují!', age: '4–8 let', formValue: 'Motiv: Za pol\u00e1rn\u00edm kruhem', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    /* Novinky */
+    'Kart\u00ed\u010dky: Na stavb\u011b': { images: ['karticky-na-stavbe.jpg','karticky-na-stavbe-detail.jpg'], desc: 'Bagry, jeřáby, míchačky a pracovní stroje – kartičky pro malé stavbaře a techniky. Ideální pro děti 2–5 let.', age: '2–5 let', formValue: '', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    /* Sady */
+    '8 r\u016fzn\u00fdch prost\u0159ed\u00ed + p\u0159i\u0159azov\u00e1n\u00ed ke st\u00edn\u016fm': { images: ['sada-8-prostredi.jpg','sada-8-prostredi-detail.jpg'], desc: 'Komplexní sada pro děti od 1,5 roku – 8 kartiček ze zcela odlišných prostředí světa doplněná o hru přiřazování obrázků ke stínům. Rozvíjí pozornost a logické myšlení.', age: 'od 1,5 roku', formValue: 'Sada: 8 prost\u0159ed\u00ed + p\u0159i\u0159azov\u00e1n\u00ed ke st\u00edn\u016fm (700 K\u010d)', variants: [{label:'Kompletní sada',price:'700 Kč'},{label:'S kroužkovou vazbou',price:'710 Kč'}] },
+    'Dopravn\u00ed prost\u0159edky': { images: ['sada-dopravni.jpg','sada-dopravni-detail.jpg'], desc: 'Sada 3 kartiček s oblíbenými dopravními prostředky a přiřazováním obrázků ke stínům. Krásný úvod do světa dopravy pro nejmenší.', age: 'od 1,5 roku', formValue: 'Sada: Dopravn\u00ed prost\u0159edky (250 K\u010d)', variants: [{label:'Kompletní sada',price:'250 Kč'},{label:'S kroužkovou vazbou',price:'260 Kč'}] },
+    'Sada: Dopravn\u00ed prost\u0159edky': { images: ['sada-dopravni.jpg','sada-dopravni-detail.jpg'], desc: 'Sada 3 kartiček s oblíbenými dopravními prostředky a přiřazováním obrázků ke stínům. Krásný úvod do světa dopravy pro nejmenší.', age: 'od 1,5 roku', formValue: 'Sada: Dopravn\u00ed prost\u0159edky (250 K\u010d)', variants: [{label:'Kompletní sada',price:'250 Kč'},{label:'S kroužkovou vazbou',price:'260 Kč'}] },
+    '5 kart\u00ed\u010dek dle vlastn\u00edho v\u00fdb\u011bru': { images: ['sada-vlastni-vyber.jpg','sada-vlastni-vyber-detail.jpg'], desc: 'Sestavte si sadu přesně podle svého! Vyberte libovolných 5 motivů z celé nabídky – skvělý dárek i způsob, jak si rozšířit sbírku.', age: 'dle výběru', formValue: 'Sada: 5 kart\u00ed\u010dek dle vlastn\u00edho v\u00fdb\u011bru (420 K\u010d)', variants: [{label:'Kompletní sada',price:'420 Kč'},{label:'S kroužkovou vazbou',price:'430 Kč'}] },
+    /* Sešity */
+    'Jarn\u00ed pracovn\u00ed se\u0161it': { images: ['jarni-sesit.jpg','jarni-sesit-detail.jpg'], desc: 'Sešit plný jarního probouzení – úkoly o přírodě, rostlinách a zvířatech, která se vrací po zimě. Uvnitř: barvy, tvary, stíny, puzzle i jemná motorika.', age: '1,5–3 roky', formValue: 'Jarn\u00ed pracovn\u00ed se\u0161it \u2013 ti\u0161t\u011bn\u00fd (450 K\u010d)', variants: [{label:'Tištěný sešit',price:'450 Kč'},{label:'PDF ke stažení',price:'100 Kč'}] },
+    'Letn\u00ed pracovn\u00ed se\u0161it': { images: ['letni-sesit.jpg','letni-sesit-detail.jpg'], desc: 'Sešit plný letního dobrodružství – úkoly zaměřené na přírodu, zvířata a letní zážitky. Ideální společník na výlety a prázdniny.', age: '1,5–3 roky', formValue: 'Letn\u00ed pracovn\u00ed se\u0161it \u2013 ti\u0161t\u011bn\u00fd (450 K\u010d)', variants: [{label:'Tištěný sešit',price:'450 Kč'},{label:'PDF ke stažení',price:'100 Kč'}] }
+  };
 
-  function openMotifModal(card) {
-    if (!motifModal) return;
-    modalName.textContent = card.dataset.name || '';
-    modalDesc.textContent = card.dataset.desc || '';
-    modalAge.textContent  = card.dataset.age  || '';
-    modalImg.src = card.dataset.img || '';
-    modalImg.alt = 'Kartičky ' + (card.dataset.name || '');
-    motifModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+  /* ─── Modal ─── */
+  var modal    = document.getElementById('modal');
+  var modalBox = document.getElementById('modal-box');
+
+  function escH(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  function closeMotifModal() {
-    if (!motifModal) return;
-    motifModal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
+  function openDetail(name) {
+    var p = products[name];
+    if (!p || !modal || !modalBox) return;
+    var imgs       = p.images || [];
+    var currentIdx = 0;
+    var svgPh = '<svg viewBox="0 0 52 44" fill="none"><rect x="2" y="2" width="48" height="40" rx="3" fill="#3A5A40" opacity=".18"/><circle cx="14" cy="14" r="6" fill="#3A5A40" opacity=".2"/><path d="M2 36 L14 22 L24 30 L32 18 L46 36 Z" fill="#3A5A40" opacity=".14"/></svg>';
 
-  document.querySelectorAll('.btn-detail').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      openMotifModal(btn.closest('.motif-card'));
+    /* Build HTML */
+    var html = '<button class="modal-close-x" id="mc-close-x" aria-label="Zav\u0159\u00edt">\u2715</button>';
+    html += '<div class="modal-carousel" id="mc-wrap">';
+    html += '<img id="mc-img" src="" alt="' + escH(name) + '" style="display:none">';
+    html += '<div class="modal-carousel-placeholder" id="mc-ph">' + svgPh + '<span id="mc-ph-label"></span></div>';
+    if (imgs.length > 1) {
+      html += '<button class="carousel-arrow prev" id="mc-prev" aria-label="P\u0159edchoz\u00ed">&#8249;</button>';
+      html += '<button class="carousel-arrow next" id="mc-next" aria-label="Dal\u0161\u00ed">&#8250;</button>';
+    }
+    html += '</div>';
+    if (imgs.length > 1) {
+      html += '<div class="carousel-dots" id="mc-dots">';
+      imgs.forEach(function(_, i) { html += '<button class="carousel-dot' + (i === 0 ? ' active' : '') + '" aria-label="Sn\u00edmek ' + (i + 1) + '"></button>'; });
+      html += '</div>';
+    }
+    html += '<h3>' + escH(name) + '</h3>';
+    html += '<p class="modal-desc">' + escH(p.desc) + '</p>';
+    if (p.age) html += '<div class="modal-age-badge">&#128118; V\u011bk: <span>' + escH(p.age) + '</span></div>';
+    if (p.variants && p.variants.length) {
+      html += '<div class="modal-prices">';
+      p.variants.forEach(function(v) { html += '<div class="modal-price-row"><span class="label">' + escH(v.label) + '</span><span class="price">' + escH(v.price) + '</span></div>'; });
+      html += '</div>';
+    }
+    html += '<div class="modal-actions"><button class="btn btn-outline" id="mc-close-btn">Zav\u0159\u00edt</button><button class="btn btn-terra" id="mc-order-btn">Objednat</button></div>';
+    modalBox.innerHTML = html;
+
+    /* Carousel logic */
+    var mcImg = document.getElementById('mc-img');
+    var mcPh  = document.getElementById('mc-ph');
+    var mcLbl = document.getElementById('mc-ph-label');
+
+    function loadSlide(idx) {
+      var src = imgs[idx] || '';
+      if (mcPh) mcPh.style.display = 'flex';
+      if (mcImg) { mcImg.style.display = 'none'; }
+      if (mcLbl) mcLbl.textContent = src;
+      if (mcImg && src) {
+        mcImg.onload  = function() { mcImg.style.display = 'block'; if (mcPh) mcPh.style.display = 'none'; };
+        mcImg.onerror = function() { mcImg.style.display = 'none';  if (mcPh) mcPh.style.display = 'flex'; };
+        mcImg.src = src;
+      }
+      document.querySelectorAll('#mc-dots .carousel-dot').forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+      var prev = document.getElementById('mc-prev');
+      var next = document.getElementById('mc-next');
+      if (prev) prev.disabled = (idx === 0);
+      if (next) next.disabled = (idx === imgs.length - 1);
+    }
+
+    loadSlide(0);
+
+    var prevBtn = document.getElementById('mc-prev');
+    var nextBtn = document.getElementById('mc-next');
+    if (prevBtn) prevBtn.addEventListener('click', function() { if (currentIdx > 0) { currentIdx--; loadSlide(currentIdx); } });
+    if (nextBtn) nextBtn.addEventListener('click', function() { if (currentIdx < imgs.length - 1) { currentIdx++; loadSlide(currentIdx); } });
+    document.querySelectorAll('#mc-dots .carousel-dot').forEach(function(dot, i) {
+      dot.addEventListener('click', function() { currentIdx = i; loadSlide(i); });
     });
-  });
 
-  var modalCloseX = document.getElementById('modal-close-x');
-  var modalBtnClose = document.getElementById('modal-btn-close');
-  var modalBtnOrder = document.getElementById('modal-btn-order');
-  if (modalCloseX) modalCloseX.addEventListener('click', closeMotifModal);
-  if (modalBtnClose) modalBtnClose.addEventListener('click', closeMotifModal);
-  if (modalBtnOrder) {
-    modalBtnOrder.addEventListener('click', function () {
-      closeMotifModal();
-      var target = document.querySelector('#objednat');
-      if (target) {
-        var top = target.getBoundingClientRect().top + window.scrollY - 72;
-        window.scrollTo({ top: top, behavior: 'smooth' });
+    /* Close / Order */
+    var closeX   = document.getElementById('mc-close-x');
+    var closeBtn = document.getElementById('mc-close-btn');
+    var orderBtn = document.getElementById('mc-order-btn');
+    if (closeX)   closeX.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (orderBtn) orderBtn.addEventListener('click', function() {
+      closeModal();
+      var formEl = document.getElementById('objednat');
+      if (formEl) window.scrollTo({ top: formEl.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' });
+      if (p.formValue) {
+        var firstSel = document.querySelector('.product-select');
+        if (firstSel) {
+          for (var i = 0; i < firstSel.options.length; i++) {
+            if (firstSel.options[i].value === p.formValue) { firstSel.selectedIndex = i; firstSel.dispatchEvent(new Event('change')); break; }
+          }
+        }
       }
     });
+
+    modal.style.display = 'flex';
+    document.body.classList.add('modal-open');
   }
 
-  if (motifModal) {
-    motifModal.addEventListener('click', function (e) {
-      if (e.target === motifModal) closeMotifModal();
-    });
+  function closeModal() {
+    if (modal) modal.style.display = 'none';
+    document.body.classList.remove('modal-open');
   }
 
-  /* — Universal Detail Modal (products, sets, notebooks) — */
-  var detailModal = document.getElementById('detail-modal');
-  var detailModalName = document.getElementById('detail-modal-name');
-  var detailModalDesc = document.getElementById('detail-modal-desc');
-  var detailModalAge = document.getElementById('detail-modal-age');
-  var detailModalPrices = document.getElementById('detail-modal-prices');
-
-  function openDetailModal(card) {
-    if (!detailModal) return;
-    var name = card.dataset.name || '';
-    var desc = card.dataset.desc || '';
-    var age = card.dataset.age || '';
-    var prices = [];
-    try { prices = JSON.parse(card.dataset.prices || '[]'); } catch(e) {}
-    
-    detailModalName.textContent = name;
-    detailModalDesc.textContent = desc;
-    if (detailModalAge) {
-      detailModalAge.textContent = age;
-      detailModalAge.parentElement.style.display = age ? 'block' : 'none';
-    }
-    
-    if (detailModalPrices) {
-      detailModalPrices.innerHTML = prices.map(function(p) {
-        return '<div class="modal-price-row"><span class="label">' + p.label + '</span><span class="price">' + p.price + '</span></div>';
-      }).join('');
-    }
-    
-    detailModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+  /* Overlay click closes modal */
+  if (modal) {
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
   }
 
-  function closeDetailModal() {
-    if (!detailModal) return;
-    detailModal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-
-  // Bind detail buttons for products, sets, notebooks
-  document.querySelectorAll('.btn-product-detail').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      openDetailModal(btn.closest('.product-card'));
-    });
-  });
-  document.querySelectorAll('.btn-set-detail').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      openDetailModal(btn.closest('.set-card'));
-    });
-  });
-  document.querySelectorAll('.btn-sesit-detail').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      openDetailModal(btn.closest('.sesit-card'));
-    });
+  /* Event delegation: all Detail buttons across all card types */
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.btn-detail, .btn-product-detail, .btn-set-detail, .btn-sesit-detail');
+    if (!btn) return;
+    var card = btn.closest('[data-name]');
+    if (card && card.dataset.name) openDetail(card.dataset.name);
   });
 
-  if (detailModal) {
-    var detailCloseX = document.getElementById('detail-modal-close-x');
-    var detailBtnClose = document.getElementById('detail-modal-btn-close');
-    var detailBtnOrder = document.getElementById('detail-modal-btn-order');
-    if (detailCloseX) detailCloseX.addEventListener('click', closeDetailModal);
-    if (detailBtnClose) detailBtnClose.addEventListener('click', closeDetailModal);
-    if (detailBtnOrder) {
-      detailBtnOrder.addEventListener('click', function () {
-        closeDetailModal();
-        var target = document.querySelector('#objednat');
-        if (target) {
-          var top = target.getBoundingClientRect().top + window.scrollY - 72;
-          window.scrollTo({ top: top, behavior: 'smooth' });
-        }
-      });
-    }
-    detailModal.addEventListener('click', function (e) {
-      if (e.target === detailModal) closeDetailModal();
-    });
-  }
-
-  /* — Escape key closes modals — */
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      if (motifModal && motifModal.style.display !== 'none') closeMotifModal();
-      if (detailModal && detailModal.style.display !== 'none') closeDetailModal();
-    }
-  });
-
-  /* — Kroužková vazba checkbox in form — */
+  /* ─── Kroužková vazba checkbox in form ─── */
   var vazbaWrap = document.getElementById('vazba-wrap');
-  var fVazba = document.getElementById('f-vazba');
+  var fVazba    = document.getElementById('f-vazba');
 
   function updateVazbaVisibility() {
     if (!productRowsContainer || !vazbaWrap) return;
     var productSelects = productRowsContainer.querySelectorAll('.product-select');
-    var qtyInputs = productRowsContainer.querySelectorAll('.qty-input');
-    
+    var qtyInputs      = productRowsContainer.querySelectorAll('.qty-input');
     var hasSada = false;
     var totalKarticky = 0;
-    
     productSelects.forEach(function(sel, index) {
       var val = sel.value;
       var qty = parseInt(qtyInputs[index] ? qtyInputs[index].value : 0, 10) || 0;
-      
-      if (val.indexOf('Sada:') === 0) {
-        hasSada = true;
-      }
-      if (/^(Vystřižené|Nevystřižené|PDF verze|Motiv:)/.test(val)) {
-        totalKarticky += qty;
-      }
+      if (val.indexOf('Sada:') === 0) hasSada = true;
+      if (/^(Vyst\u0159i\u017een\u00e9|Nevyst\u0159i\u017een\u00e9|PDF verze|Motiv:)/.test(val)) totalKarticky += qty;
     });
-    
     var shouldShow = hasSada || totalKarticky >= 5;
     vazbaWrap.style.display = shouldShow ? 'flex' : 'none';
     if (!shouldShow && fVazba) fVazba.checked = false;
@@ -2816,36 +2795,10 @@
 
 })();
 </script>
-<!-- ░░░ MOTIF DETAIL MODAL ░░░ -->
-<div id="motif-modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-name">
-  <div class="modal-box">
-    <button class="modal-close-x" id="modal-close-x" aria-label="Zavřít">✕</button>
-    <div class="modal-img-wrap">
-      <img id="modal-img" src="" alt="" />
-    </div>
-    <h3 id="modal-name"></h3>
-    <p class="modal-desc" id="modal-desc"></p>
-    <div class="modal-age-badge">👶 Věk: <span id="modal-age"></span></div>
-    <div class="modal-actions">
-      <button class="btn btn-outline" id="modal-btn-close">Zavřít</button>
-      <a href="#objednat" class="btn btn-terra" id="modal-btn-order">Objednat</a>
-    </div>
-  </div>
-</div>
 
-<!-- ░░░ UNIVERSAL DETAIL MODAL (products, sets, notebooks) ░░░ -->
-<div id="detail-modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="detail-modal-name">
-  <div class="modal-box">
-    <button class="modal-close-x" id="detail-modal-close-x" aria-label="Zavřít">✕</button>
-    <h3 id="detail-modal-name"></h3>
-    <p class="modal-desc" id="detail-modal-desc"></p>
-    <div class="modal-age-badge" id="detail-modal-age-wrap">👶 Věk: <span id="detail-modal-age"></span></div>
-    <div class="modal-prices" id="detail-modal-prices"></div>
-    <div class="modal-actions">
-      <button class="btn btn-outline" id="detail-modal-btn-close">Zavřít</button>
-      <a href="#objednat" class="btn btn-terra" id="detail-modal-btn-order">Objednat</a>
-    </div>
-  </div>
+<!-- ░░░ DETAIL MODAL ░░░ -->
+<div id="modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div id="modal-box" class="modal-box"></div>
 </div>
 
 </body>
