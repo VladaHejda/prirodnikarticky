@@ -536,15 +536,15 @@
       margin-top: 0;
     }
     .carousel-track.motifs-grid .motif-card {
-      flex: 0 0 200px;
-      min-width: 180px;
-      max-width: 220px;
+      flex: 0 0 240px;
+      min-width: 220px;
+      max-width: 260px;
     }
     @media (max-width: 600px) {
       .carousel-track.motifs-grid .motif-card {
-        flex: 0 0 160px;
-        min-width: 145px;
-        max-width: 180px;
+        flex: 0 0 180px;
+        min-width: 165px;
+        max-width: 200px;
       }
     }
     .motif-card {
@@ -558,31 +558,34 @@
     }
     .motif-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
     .motif-img {
-      aspect-ratio: 4/3;
+      aspect-ratio: 3/2;
       background: var(--green-pale);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 16px;
+      padding: 20px;
+      min-height: 160px;
     }
     .motif-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .motif-img svg { width: 44px; height: 44px; opacity: .55; }
+    .motif-img svg { width: 64px; height: 64px; opacity: .55; }
     .motif-img span { font-size: .72rem; color: var(--green); font-style: italic; text-align: center; }
     .motif-body {
       padding: 14px 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 6px;
       flex: 1;
     }
     .motif-body h3 { font-family: var(--font-head); font-size: 1rem; color: var(--text); margin: 0; line-height: 1.3; }
+    .motif-price { font-size: .9rem; font-weight: 700; color: var(--terra); margin: 0; }
+    .motif-age { font-size: .78rem; color: var(--text-light); margin: 0 0 4px; }
     .motif-body .btn { font-size: .8rem; padding: 7px 14px; align-self: stretch; text-align: center; }
     @media (max-width: 600px) {
       .motifs-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 14px; }
     }
-    .motif-body .btn-group { display: flex; flex-direction: column; gap: 7px; }
+    .motif-body .btn-group { display: flex; flex-direction: column; gap: 7px; margin-top: auto; }
 
     /* ─── MODAL ─── */
     .modal-overlay {
@@ -1361,7 +1364,7 @@
     .product-rows { display: flex; flex-direction: column; gap: 16px; }
     .product-row {
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 2fr 1.4fr auto auto;
       gap: 12px;
       align-items: end;
       padding: 16px;
@@ -1405,9 +1408,11 @@
     }
     @media (max-width: 600px) {
       .product-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
         gap: 10px;
       }
+      .product-row .form-group:first-child { grid-column: 1 / -1; }
       .product-row .qty-input { width: 100%; }
     }
   </style>
@@ -1613,7 +1618,7 @@
         </div>
       </div>
 
-      <div class="product-card" data-name="Letní pracovní sešit" data-desc="Sešit plný letních dobrodružství – aktivity, omalovánky a hádanky na prázdniny. Ideální pro děti přibližně od 1,5 do 3 let." data-age="1,5–3 roky" data-prices='[{"label":"Tištěný sešit","price":"450 Kč"},{"label":"PDF ke stažení","price":"100 Kč"}]'>
+      <div class="product-card" data-name="Letní pracovní sešit" data-desc="Sešit plný letních dobrodružství – aktivity, omalovánky a hádanky na prázdniny. Ideální pro děti přibližně od 1,5 do 3 let." data-age="1,5–3 roky" data-prices='[{"label":"Zalaminovaný sešit","price":"450 Kč"},{"label":"PDF ke stažení","price":"100 Kč"}]'>
         <div class="card-img">
           <!-- Replace src with real product photo: letní sešit -->
           <div class="card-img-placeholder">
@@ -1660,75 +1665,9 @@
 <section id="cenik">
   <div class="section-inner">
     <div class="section-heading">
-      <div class="section-label">Typy a ceny</div>
-      <h2>Kartičky & ceník</h2>
-      <p>Vyberte si variantu, která vám nejlépe vyhovuje – ať už chcete tisknout sami, nebo dostanete kartičky rovnou hotové.</p>
-    </div>
-
-    <div class="pricing-grid">
-
-      <div class="pricing-card featured">
-        <div class="pricing-icon">
-          <svg viewBox="0 0 36 36" fill="none"><rect x="4" y="6" width="28" height="24" rx="3" fill="#3A5A40"/><rect x="7" y="10" width="10" height="8" rx="2" fill="#F5F0E8" opacity=".6"/><path d="M20 12 H29 M20 16 H26 M7 22 H29" stroke="#F5F0E8" stroke-width="1.5" stroke-linecap="round" opacity=".6"/></svg>
-        </div>
-        <h3>Vystřižené kartičky</h3>
-        <div class="pricing-price">95 <span>Kč/kus</span></div>
-        <p>Kartičky připravené k okamžitému použití – pečlivě vystřižené, ručně laminované a zaoblené.</p>
-        <ul class="pricing-features">
-          <li>Ručně laminované</li>
-          <li>Vystřižené a zaoblené</li>
-          <li>Připravené k použití</li>
-        </ul>
-        <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:auto;">
-          <a href="#motifs-heading" class="btn btn-outline" style="text-align:center;">🌿 Vybrat motiv</a>
-          <a href="#objednat" class="btn btn-primary">Objednat</a>
-        </div>
-      </div>
-
-      <div class="pricing-card">
-        <div class="pricing-icon">
-          <svg viewBox="0 0 36 36" fill="none"><rect x="4" y="6" width="28" height="24" rx="3" fill="#C9B99A"/><path d="M8 12 L28 12 M8 18 L20 18 M8 24 L24 24" stroke="#F5F0E8" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <h3>Nevystřižené kartičky</h3>
-        <div class="pricing-price">70 <span>Kč/set</span></div>
-        <p>Laminované archy s kartičkami – dostanete je v celé ploše, vystřihnete dle vlastní libosti.</p>
-        <ul class="pricing-features">
-          <li>Ručně laminované</li>
-          <li>Nevystřižené archy</li>
-          <li>Vystřihněte si sami</li>
-          <li>Suché zipy jsou součástí listu</li>
-        </ul>
-        <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:auto;">
-          <a href="#motifs-heading" class="btn btn-outline" style="text-align:center;">🌿 Vybrat motiv</a>
-          <a href="#objednat" class="btn btn-outline">Objednat</a>
-        </div>
-      </div>
-
-      <div class="pricing-card">
-        <div class="pricing-icon">
-          <svg viewBox="0 0 36 36" fill="none"><path d="M8 4 L24 4 L30 10 L30 32 L8 32 Z" fill="#A0522D" opacity=".35"/><path d="M22 4 L22 12 L30 12" stroke="#A0522D" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M13 18 L23 18 M13 23 L20 23" stroke="#3A5A40" stroke-width="1.8" stroke-linecap="round"/><path d="M18 28 L22 32 L30 20" stroke="#3A5A40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <h3>PDF verze ke stažení</h3>
-        <div class="pricing-price">30 <span>Kč/set</span></div>
-        <p>Stáhněte, tiskněte, laminujte a vystřihujte doma. PDF Print kvalita.</p>
-        <ul class="pricing-features">
-          <li>Okamžité stažení po platbě</li>
-          <li>Tiskněte kolikrát chcete</li>
-          <li>Nejnižší cena</li>
-        </ul>
-        <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:auto;">
-          <a href="#motifs-heading" class="btn btn-outline" style="text-align:center;">🌿 Vybrat motiv</a>
-          <a href="#objednat" class="btn btn-outline">Objednat</a>
-        </div>
-      </div>
-
-    </div><!-- /pricing-grid -->
-
-    <!-- Motif grid -->
-    <div class="motifs-heading" id="motifs-heading">
-      <div class="section-label">Dostupné kartičky</div>
-      <h3>Vyberte si kartičky</h3>
-      <p>Každý motiv je k dispozici ve všech variantách – vystřižený, nevystřižený i PDF ke stažení.</p>
+      <div class="section-label">Vzdělávací kartičky</div>
+      <h2>Dostupné kartičky</h2>
+      <p>Každý motiv je k dispozici ve třech variantách – kompletně vystřižené a zalaminované, připravené k vystřižení, nebo PDF ke stažení.</p>
     </div>
     <div class="carousel-container" id="motifs-carousel">
       <button class="carousel-btn prev" aria-label="Předchozí">‹</button>
@@ -1739,7 +1678,7 @@
           <svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="24" r="12" fill="#E8673A" opacity=".3"/><path d="M22 12 C22 8 26 6 28 8" stroke="#3A5A40" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="14" cy="28" r="7" fill="#F5A623" opacity=".35"/><circle cx="30" cy="30" r="7" fill="#C0392B" opacity=".28"/></svg>
           <span>Foto: Ovoce</span>
         </div>
-        <div class="motif-body"><h3>Ovoce</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Ovoce</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Zelenina" data-img="karticky-zelenina-detail.jpg" data-desc="Zelenina ze zahrádky i z obchodu. Děti poznávají tvary, barvy a vůně čerstvé zeleniny a učí se, co roste nad zemí a co pod ní." data-age="2–5 let">
@@ -1747,7 +1686,7 @@
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="26" rx="10" ry="12" fill="#27AE60" opacity=".3"/><path d="M22 14 C20 10 16 10 14 14 C20 12 22 14 22 14Z" fill="#3A5A40" opacity=".4"/><ellipse cx="14" cy="30" rx="6" ry="8" fill="#E74C3C" opacity=".3"/></svg>
           <span>Foto: Zelenina</span>
         </div>
-        <div class="motif-body"><h3>Zelenina</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Zelenina</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Ovozel – přiřazování barev" data-img="karticky-ovozel-detail.jpg" data-desc="Kombinace ovoce a zeleniny s herním prvkem přiřazování ke správné barvě. Rozvíjí pozornost, logiku a znalost barev." data-age="3–6 let">
@@ -1755,7 +1694,7 @@
           <svg viewBox="0 0 44 44" fill="none"><circle cx="16" cy="22" r="9" fill="#F5A623" opacity=".3"/><circle cx="28" cy="22" r="9" fill="#27AE60" opacity=".3"/><path d="M19 22 L25 22" stroke="#3A5A40" stroke-width="2" stroke-linecap="round"/></svg>
           <span>Foto: Ovozel – barvy</span>
         </div>
-        <div class="motif-body"><h3>Ovozel – přiřazování barev</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Ovozel – přiřazování barev</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Hmyzí rodinka" data-img="karticky-hmyzi-rodinka-detail.jpg" data-desc="Fascinující svět hmyzu – včely, motýli, broučci a jiní šestinožci. Ideální pro malé přírodovědce zvídavé po tajemstvích přírody." data-age="3–7 let">
@@ -1763,7 +1702,7 @@
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="24" rx="7" ry="9" fill="#8E44AD" opacity=".25"/><circle cx="22" cy="14" r="5" fill="#8E44AD" opacity=".3"/><path d="M14 20 C10 16 8 12 12 10 M30 20 C34 16 36 12 32 10" stroke="#3A5A40" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/><path d="M14 28 C10 30 8 34 12 36 M30 28 C34 30 36 34 32 36" stroke="#3A5A40" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/></svg>
           <span>Foto: Hmyzí rodinka</span>
         </div>
-        <div class="motif-body"><h3>Hmyzí rodinka</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Hmyzí rodinka</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Zvířata a zimní spánek" data-img="karticky-zimni-spanek-detail.jpg" data-desc="Která zvířata spí celou zimu? Děti poznávají ježky, medvědy, plchy a jejich útulné zimní úkryty. Krásné na podzim i v zimě." data-age="3–6 let">
@@ -1771,7 +1710,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M10 32 C10 24 16 18 22 18 C28 18 34 24 34 32Z" fill="#C9B99A" opacity=".4"/><path d="M16 18 C16 12 20 10 22 10 C24 10 26 12 26 16" stroke="#3A5A40" stroke-width="1.8" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="14" r="4" fill="#F5F0E8" opacity=".6" stroke="#C9B99A" stroke-width="1"/></svg>
           <span>Foto: Zimní spánek</span>
         </div>
-        <div class="motif-body"><h3>Zvířata a zimní spánek</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Zvířata a zimní spánek</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="V lese" data-img="karticky-v-lese-detail.jpg" data-desc="Lesní prostředí plné překvapení – stromy, houby, zvěř a vůně borovic. Kartičky pro malé lesní skřítky a budoucí lesníky." data-age="2–6 let">
@@ -1779,7 +1718,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M22 8 L12 24 H32Z" fill="#3A5A40" opacity=".35"/><path d="M18 20 L10 32 H34L26 20" fill="#3A5A40" opacity=".25"/><rect x="19" y="32" width="6" height="8" rx="1" fill="#A0522D" opacity=".5"/></svg>
           <span>Foto: V lese</span>
         </div>
-        <div class="motif-body"><h3>V lese</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>V lese</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Na farmě" data-img="karticky-na-farme-detail.jpg" data-desc="Slepice, kravičky, prasátka i traktor. Farmářský svět v kapse – krásné pro děti i rodiče z města. Učí se, odkud pochází jídlo." data-age="2–6 let">
@@ -1787,7 +1726,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M8 24 L22 10 L36 24 H8Z" fill="#C9B99A" opacity=".4"/><rect x="12" y="24" width="20" height="14" rx="1" fill="#A0522D" opacity=".3"/><rect x="18" y="28" width="8" height="10" rx="1" fill="#3A5A40" opacity=".3"/></svg>
           <span>Foto: Na farmě</span>
         </div>
-        <div class="motif-body"><h3>Na farmě</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Na farmě</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="V savaně" data-img="karticky-v-savane-detail.jpg" data-desc="Lvi, sloni, žirafy a baobaby. Africká savana jako ilustrovaná dobrodružná výprava plná úžasných zvířat a barev západu slunce." data-age="3–7 let">
@@ -1795,7 +1734,7 @@
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="34" rx="18" ry="4" fill="#F5C842" opacity=".2"/><path d="M10 34 C10 26 14 20 18 20 C16 16 18 12 22 12 C26 12 28 16 26 20 C30 20 34 26 34 34" fill="#F5C842" opacity=".3"/><circle cx="22" cy="22" r="6" fill="#E8673A" opacity=".2"/></svg>
           <span>Foto: V savaně</span>
         </div>
-        <div class="motif-body"><h3>V savaně</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>V savaně</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="V mořích a oceánech" data-img="karticky-more-oceany-detail.jpg" data-desc="Hlubiny i mělčiny oceánů – od delfínů přes chobotnice až po korálové útesy. Dobrodružná cesta podmořským světem." data-age="3–7 let">
@@ -1803,7 +1742,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M6 28 C12 24 18 32 24 28 C30 24 36 32 42 28" stroke="#2980B9" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".4"/><path d="M6 34 C12 30 18 38 24 34 C30 30 36 38 42 34" stroke="#2980B9" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".3"/><path d="M18 20 C20 16 24 14 26 18 C22 16 20 20 18 20Z" fill="#2980B9" opacity=".35"/></svg>
           <span>Foto: Moře a oceány</span>
         </div>
-        <div class="motif-body"><h3>V mořích a oceánech</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>V mořích a oceánech</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Na horách" data-img="karticky-na-horach-detail.jpg" data-desc="Kamzíci, ledovce, alpské louky a horská jezera. Kartičky pro budoucí horolezce a milovníky hor. Krásné i jako dekorace pokojíčku." data-age="3–7 let">
@@ -1811,7 +1750,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M6 36 L18 14 L26 26 L30 20 L40 36Z" fill="#7F8C8D" opacity=".3"/><path d="M14 14 L18 10 L22 14" fill="#F5F0E8" opacity=".7"/><path d="M28 20 L30 16 L32 20" fill="#F5F0E8" opacity=".7"/></svg>
           <span>Foto: Na horách</span>
         </div>
-        <div class="motif-body"><h3>Na horách</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Na horách</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Doma" data-img="karticky-doma-detail.jpg" data-desc="Každodenní svět dítěte – nábytek, kuchyňské nádobí, hračky i domácí mazlíčci. Skvělé pro pojmenovávání věcí v domácnosti." data-age="2–5 let">
@@ -1819,7 +1758,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M8 22 L22 8 L36 22 H8Z" fill="#C9B99A" opacity=".4"/><rect x="12" y="22" width="20" height="16" rx="1" fill="#A0522D" opacity=".3"/><rect x="16" y="26" width="6" height="6" rx="1" fill="#2980B9" opacity=".35"/><rect x="24" y="28" width="5" height="10" rx="1" fill="#3A5A40" opacity=".35"/></svg>
           <span>Foto: Doma</span>
         </div>
-        <div class="motif-body"><h3>Doma</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Doma</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="V džungli" data-img="karticky-v-dzungli-detail.jpg" data-desc="Tropický deštný les plný barev a zvuků – papoušci, leguáni, orchideje a hustá zeleň. Malí průzkumníci se budou cítit jako v dobrodružném filmu." data-age="3–7 let">
@@ -1827,7 +1766,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M8 36 C8 26 14 16 22 14 C30 16 36 26 36 36" fill="#1E8449" opacity=".2"/><path d="M14 36 C12 28 16 20 22 18" stroke="#27AE60" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".5"/><path d="M30 36 C32 28 28 20 22 18" stroke="#27AE60" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".4"/><ellipse cx="22" cy="16" rx="5" ry="3" fill="#1E8449" opacity=".4"/></svg>
           <span>Foto: V džungli</span>
         </div>
-        <div class="motif-body"><h3>V džungli</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>V džungli</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Za polárním kruhem" data-img="karticky-polarni-kruh-detail.jpg" data-desc="Ledový svět tučňáků, polárních medvědů, sobů a severního světla. Chladný, ale nádherný – děti ho milují!" data-age="4–8 let">
@@ -1835,7 +1774,7 @@
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="30" rx="16" ry="8" fill="#AED6F1" opacity=".3"/><circle cx="22" cy="18" r="8" fill="#F5F0E8" opacity=".5" stroke="#AED6F1" stroke-width="1.5"/><path d="M14 30 C14 24 18 20 22 20 C26 20 30 24 30 30" fill="#AED6F1" opacity=".4"/></svg>
           <span>Foto: Za polárním kruhem</span>
         </div>
-        <div class="motif-body"><h3>Za polárním kruhem</h3><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Za polárním kruhem</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
       </div>
 
       </div><!-- /carousel-track -->
@@ -1981,7 +1920,7 @@
 
     <div class="sesity-grid">
 
-      <div class="sesit-card" data-name="Jarní pracovní sešit" data-desc="Sešit plný jarního probouzení – úkoly o přírodě, rostlinách a zvířatech, která se vrací po zimě. Krásný start do nové sezóny. Uvnitř najdete úkoly zaměřené na barvy, tvary, stíny, puzzle i jemnou motoriku." data-age="1,5–3 roky" data-prices='[{"label":"Tištěný sešit","price":"450 Kč"},{"label":"PDF ke stažení","price":"100 Kč"}]'>
+      <div class="sesit-card" data-name="Jarní pracovní sešit" data-desc="Sešit plný jarního probouzení – úkoly o přírodě, rostlinách a zvířatech, která se vrací po zimě. Krásný start do nové sezóny. Uvnitř najdete úkoly zaměřené na barvy, tvary, stíny, puzzle i jemnou motoriku." data-age="1,5–3 roky" data-prices='[{"label":"Zalaminovaný sešit","price":"450 Kč"},{"label":"PDF ke stažení","price":"100 Kč"}]'>
         <div class="sesit-img">
           <!-- Replace src with real photo: jarni-sesit.jpg -->
           <div class="sesit-img-placeholder">
@@ -1995,7 +1934,7 @@
           <p>Sešit plný jarního probouzení – úkoly o přírodě, rostlinách a zvířatech, která se vrací po zimě. Krásný start do nové sezóny.</p>
           <div class="sesit-pricing">
             <div class="sesit-price-row">
-              <span>🖨 Tištěný sešit</span>
+              <span>🧩 Zalaminovaný sešit</span>
               <span class="price-val">450 Kč</span>
             </div>
             <div class="sesit-price-row">
@@ -2010,7 +1949,7 @@
         </div>
       </div>
 
-      <div class="sesit-card" data-name="Letní pracovní sešit" data-desc="Sešit plný letního dobrodružství – stránky s úkoly zaměřenými na přírodu, zvířata a letní zážitky. Ideální společník na výlety a prázdniny. Uvnitř najdete úkoly zaměřené na barvy, tvary, stíny, puzzle i jemnou motoriku." data-age="1,5–3 roky" data-prices='[{"label":"Tištěný sešit","price":"450 Kč"},{"label":"PDF ke stažení","price":"100 Kč"}]'>
+      <div class="sesit-card" data-name="Letní pracovní sešit" data-desc="Sešit plný letního dobrodružství – stránky s úkoly zaměřenými na přírodu, zvířata a letní zážitky. Ideální společník na výlety a prázdniny. Uvnitř najdete úkoly zaměřené na barvy, tvary, stíny, puzzle i jemnou motoriku." data-age="1,5–3 roky" data-prices='[{"label":"Zalaminovaný sešit","price":"450 Kč"},{"label":"PDF ke stažení","price":"100 Kč"}]'>
         <div class="sesit-img">
           <!-- Replace src with real photo: letni-sesit.jpg -->
           <div class="sesit-img-placeholder">
@@ -2024,7 +1963,7 @@
           <p>Sešit plný letního dobrodružství – stránky s úkoly zaměřenými na přírodu, zvířata a letní zážitky. Ideální společník na výlety a prázdniny.</p>
           <div class="sesit-pricing">
             <div class="sesit-price-row">
-              <span>🖨 Tištěný sešit</span>
+              <span>🧩 Zalaminovaný sešit</span>
               <span class="price-val">450 Kč</span>
             </div>
             <div class="sesit-price-row">
@@ -2129,41 +2068,37 @@
                   <label>Produkt</label>
                   <select class="product-select" name="entry.product_0" required>
                     <option value="" disabled selected>— Vyberte produkt —</option>
-                    <optgroup label="🃏 Kartičky – typ">
-                      <option value="Vystřižené kartičky (95 Kč)">Vystřižené kartičky – 95 Kč</option>
-                      <option value="Nevystřižené kartičky (70 Kč)">Nevystřižené kartičky – 70 Kč</option>
-                      <option value="PDF verze ke stažení (30 Kč)">PDF verze ke stažení – 30 Kč</option>
-                    </optgroup>
-                    <optgroup label="🃏 Kartičky – motiv">
-                      <option value="Motiv: Ovoce">Ovoce</option>
-                      <option value="Motiv: Zelenina">Zelenina</option>
-                      <option value="Motiv: Ovozel – přiřazování barev">Ovozel – přiřazování barev</option>
-                      <option value="Motiv: Hmyzí rodinka">Hmyzí rodinka</option>
-                      <option value="Motiv: Zvířata a zimní spánek">Zvířata a zimní spánek</option>
-                      <option value="Motiv: V lese">V lese</option>
-                      <option value="Motiv: Na farmě">Na farmě</option>
-                      <option value="Motiv: V savaně">V savaně</option>
-                      <option value="Motiv: V mořích a oceánech">V mořích a oceánech</option>
-                      <option value="Motiv: Na horách">Na horách</option>
-                      <option value="Motiv: Doma">Doma</option>
-                      <option value="Motiv: V džungli">V džungli</option>
-                      <option value="Motiv: Za polárním kruhem">Za polárním kruhem</option>
+                    <optgroup label="🃏 Kartičky – motivy">
+                      <option value="Ovoce" data-category="karticky">Ovoce</option>
+                      <option value="Zelenina" data-category="karticky">Zelenina</option>
+                      <option value="Ovozel – přiřazování barev" data-category="karticky">Ovozel – přiřazování barev</option>
+                      <option value="Hmyzí rodinka" data-category="karticky">Hmyzí rodinka</option>
+                      <option value="Zvířata a zimní spánek" data-category="karticky">Zvířata a zimní spánek</option>
+                      <option value="V lese" data-category="karticky">V lese</option>
+                      <option value="Na farmě" data-category="karticky">Na farmě</option>
+                      <option value="V savaně" data-category="karticky">V savaně</option>
+                      <option value="V mořích a oceánech" data-category="karticky">V mořích a oceánech</option>
+                      <option value="Na horách" data-category="karticky">Na horách</option>
+                      <option value="Doma" data-category="karticky">Doma</option>
+                      <option value="V džungli" data-category="karticky">V džungli</option>
+                      <option value="Za polárním kruhem" data-category="karticky">Za polárním kruhem</option>
+                      <option value="Na stavbě" data-category="karticky">Na stavbě</option>
                     </optgroup>
                     <optgroup label="📦 Sady kartiček">
-                      <option value="Sada: 8 prostředí + přiřazování ke stínům (700 Kč)">Sada: 8 prostředí + přiřazování ke stínům – 700 Kč</option>
-                      <option value="Sada: Dopravní prostředky (250 Kč)">Sada: Dopravní prostředky – 250 Kč</option>
-                      <option value="Sada: 5 kartiček dle vlastního výběru (420 Kč)">Sada: 5 kartiček dle vlastního výběru – 420 Kč</option>
+                      <option value="Sada: 8 prostředí + přiřazování ke stínům" data-category="sada">Sada: 8 prostředí + přiřazování ke stínům</option>
+                      <option value="Sada: Dopravní prostředky" data-category="sada">Sada: Dopravní prostředky</option>
+                      <option value="Sada: 5 kartiček dle vlastního výběru" data-category="sada">Sada: 5 kartiček dle vlastního výběru</option>
                     </optgroup>
                     <optgroup label="📒 Sešity">
-                      <option value="Jarní pracovní sešit – tištěný (450 Kč)">Jarní pracovní sešit – tištěný 450 Kč</option>
-                      <option value="Jarní pracovní sešit – PDF (100 Kč)">Jarní pracovní sešit – PDF 100 Kč</option>
-                      <option value="Letní pracovní sešit – tištěný (450 Kč)">Letní pracovní sešit – tištěný 450 Kč</option>
-                      <option value="Letní pracovní sešit – PDF (100 Kč)">Letní pracovní sešit – PDF 100 Kč</option>
+                      <option value="Jarní pracovní sešit" data-category="sesit">Jarní pracovní sešit</option>
+                      <option value="Letní pracovní sešit" data-category="sesit">Letní pracovní sešit</option>
                     </optgroup>
-                    <optgroup label="🏷 Samolepky">
-                      <option value="Samolepky Na stavbě">Samolepky – Na stavbě</option>
-                      <option value="Samolepky Dopravní prostředky">Samolepky – Dopravní prostředky</option>
-                    </optgroup>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Typ</label>
+                  <select class="type-select" name="entry.type_0" required disabled>
+                    <option value="" disabled selected>— nejdřív vyberte produkt —</option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -2399,6 +2334,9 @@
     
     prevBtn.addEventListener('click', function() { slide(-1); });
     nextBtn.addEventListener('click', function() { slide(1); });
+    var touchStartX = 0;
+    track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', function(e) { var diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 40) slide(diff > 0 ? 1 : -1); }, { passive: true });
     window.addEventListener('resize', updateButtons);
     updateButtons();
   }
@@ -2425,57 +2363,67 @@
   function getProductSelectHTML(index) {
     return '<select class="product-select" name="entry.product_' + index + '" required>' +
       '<option value="" disabled selected>— Vyberte produkt —</option>' +
-      '<optgroup label="🃏 Kartičky – typ">' +
-        '<option value="Vystřižené kartičky (95 Kč)">Vystřižené kartičky – 95 Kč</option>' +
-        '<option value="Nevystřižené kartičky (70 Kč)">Nevystřižené kartičky – 70 Kč</option>' +
-        '<option value="PDF verze ke stažení (30 Kč)">PDF verze ke stažení – 30 Kč</option>' +
+      '<optgroup label="🃏 Kartičky – motivy">' +
+        '<option value="Ovoce" data-category="karticky">Ovoce</option>' +
+        '<option value="Zelenina" data-category="karticky">Zelenina</option>' +
+        '<option value="Ovozel \u2013 p\u0159i\u0159azov\u00e1n\u00ed barev" data-category="karticky">Ovozel \u2013 p\u0159i\u0159azov\u00e1n\u00ed barev</option>' +
+        '<option value="Hmyz\u00ed rodinka" data-category="karticky">Hmyz\u00ed rodinka</option>' +
+        '<option value="Zv\u00ed\u0159ata a zimn\u00ed sp\u00e1nek" data-category="karticky">Zv\u00ed\u0159ata a zimn\u00ed sp\u00e1nek</option>' +
+        '<option value="V lese" data-category="karticky">V lese</option>' +
+        '<option value="Na farm\u011b" data-category="karticky">Na farm\u011b</option>' +
+        '<option value="V savan\u011b" data-category="karticky">V savan\u011b</option>' +
+        '<option value="V mo\u0159\u00edch a oce\u00e1nech" data-category="karticky">V mo\u0159\u00edch a oce\u00e1nech</option>' +
+        '<option value="Na hor\u00e1ch" data-category="karticky">Na hor\u00e1ch</option>' +
+        '<option value="Doma" data-category="karticky">Doma</option>' +
+        '<option value="V d\u017eungli" data-category="karticky">V d\u017eungli</option>' +
+        '<option value="Za pol\u00e1rn\u00edm kruhem" data-category="karticky">Za pol\u00e1rn\u00edm kruhem</option>' +
+        '<option value="Na stavb\u011b" data-category="karticky">Na stavb\u011b</option>' +
       '</optgroup>' +
-      '<optgroup label="🃏 Kartičky – motiv">' +
-        '<option value="Motiv: Ovoce">Ovoce</option>' +
-        '<option value="Motiv: Zelenina">Zelenina</option>' +
-        '<option value="Motiv: Ovozel – přiřazování barev">Ovozel – přiřazování barev</option>' +
-        '<option value="Motiv: Hmyzí rodinka">Hmyzí rodinka</option>' +
-        '<option value="Motiv: Zvířata a zimní spánek">Zvířata a zimní spánek</option>' +
-        '<option value="Motiv: V lese">V lese</option>' +
-        '<option value="Motiv: Na farmě">Na farmě</option>' +
-        '<option value="Motiv: V savaně">V savaně</option>' +
-        '<option value="Motiv: V mořích a oceánech">V mořích a oceánech</option>' +
-        '<option value="Motiv: Na horách">Na horách</option>' +
-        '<option value="Motiv: Doma">Doma</option>' +
-        '<option value="Motiv: V džungli">V džungli</option>' +
-        '<option value="Motiv: Za polárním kruhem">Za polárním kruhem</option>' +
+      '<optgroup label="\ud83d\udce6 Sady kart\u00ed\u010dek">' +
+        '<option value="Sada: 8 prost\u0159ed\u00ed + p\u0159i\u0159azov\u00e1n\u00ed ke st\u00edn\u016fm" data-category="sada">Sada: 8 prost\u0159ed\u00ed + p\u0159i\u0159azov\u00e1n\u00ed ke st\u00edn\u016fm</option>' +
+        '<option value="Sada: Dopravn\u00ed prost\u0159edky" data-category="sada">Sada: Dopravn\u00ed prost\u0159edky</option>' +
+        '<option value="Sada: 5 kart\u00ed\u010dek dle vlastn\u00edho v\u00fdb\u011bru" data-category="sada">Sada: 5 kart\u00ed\u010dek dle vlastn\u00edho v\u00fdb\u011bru</option>' +
       '</optgroup>' +
-      '<optgroup label="📦 Sady kartiček">' +
-        '<option value="Sada: 8 prostředí + přiřazování ke stínům (700 Kč)">Sada: 8 prostředí + stíny – 700 Kč</option>' +
-        '<option value="Sada: Dopravní prostředky (250 Kč)">Sada: Dopravní prostředky – 250 Kč</option>' +
-        '<option value="Sada: 5 kartiček dle vlastního výběru (420 Kč)">Sada: 5 kartiček dle výběru – 420 Kč</option>' +
-      '</optgroup>' +
-      '<optgroup label="📒 Sešity">' +
-        '<option value="Jarní pracovní sešit – tištěný (450 Kč)">Jarní sešit – tištěný 450 Kč</option>' +
-        '<option value="Jarní pracovní sešit – PDF (100 Kč)">Jarní sešit – PDF 100 Kč</option>' +
-        '<option value="Letní pracovní sešit – tištěný (450 Kč)">Letní sešit – tištěný 450 Kč</option>' +
-        '<option value="Letní pracovní sešit – PDF (100 Kč)">Letní sešit – PDF 100 Kč</option>' +
-      '</optgroup>' +
-      '<optgroup label="🏷 Samolepky">' +
-        '<option value="Samolepky Na stavbě">Samolepky – Na stavbě</option>' +
-        '<option value="Samolepky Dopravní prostředky">Samolepky – Dopravní prostředky</option>' +
+      '<optgroup label="\ud83d\udcd2 Se\u0161ity">' +
+        '<option value="Jarn\u00ed pracovn\u00ed se\u0161it" data-category="sesit">Jarn\u00ed pracovn\u00ed se\u0161it</option>' +
+        '<option value="Letn\u00ed pracovn\u00ed se\u0161it" data-category="sesit">Letn\u00ed pracovn\u00ed se\u0161it</option>' +
       '</optgroup>' +
     '</select>';
   }
 
+  function getTypeSelectHTML(index) {
+    return '<select class="type-select" name="entry.type_' + index + '" required disabled>' +
+      '<option value="" disabled selected>\u2014 nejd\u0159\u00edv vyberte produkt \u2014</option>' +
+    '</select>';
+  }
+
+  function updateTypeOptions(typeSelect, category) {
+    typeSelect.disabled = false;
+    var opts = '<option value="" disabled selected>\u2014 Vyberte typ \u2014</option>';
+    opts += '<option value="Kompletn\u011b vyst\u0159i\u017een\u00e9 a zalaminovan\u00e9 (95 K\u010d)">Kompletn\u011b vyst\u0159i\u017een\u00e9 a zalaminovan\u00e9 \u2013 95 K\u010d</option>';
+    opts += '<option value="P\u0159ipraven\u00e9 k vyst\u0159i\u017een\u00ed (70 K\u010d)">P\u0159ipraven\u00e9 k vyst\u0159i\u017een\u00ed \u2013 70 K\u010d</option>';
+    opts += '<option value="PDF verze (30 K\u010d)">PDF verze \u2013 30 K\u010d</option>';
+    if (category === 'sesit') {
+      opts += '<option value="Krou\u017ekov\u00e1 vazba (+10 K\u010d)">Krou\u017ekov\u00e1 vazba \u2013 +10 K\u010d</option>';
+    }
+    typeSelect.innerHTML = opts;
+    typeSelect.selectedIndex = 0;
+  }
+
   function addProductRow() {
     if (rowCount >= MAX_PRODUCTS) {
-      alert('Můžete přidat maximálně ' + MAX_PRODUCTS + ' produktů.');
+      alert('M\u016f\u017eete p\u0159idat maxim\u00e1ln\u011b ' + MAX_PRODUCTS + ' produkt\u016f.');
       return;
     }
     var newRow = document.createElement('div');
     newRow.className = 'product-row';
     newRow.dataset.row = rowCount;
-    newRow.innerHTML = '<div class="form-group"><label>Produkt</label>' +
-      getProductSelectHTML(rowCount) + '</div>' +
-      '<div class="form-group"><label>Počet ks</label>' +
-      '<input type="number" class="qty-input" name="entry.qty_' + rowCount + '" min="1" max="10" value="1" required /></div>' +
-      '<button type="button" class="remove-row-btn" title="Odebrat">✕</button>';
+    newRow.innerHTML =
+      '<div class="form-group"><label>Produkt</label>' + getProductSelectHTML(rowCount) + '</div>' +
+      '<div class="form-group"><label>Typ</label>' + getTypeSelectHTML(rowCount) + '</div>' +
+      '<div class="form-group"><label>Po\u010det ks</label>' +
+        '<input type="number" class="qty-input" name="entry.qty_' + rowCount + '" min="1" max="10" value="1" required /></div>' +
+      '<button type="button" class="remove-row-btn" title="Odebrat">\u2715</button>';
     productRowsContainer.appendChild(newRow);
     rowCount++;
     updateRemoveButtons();
@@ -2507,7 +2455,17 @@
       }
     });
     productRowsContainer.addEventListener('change', function(e) {
-      if (e.target.classList.contains('product-select') || e.target.classList.contains('qty-input')) {
+      if (e.target.classList.contains('product-select')) {
+        var row = e.target.closest('.product-row');
+        var typeSelect = row ? row.querySelector('.type-select') : null;
+        if (typeSelect) {
+          var selOpt = e.target.options[e.target.selectedIndex];
+          var cat = selOpt ? selOpt.getAttribute('data-category') : null;
+          if (cat) updateTypeOptions(typeSelect, cat);
+        }
+        updateVazbaVisibility();
+      }
+      if (e.target.classList.contains('type-select') || e.target.classList.contains('qty-input')) {
         updateVazbaVisibility();
       }
     });
@@ -2521,11 +2479,17 @@
     var email   = document.getElementById('f-email').value.trim();
     var productSelects = productRowsContainer ? productRowsContainer.querySelectorAll('.product-select') : [];
     var hasProduct = Array.from(productSelects).some(function(sel) { return sel.value; });
+    var hasType = Array.from(productRowsContainer ? productRowsContainer.querySelectorAll('.type-select') : [])
+      .every(function(ts) {
+        var row = ts.closest('.product-row');
+        var ps = row ? row.querySelector('.product-select') : null;
+        return !ps || !ps.value || ts.value;
+      });
     var doprava = form.querySelector('input[name="entry.doprava"]:checked');
     var pobockaVisible = pobockaWrap && pobockaWrap.style.display !== 'none';
     var pobocka = pobockaVisible && pobockaInput ? pobockaInput.value.trim() : 'n/a';
 
-    if (!name || !email || !hasProduct || !doprava || (pobockaVisible && !pobocka)) {
+    if (!name || !email || !hasProduct || !hasType || !doprava || (pobockaVisible && !pobocka)) {
       [
         { el: document.getElementById('f-name'), val: name },
         { el: document.getElementById('f-email'), val: email }
@@ -2635,31 +2599,37 @@
   });
 
   /* ─── Products data ─── */
+  var KARTICKY_VARIANTS = [
+    {label:'Kompletn\u011b vyst\u0159i\u017een\u00e9', price:'95 K\u010d'},
+    {label:'K vyst\u0159i\u017een\u00ed',              price:'70 K\u010d'},
+    {label:'PDF verze',                               price:'30 K\u010d'}
+  ];
   var products = {
     /* Motiv kartičky */
-    'Ovoce': { images: ['karticky-ovoce.jpg','karticky-ovoce-detail.jpg'], desc: 'Barevné ovoce z celého světa – jablka, hrušky, banány i exotické plody. Skvělé pro první pojmenovávání a třídění dle barvy či tvaru.', age: '2–5 let', formValue: 'Motiv: Ovoce', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'Zelenina': { images: ['karticky-zelenina.jpg','karticky-zelenina-detail.jpg'], desc: 'Zelenina ze zahrádky i z obchodu. Děti poznávají tvary, barvy a vůně čerstvé zeleniny a učí se, co roste nad zemí a co pod ní.', age: '2–5 let', formValue: 'Motiv: Zelenina', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'Ovozel \u2013 p\u0159i\u0159azov\u00e1n\u00ed barev': { images: ['karticky-ovozel.jpg','karticky-ovozel-detail.jpg'], desc: 'Kombinace ovoce a zeleniny s herním prvkem přiřazování ke správné barvě. Rozvíjí pozornost, logiku a znalost barev.', age: '3–6 let', formValue: 'Motiv: Ovozel \u2013 p\u0159i\u0159azov\u00e1n\u00ed barev', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'Hmyz\u00ed rodinka': { images: ['karticky-hmyzi-rodinka.jpg','karticky-hmyzi-rodinka-detail.jpg'], desc: 'Fascinující svět hmyzu – včely, motýli, broučci a jiní šestinožci. Ideální pro malé přírodovědce zvídavé po tajemstvích přírody.', age: '3–7 let', formValue: 'Motiv: Hmyz\u00ed rodinka', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'Zv\u00ed\u0159ata a zimn\u00ed sp\u00e1nek': { images: ['karticky-zimni-spanek.jpg','karticky-zimni-spanek-detail.jpg'], desc: 'Která zvířata spí celou zimu? Děti poznávají ježky, medvědy, plchy a jejich útulné zimní úkryty. Krásné na podzim i v zimě.', age: '3–6 let', formValue: 'Motiv: Zv\u00ed\u0159ata a zimn\u00ed sp\u00e1nek', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'V lese': { images: ['karticky-v-lese.jpg','karticky-v-lese-detail.jpg'], desc: 'Lesní prostředí plné překvapení – stromy, houby, zvěř a vůně borovic. Kartičky pro malé lesní skřítky a budoucí lesníky.', age: '2–6 let', formValue: 'Motiv: V lese', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'Na farm\u011b': { images: ['karticky-na-farme.jpg','karticky-na-farme-detail.jpg'], desc: 'Slepice, kravičky, prasátka i traktor. Farmářský svět v kapse – krásné pro děti i rodiče z města. Učí se, odkud pochází jídlo.', age: '2–6 let', formValue: 'Motiv: Na farm\u011b', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'V savan\u011b': { images: ['karticky-v-savane.jpg','karticky-v-savane-detail.jpg'], desc: 'Lvi, sloni, žirafy a baobaby. Africká savana jako ilustrovaná dobrodružná výprava plná úžasných zvířat a barev západu slunce.', age: '3–7 let', formValue: 'Motiv: V savan\u011b', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'V mo\u0159\u00edch a oce\u00e1nech': { images: ['karticky-more-oceany.jpg','karticky-more-oceany-detail.jpg'], desc: 'Hlubiny i mělčiny oceánů – od delfínů přes chobotnice až po korálové útesy. Dobrodružná cesta podmořským světem.', age: '3–7 let', formValue: 'Motiv: V mo\u0159\u00edch a oce\u00e1nech', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'Na hor\u00e1ch': { images: ['karticky-na-horach.jpg','karticky-na-horach-detail.jpg'], desc: 'Kamzíci, ledovce, alpské louky a horská jezera. Kartičky pro budoucí horolezce a milovníky hor. Krásné i jako dekorace pokojíčku.', age: '3–7 let', formValue: 'Motiv: Na hor\u00e1ch', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'Doma': { images: ['karticky-doma.jpg','karticky-doma-detail.jpg'], desc: 'Každodenní svět dítěte – nábytek, kuchyňské nádobí, hračky i domácí mazlíčci. Skvělé pro pojmenovávání věcí v domácnosti.', age: '2–5 let', formValue: 'Motiv: Doma', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'V d\u017eungli': { images: ['karticky-v-dzungli.jpg','karticky-v-dzungli-detail.jpg'], desc: 'Tropický deštný les plný barev a zvuků – papoušci, leguáni, orchideje a hustá zeleň. Malí průzkumníci se budou cítit jako v dobrodružném filmu.', age: '3–7 let', formValue: 'Motiv: V d\u017eungli', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    'Za pol\u00e1rn\u00edm kruhem': { images: ['karticky-polarni-kruh.jpg','karticky-polarni-kruh-detail.jpg'], desc: 'Ledový svět tučňáků, polárních medvědů, sobů a severního světla. Chladný, ale nádherný – děti ho milují!', age: '4–8 let', formValue: 'Motiv: Za pol\u00e1rn\u00edm kruhem', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
-    /* Novinky */
-    'Kart\u00ed\u010dky: Na stavb\u011b': { images: ['karticky-na-stavbe.jpg','karticky-na-stavbe-detail.jpg'], desc: 'Bagry, jeřáby, míchačky a pracovní stroje – kartičky pro malé stavbaře a techniky. Ideální pro děti 2–5 let.', age: '2–5 let', formValue: '', variants: [{label:'Vystřižené kartičky',price:'95 Kč/kus'},{label:'Nevystřižené kartičky',price:'70 Kč/set'},{label:'PDF ke stažení',price:'30 Kč/set'}] },
+    'Ovoce': { images: ['karticky-ovoce.jpg','karticky-ovoce-detail.jpg'], desc: 'Barevné ovoce z celého světa – jablka, hrušky, banány i exotické plody. Skvělé pro první pojmenovávání a třídění dle barvy či tvaru.', age: 'od 1,5 roku', formValue: 'Ovoce', variants: KARTICKY_VARIANTS },
+    'Zelenina': { images: ['karticky-zelenina.jpg','karticky-zelenina-detail.jpg'], desc: 'Zelenina ze zahrádky i z obchodu. Děti poznávají tvary, barvy a vůně čerstvé zeleniny a učí se, co roste nad zemí a co pod ní.', age: 'od 1,5 roku', formValue: 'Zelenina', variants: KARTICKY_VARIANTS },
+    'Ovozel \u2013 p\u0159i\u0159azov\u00e1n\u00ed barev': { images: ['karticky-ovozel.jpg','karticky-ovozel-detail.jpg'], desc: 'Kombinace ovoce a zeleniny s herním prvkem přiřazování ke správné barvě. Rozvíjí pozornost, logiku a znalost barev.', age: 'od 1,5 roku', formValue: 'Ovozel \u2013 p\u0159i\u0159azov\u00e1n\u00ed barev', variants: KARTICKY_VARIANTS },
+    'Hmyz\u00ed rodinka': { images: ['karticky-hmyzi-rodinka.jpg','karticky-hmyzi-rodinka-detail.jpg'], desc: 'Fascinující svět hmyzu – včely, motýli, broučci a jiní šestinožci. Ideální pro malé přírodovědce zvídavé po tajemstvích přírody.', age: 'od 1,5 roku', formValue: 'Hmyz\u00ed rodinka', variants: KARTICKY_VARIANTS },
+    'Zv\u00ed\u0159ata a zimn\u00ed sp\u00e1nek': { images: ['karticky-zimni-spanek.jpg','karticky-zimni-spanek-detail.jpg'], desc: 'Která zvířata spí celou zimu? Děti poznávají ježky, medvědy, plchy a jejich útulné zimní úkryty. Krásné na podzim i v zimě.', age: 'od 1,5 roku', formValue: 'Zv\u00ed\u0159ata a zimn\u00ed sp\u00e1nek', variants: KARTICKY_VARIANTS },
+    'V lese': { images: ['karticky-v-lese.jpg','karticky-v-lese-detail.jpg'], desc: 'Lesní prostředí plné překvapení – stromy, houby, zvěř a vůně borovic. Kartičky pro malé lesní skřítky a budoucí lesníky.', age: 'od 1,5 roku', formValue: 'V lese', variants: KARTICKY_VARIANTS },
+    'Na farm\u011b': { images: ['karticky-na-farme.jpg','karticky-na-farme-detail.jpg'], desc: 'Slepice, kravičky, prasátka i traktor. Farmářský svět v kapse – krásné pro děti i rodiče z města. Učí se, odkud pochází jídlo.', age: 'od 1,5 roku', formValue: 'Na farm\u011b', variants: KARTICKY_VARIANTS },
+    'V savan\u011b': { images: ['karticky-v-savane.jpg','karticky-v-savane-detail.jpg'], desc: 'Lvi, sloni, žirafy a baobaby. Africká savana jako ilustrovaná dobrodružná výprava plná úžasných zvířat a barev západu slunce.', age: 'od 1,5 roku', formValue: 'V savan\u011b', variants: KARTICKY_VARIANTS },
+    'V mo\u0159\u00edch a oce\u00e1nech': { images: ['karticky-more-oceany.jpg','karticky-more-oceany-detail.jpg'], desc: 'Hlubiny i mělčiny oceánů – od delfínů přes chobotnice až po korálové útesy. Dobrodružná cesta podmořským světem.', age: 'od 1,5 roku', formValue: 'V mo\u0159\u00edch a oce\u00e1nech', variants: KARTICKY_VARIANTS },
+    'Na hor\u00e1ch': { images: ['karticky-na-horach.jpg','karticky-na-horach-detail.jpg'], desc: 'Kamzíci, ledovce, alpské louky a horská jezera. Kartičky pro budoucí horolezce a milovníky hor. Krásné i jako dekorace pokojíčku.', age: 'od 1,5 roku', formValue: 'Na hor\u00e1ch', variants: KARTICKY_VARIANTS },
+    'Doma': { images: ['karticky-doma.jpg','karticky-doma-detail.jpg'], desc: 'Každodenní svět dítěte – nábytek, kuchyňské nádobí, hračky i domácí mazlíčci. Skvělé pro pojmenovávání věcí v domácnosti.', age: 'od 1,5 roku', formValue: 'Doma', variants: KARTICKY_VARIANTS },
+    'V d\u017eungli': { images: ['karticky-v-dzungli.jpg','karticky-v-dzungli-detail.jpg'], desc: 'Tropický deštný les plný barev a zvuků – papoušci, leguáni, orchideje a hustá zeleň. Malí průzkumníci se budou cítit jako v dobrodružném filmu.', age: 'od 1,5 roku', formValue: 'V d\u017eungli', variants: KARTICKY_VARIANTS },
+    'Za pol\u00e1rn\u00edm kruhem': { images: ['karticky-polarni-kruh.jpg','karticky-polarni-kruh-detail.jpg'], desc: 'Ledový svět tučňáků, polárních medvědů, sobů a severního světla. Chladný, ale nádherný – děti ho milují!', age: 'od 1,5 roku', formValue: 'Za pol\u00e1rn\u00edm kruhem', variants: KARTICKY_VARIANTS },
+    /* Novinky / Na stavbě */
+    'Kart\u00ed\u010dky: Na stavb\u011b': { images: ['karticky-na-stavbe.jpg','karticky-na-stavbe-detail.jpg'], desc: 'Bagry, jeřáby, míchačky a pracovní stroje – kartičky pro malé stavbaře a techniky. Ideální pro děti 2–5 let.', age: 'od 1,5 roku', formValue: 'Na stavb\u011b', variants: KARTICKY_VARIANTS },
+    'Na stavb\u011b': { images: ['karticky-na-stavbe.jpg','karticky-na-stavbe-detail.jpg'], desc: 'Bagry, jeřáby, míchačky a pracovní stroje – kartičky pro malé stavbaře a techniky.', age: 'od 1,5 roku', formValue: 'Na stavb\u011b', variants: KARTICKY_VARIANTS },
     /* Sady */
-    '8 r\u016fzn\u00fdch prost\u0159ed\u00ed + p\u0159i\u0159azov\u00e1n\u00ed ke st\u00edn\u016fm': { images: ['sada-8-prostredi.jpg','sada-8-prostredi-detail.jpg'], desc: 'Komplexní sada pro děti od 1,5 roku – 8 kartiček ze zcela odlišných prostředí světa doplněná o hru přiřazování obrázků ke stínům. Rozvíjí pozornost a logické myšlení.', age: 'od 1,5 roku', formValue: 'Sada: 8 prost\u0159ed\u00ed + p\u0159i\u0159azov\u00e1n\u00ed ke st\u00edn\u016fm (700 K\u010d)', variants: [{label:'Kompletní sada',price:'700 Kč'},{label:'S kroužkovou vazbou',price:'710 Kč'}] },
-    'Dopravn\u00ed prost\u0159edky': { images: ['sada-dopravni.jpg','sada-dopravni-detail.jpg'], desc: 'Sada 3 kartiček s oblíbenými dopravními prostředky a přiřazováním obrázků ke stínům. Krásný úvod do světa dopravy pro nejmenší.', age: 'od 1,5 roku', formValue: 'Sada: Dopravn\u00ed prost\u0159edky (250 K\u010d)', variants: [{label:'Kompletní sada',price:'250 Kč'},{label:'S kroužkovou vazbou',price:'260 Kč'}] },
-    'Sada: Dopravn\u00ed prost\u0159edky': { images: ['sada-dopravni.jpg','sada-dopravni-detail.jpg'], desc: 'Sada 3 kartiček s oblíbenými dopravními prostředky a přiřazováním obrázků ke stínům. Krásný úvod do světa dopravy pro nejmenší.', age: 'od 1,5 roku', formValue: 'Sada: Dopravn\u00ed prost\u0159edky (250 K\u010d)', variants: [{label:'Kompletní sada',price:'250 Kč'},{label:'S kroužkovou vazbou',price:'260 Kč'}] },
-    '5 kart\u00ed\u010dek dle vlastn\u00edho v\u00fdb\u011bru': { images: ['sada-vlastni-vyber.jpg','sada-vlastni-vyber-detail.jpg'], desc: 'Sestavte si sadu přesně podle svého! Vyberte libovolných 5 motivů z celé nabídky – skvělý dárek i způsob, jak si rozšířit sbírku.', age: 'dle výběru', formValue: 'Sada: 5 kart\u00ed\u010dek dle vlastn\u00edho v\u00fdb\u011bru (420 K\u010d)', variants: [{label:'Kompletní sada',price:'420 Kč'},{label:'S kroužkovou vazbou',price:'430 Kč'}] },
+    '8 r\u016fzn\u00fdch prost\u0159ed\u00ed + p\u0159i\u0159azov\u00e1n\u00ed ke st\u00edn\u016fm': { images: ['sada-8-prostredi.jpg','sada-8-prostredi-detail.jpg'], desc: 'Komplexní sada pro děti od 1,5 roku – 8 kartiček ze zcela odlišných prostředí světa doplněná o hru přiřazování obrázků ke stínům. Rozvíjí pozornost a logické myšlení.', age: 'od 1,5 roku', formValue: 'Sada: 8 prost\u0159ed\u00ed + p\u0159i\u0159azov\u00e1n\u00ed ke st\u00edn\u016fm', variants: KARTICKY_VARIANTS },
+    'Dopravn\u00ed prost\u0159edky': { images: ['sada-dopravni.jpg','sada-dopravni-detail.jpg'], desc: 'Sada 3 kartiček s oblíbenými dopravními prostředky a přiřazováním obrázků ke stínům. Krásný úvod do světa dopravy pro nejmenší.', age: 'od 1,5 roku', formValue: 'Sada: Dopravn\u00ed prost\u0159edky', variants: KARTICKY_VARIANTS },
+    'Sada: Dopravn\u00ed prost\u0159edky': { images: ['sada-dopravni.jpg','sada-dopravni-detail.jpg'], desc: 'Sada 3 kartiček s oblíbenými dopravními prostředky a přiřazováním obrázků ke stínům. Krásný úvod do světa dopravy pro nejmenší.', age: 'od 1,5 roku', formValue: 'Sada: Dopravn\u00ed prost\u0159edky', variants: KARTICKY_VARIANTS },
+    '5 kart\u00ed\u010dek dle vlastn\u00edho v\u00fdb\u011bru': { images: ['sada-vlastni-vyber.jpg','sada-vlastni-vyber-detail.jpg'], desc: 'Sestavte si sadu přesně podle svého! Vyberte libovolných 5 motivů z celé nabídky – skvělý dárek i způsob, jak si rozšířit sbírku.', age: 'dle v\u00fdb\u011bru', formValue: 'Sada: 5 kart\u00ed\u010dek dle vlastn\u00edho v\u00fdb\u011bru', variants: KARTICKY_VARIANTS },
     /* Sešity */
-    'Jarn\u00ed pracovn\u00ed se\u0161it': { images: ['jarni-sesit.jpg','jarni-sesit-detail.jpg'], desc: 'Sešit plný jarního probouzení – úkoly o přírodě, rostlinách a zvířatech, která se vrací po zimě. Uvnitř: barvy, tvary, stíny, puzzle i jemná motorika.', age: '1,5–3 roky', formValue: 'Jarn\u00ed pracovn\u00ed se\u0161it \u2013 ti\u0161t\u011bn\u00fd (450 K\u010d)', variants: [{label:'Tištěný sešit',price:'450 Kč'},{label:'PDF ke stažení',price:'100 Kč'}] },
-    'Letn\u00ed pracovn\u00ed se\u0161it': { images: ['letni-sesit.jpg','letni-sesit-detail.jpg'], desc: 'Sešit plný letního dobrodružství – úkoly zaměřené na přírodu, zvířata a letní zážitky. Ideální společník na výlety a prázdniny.', age: '1,5–3 roky', formValue: 'Letn\u00ed pracovn\u00ed se\u0161it \u2013 ti\u0161t\u011bn\u00fd (450 K\u010d)', variants: [{label:'Tištěný sešit',price:'450 Kč'},{label:'PDF ke stažení',price:'100 Kč'}] }
+    'Jarn\u00ed pracovn\u00ed se\u0161it': { images: ['jarni-sesit.jpg','jarni-sesit-detail.jpg'], desc: 'Sešit plný jarního probouzení – úkoly o přírodě, rostlinách a zvířatech, která se vrací po zimě. Uvnitř: barvy, tvary, stíny, puzzle i jemná motorika.', age: '1,5\u20133 roky', formValue: 'Jarn\u00ed pracovn\u00ed se\u0161it', variants: [{label:'Zalaminovan\u00fd se\u0161it',price:'450 K\u010d'},{label:'PDF ke sta\u017een\u00ed',price:'100 K\u010d'},{label:'Krou\u017ekov\u00e1 vazba',price:'+10 K\u010d'}] },
+    'Letn\u00ed pracovn\u00ed se\u0161it': { images: ['letni-sesit.jpg','letni-sesit-detail.jpg'], desc: 'Sešit plný letního dobrodružství – úkoly zaměřené na přírodu, zvířata a letní zážitky. Ideální společník na výlety a prázdniny.', age: '1,5\u20133 roky', formValue: 'Letn\u00ed pracovn\u00ed se\u0161it', variants: [{label:'Zalaminovan\u00fd se\u0161it',price:'450 K\u010d'},{label:'PDF ke sta\u017een\u00ed',price:'100 K\u010d'},{label:'Krou\u017ekov\u00e1 vazba',price:'+10 K\u010d'}] }
   };
 
   /* ─── Modal ─── */
@@ -2731,6 +2701,18 @@
     var nextBtn = document.getElementById('mc-next');
     if (prevBtn) prevBtn.addEventListener('click', function() { if (currentIdx > 0) { currentIdx--; loadSlide(currentIdx); } });
     if (nextBtn) nextBtn.addEventListener('click', function() { if (currentIdx < imgs.length - 1) { currentIdx++; loadSlide(currentIdx); } });
+    var mcTouchStartX = 0;
+    var mcWrap = document.getElementById('mc-wrap');
+    if (mcWrap) {
+      mcWrap.addEventListener('touchstart', function(e) { mcTouchStartX = e.touches[0].clientX; }, { passive: true });
+      mcWrap.addEventListener('touchend', function(e) {
+        var diff = mcTouchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) {
+          if (diff > 0 && currentIdx < imgs.length - 1) { currentIdx++; loadSlide(currentIdx); }
+          else if (diff < 0 && currentIdx > 0)          { currentIdx--; loadSlide(currentIdx); }
+        }
+      }, { passive: true });
+    }
     document.querySelectorAll('#mc-dots .carousel-dot').forEach(function(dot, i) {
       dot.addEventListener('click', function() { currentIdx = i; loadSlide(i); });
     });
@@ -2783,17 +2765,21 @@
 
   function updateVazbaVisibility() {
     if (!productRowsContainer || !vazbaWrap) return;
-    var productSelects = productRowsContainer.querySelectorAll('.product-select');
-    var qtyInputs      = productRowsContainer.querySelectorAll('.qty-input');
-    var hasSada = false;
+    var rows = productRowsContainer.querySelectorAll('.product-row');
+    var hasVazba = false;
     var totalKarticky = 0;
-    productSelects.forEach(function(sel, index) {
-      var val = sel.value;
-      var qty = parseInt(qtyInputs[index] ? qtyInputs[index].value : 0, 10) || 0;
-      if (val.indexOf('Sada:') === 0) hasSada = true;
-      if (/^(Vyst\u0159i\u017een\u00e9|Nevyst\u0159i\u017een\u00e9|PDF verze|Motiv:)/.test(val)) totalKarticky += qty;
+    rows.forEach(function(row) {
+      var productSelect = row.querySelector('.product-select');
+      var typeSelect    = row.querySelector('.type-select');
+      var qtyInput      = row.querySelector('.qty-input');
+      var typeVal       = typeSelect ? typeSelect.value : '';
+      var selOpt        = productSelect ? productSelect.options[productSelect.selectedIndex] : null;
+      var category      = selOpt ? selOpt.getAttribute('data-category') : null;
+      var qty           = parseInt(qtyInput ? qtyInput.value : 0, 10) || 0;
+      if (typeVal === 'Krou\u017ekov\u00e1 vazba (+10 K\u010d)') hasVazba = true;
+      if ((category === 'karticky' || category === 'sada') && productSelect && productSelect.value) totalKarticky += qty;
     });
-    var shouldShow = hasSada || totalKarticky >= 5;
+    var shouldShow = hasVazba || totalKarticky >= 5;
     vazbaWrap.style.display = shouldShow ? 'flex' : 'none';
     if (!shouldShow && fVazba) fVazba.checked = false;
   }
