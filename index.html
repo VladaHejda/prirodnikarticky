@@ -1121,6 +1121,42 @@
       color: rgba(245,240,232,.5);
     }
     .footer-made-with { display: flex; align-items: center; gap: 6px; font-size: .85rem; color: rgba(245,240,232,.4); }
+    .footer-link-btn {
+      background: none; border: none; padding: 0; cursor: pointer;
+      color: rgba(245,240,232,.65); font: inherit; font-size: inherit;
+      text-decoration: underline; text-underline-offset: 3px;
+    }
+    .footer-link-btn:hover { color: var(--cream); }
+
+    /* ─── Cookie bar ─── */
+    #cookie-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; flex-wrap: wrap;
+      background: var(--green-dark); color: var(--cream);
+      padding: 14px 24px;
+      font-size: .88rem; line-height: 1.5;
+      box-shadow: 0 -2px 12px rgba(0,0,0,.18);
+    }
+    #cookie-bar p { margin: 0; flex: 1; min-width: 220px; }
+    #cookie-bar .btn { white-space: nowrap; flex-shrink: 0; }
+
+    /* ─── Terms modal ─── */
+    .modal-box--terms {
+      max-width: 680px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 40px 44px 32px;
+    }
+    .terms-content h2 { font-family: var(--font-heading); color: var(--green-dark); margin: 0 0 4px; font-size: 1.5rem; }
+    .terms-subtitle { color: var(--terracotta); font-size: .9rem; margin: 0 0 24px; font-weight: 600; }
+    .terms-content h3 { font-family: var(--font-heading); color: var(--green-dark); font-size: 1rem; margin: 20px 0 6px; }
+    .terms-content p { color: #4a4a4a; font-size: .9rem; line-height: 1.7; margin: 0 0 4px; }
+    .terms-content a { color: var(--green-dark); }
+    @media (max-width: 600px) {
+      .modal-box--terms { padding: 28px 20px 24px; }
+      #cookie-bar { gap: 10px; padding: 12px 16px; }
+    }
 
     /* ─── Hero mosaic ─── */
     .hero-inner {
@@ -2219,7 +2255,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 Přírodní kartičky · Všechna práva vyhrazena</p>
+      <p>© 2025 Přírodní kartičky · Všechna práva vyhrazena · <button id="btn-podminky" class="footer-link-btn">Obchodní podmínky</button></p>
       <div class="footer-made-with">
         <span>🌿</span>
         <span>Tvořeno s láskou k přírodě</span>
@@ -2227,6 +2263,50 @@
     </div>
   </div>
 </footer>
+
+<!-- ░░░ OBCHODNÍ PODMÍNKY MODAL ░░░ -->
+<div id="modal-podminky" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="podminky-title">
+  <div class="modal-box modal-box--terms">
+    <button class="modal-close-x" id="podminky-close-x" aria-label="Zavřít">✕</button>
+    <div class="terms-content">
+      <h2 id="podminky-title">Obchodní podmínky</h2>
+      <p class="terms-subtitle">Přírodní kartičky | Patricie Šebková</p>
+
+      <h3>1. Prodávající</h3>
+      <p>Patricie Šebková se sídlem Šafaříkova 895, Sezimovo Ústí 1<br>IČO: 23676949<br>Kontakt: <a href="mailto:sebkova.patricie@gmail.com">sebkova.patricie@gmail.com</a></p>
+
+      <h3>2. Objednávka</h3>
+      <p>Objednávka je závazná po potvrzení e-mailem ze strany prodávající. Kupní smlouva vzniká okamžikem potvrzení objednávky.</p>
+
+      <h3>3. Ceny a platba</h3>
+      <p>Všechny ceny jsou uvedeny v Kč včetně DPH. Platba probíhá bankovním převodem na základě zaslané faktury. Zboží je odesláno po připsání platby na účet.</p>
+
+      <h3>4. Doprava a dodání</h3>
+      <p>Objednávky jsou odesílány do 5 pracovních dnů od připsání platby. Dostupné způsoby dopravy: Alzabox (49 Kč), Balíkovna (79 Kč), Zásilkovna (89 Kč). Doprava je účtována k ceně objednávky.</p>
+
+      <h3>5. Odstoupení od smlouvy</h3>
+      <p>Zákazník má právo odstoupit od smlouvy do 14 dnů od převzetí zboží bez udání důvodu (§ 1829 občanského zákoníku). PDF produkty jsou po stažení vyňaty z práva na odstoupení. Zboží vraťte nepoškozené na vlastní náklady.</p>
+
+      <h3>6. Reklamace</h3>
+      <p>Reklamaci uplatněte e-mailem do 24 měsíců od převzetí. Popis závady + fotodokumentace. Vyřízení do 30 dnů.</p>
+
+      <h3>7. Ochrana osobních údajů</h3>
+      <p>Osobní údaje jsou zpracovávány pouze za účelem vyřízení objednávky a nejsou předávány třetím stranám. Správce údajů: Patricie Šebková. Více informací na vyžádání.</p>
+
+      <h3>8. Závěrečná ustanovení</h3>
+      <p>Tyto podmínky jsou platné od 10.&nbsp;6.&nbsp;2026. Prodávající si vyhrazuje právo podmínky měnit.</p>
+    </div>
+    <div class="modal-actions" style="justify-content:center;margin-top:8px;">
+      <button class="btn btn-terra" id="podminky-close-btn">Zavřít</button>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ COOKIE LIŠTA ░░░ -->
+<div id="cookie-bar" role="region" aria-label="Souhlas s cookies" style="display:none;">
+  <p>Tento web používá cookies pro zajištění základní funkčnosti. Používáním webu souhlasíte s jejich použitím.</p>
+  <button id="cookie-accept" class="btn btn-terra btn-sm">Rozumím</button>
+</div>
 
 <!-- ░░░ DETAIL MODAL ░░░ -->
 <div id="modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true">
@@ -2782,6 +2862,38 @@
     var shouldShow = hasVazba || totalKarticky >= 5;
     vazbaWrap.style.display = shouldShow ? 'flex' : 'none';
     if (!shouldShow && fVazba) fVazba.checked = false;
+  }
+
+  /* ─── Obchodní podmínky popup ─── */
+  var modalPodminky = document.getElementById('modal-podminky');
+  var btnPodminky   = document.getElementById('btn-podminky');
+  function openPodminky() {
+    if (modalPodminky) { modalPodminky.style.display = 'flex'; document.body.classList.add('modal-open'); }
+  }
+  function closePodminky() {
+    if (modalPodminky) { modalPodminky.style.display = 'none'; document.body.classList.remove('modal-open'); }
+  }
+  if (btnPodminky) btnPodminky.addEventListener('click', openPodminky);
+  var pCloseX   = document.getElementById('podminky-close-x');
+  var pCloseBtn = document.getElementById('podminky-close-btn');
+  if (pCloseX)   pCloseX.addEventListener('click', closePodminky);
+  if (pCloseBtn) pCloseBtn.addEventListener('click', closePodminky);
+  if (modalPodminky) modalPodminky.addEventListener('click', function(e) { if (e.target === modalPodminky) closePodminky(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && modalPodminky && modalPodminky.style.display === 'flex') closePodminky(); });
+
+  /* ─── Cookie bar ─── */
+  var cookieBar    = document.getElementById('cookie-bar');
+  var cookieAccept = document.getElementById('cookie-accept');
+  if (cookieBar) {
+    if (!localStorage.getItem('cookies_accepted')) {
+      cookieBar.style.display = 'flex';
+    }
+    if (cookieAccept) {
+      cookieAccept.addEventListener('click', function() {
+        localStorage.setItem('cookies_accepted', '1');
+        cookieBar.style.display = 'none';
+      });
+    }
   }
 
 })();
