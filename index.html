@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="products.js"></script>
 
   <style>
     /* ─── Reset & Base ─── */
@@ -1451,6 +1452,19 @@
       .product-row .form-group:first-child { grid-column: 1 / -1; }
       .product-row .qty-input { width: 100%; }
     }
+
+    /* ─── Motifs Static Grid ─── */
+    .motifs-static-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:24px; }
+
+    /* ─── FAQ Accordion ─── */
+    .faq-list { max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
+    .faq-item { background:var(--cream); border:1px solid var(--beige-light); border-radius:var(--radius); overflow:hidden; }
+    .faq-question { width:100%; display:flex; justify-content:space-between; align-items:center; padding:18px 22px; font-family:'Lora',serif; font-size:1rem; font-weight:600; color:var(--text); background:none; text-align:left; gap:12px; cursor:pointer; border:none; }
+    .faq-question:hover { background:var(--green-pale); }
+    .faq-arrow { font-size:1.1rem; transition:transform .25s; flex-shrink:0; color:var(--green); }
+    .faq-item.open .faq-arrow { transform:rotate(180deg); }
+    .faq-answer { display:none; padding:0 22px 18px; color:var(--text-light); line-height:1.7; font-size:.95rem; }
+    .faq-item.open .faq-answer { display:block; }
   </style>
 </head>
 
@@ -1506,7 +1520,7 @@
 
     <a href="#sady"><span class="nav-icon">☀️</span>Léto</a>
     <a href="#o-mne"><span class="nav-icon">👩</span>O mně</a>
-    <a href="#objednat"><span class="nav-icon">🛒</span>Objednat</a>
+    <a href="kosik.html"><span class="nav-icon">🛒</span>Košík</a>
   </nav>
 
   <div class="sidebar-footer">
@@ -1518,7 +1532,7 @@
 <header id="topbar">
   <button id="hamburger" aria-label="Otevřít menu">☰</button>
   <a href="#hero" class="topbar-logo">🌿 Přírodní kartičky</a>
-  <button class="topbar-cart" aria-label="Košík" onclick="document.getElementById('objednat').scrollIntoView({behavior:'smooth'})">🛒</button>
+  <a href="kosik.html" class="topbar-cart" aria-label="Košík">🛒 <span id="cart-count" style="font-size:.75rem;font-weight:700;background:var(--terra);color:white;border-radius:50%;padding:0 5px;display:none;"></span></a>
 </header>
 
 <!-- ░░░ HERO ░░░ -->
@@ -1625,7 +1639,7 @@
             <div class="card-price">od 30 Kč</div>
             <div class="btn-group" style="display:flex;flex-direction:column;gap:6px;">
               <button class="btn btn-sm btn-outline btn-product-detail">Detail</button>
-              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+              <a href="detail.html?p=na-stavbe" class="btn btn-sm btn-terra">Objednat</a>
             </div>
           </div>
         </div>
@@ -1648,7 +1662,7 @@
             <div class="card-price">250 Kč</div>
             <div class="btn-group" style="display:flex;flex-direction:column;gap:6px;">
               <button class="btn btn-sm btn-outline btn-product-detail">Detail</button>
-              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+              <a href="detail.html?p=sada-dopravni" class="btn btn-sm btn-terra">Objednat</a>
             </div>
           </div>
         </div>
@@ -1671,7 +1685,7 @@
             <div class="card-price">450 Kč <span style="font-size:.8rem;color:var(--text-light);font-weight:400;">/ PDF 100 Kč</span></div>
             <div class="btn-group" style="display:flex;flex-direction:column;gap:6px;">
               <button class="btn btn-sm btn-outline btn-product-detail">Detail</button>
-              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+              <a href="detail.html?p=letni-sesit" class="btn btn-sm btn-terra">Objednat</a>
             </div>
           </div>
         </div>
@@ -1705,16 +1719,14 @@
       <h2>Dostupné kartičky</h2>
       <p>Každý motiv je k dispozici ve třech variantách – kompletně vystřižené a zalaminované, připravené k vystřižení, nebo PDF ke stažení.</p>
     </div>
-    <div class="carousel-container" id="motifs-carousel">
-      <button class="carousel-btn prev" aria-label="Předchozí">‹</button>
-      <div class="carousel-track motifs-grid">
+    <div class="motifs-static-grid">
 
       <div class="motif-card" data-name="Ovoce" data-img="karticky-ovoce-detail.jpg" data-desc="Barevné ovoce z celého světa – jablka, hrušky, banány i exotické plody. Skvělé pro první pojmenovávání a třídění dle barvy či tvaru." data-age="2–5 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-ovoce.jpg" alt="Kartičky Ovoce" /> -->
           <svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="24" r="12" fill="#E8673A" opacity=".3"/><path d="M22 12 C22 8 26 6 28 8" stroke="#3A5A40" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="14" cy="28" r="7" fill="#F5A623" opacity=".35"/><circle cx="30" cy="30" r="7" fill="#C0392B" opacity=".28"/></svg>
           <span>Foto: Ovoce</span>
         </div>
-        <div class="motif-body"><h3>Ovoce</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Ovoce</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=ovoce" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Zelenina" data-img="karticky-zelenina-detail.jpg" data-desc="Zelenina ze zahrádky i z obchodu. Děti poznávají tvary, barvy a vůně čerstvé zeleniny a učí se, co roste nad zemí a co pod ní." data-age="2–5 let">
@@ -1722,7 +1734,7 @@
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="26" rx="10" ry="12" fill="#27AE60" opacity=".3"/><path d="M22 14 C20 10 16 10 14 14 C20 12 22 14 22 14Z" fill="#3A5A40" opacity=".4"/><ellipse cx="14" cy="30" rx="6" ry="8" fill="#E74C3C" opacity=".3"/></svg>
           <span>Foto: Zelenina</span>
         </div>
-        <div class="motif-body"><h3>Zelenina</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Zelenina</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=zelenina" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Ovozel – přiřazování barev" data-img="karticky-ovozel-detail.jpg" data-desc="Kombinace ovoce a zeleniny s herním prvkem přiřazování ke správné barvě. Rozvíjí pozornost, logiku a znalost barev." data-age="3–6 let">
@@ -1730,7 +1742,7 @@
           <svg viewBox="0 0 44 44" fill="none"><circle cx="16" cy="22" r="9" fill="#F5A623" opacity=".3"/><circle cx="28" cy="22" r="9" fill="#27AE60" opacity=".3"/><path d="M19 22 L25 22" stroke="#3A5A40" stroke-width="2" stroke-linecap="round"/></svg>
           <span>Foto: Ovozel – barvy</span>
         </div>
-        <div class="motif-body"><h3>Ovozel – přiřazování barev</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Ovozel – přiřazování barev</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=ovozel" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Hmyzí rodinka" data-img="karticky-hmyzi-rodinka-detail.jpg" data-desc="Fascinující svět hmyzu – včely, motýli, broučci a jiní šestinožci. Ideální pro malé přírodovědce zvídavé po tajemstvích přírody." data-age="3–7 let">
@@ -1738,7 +1750,7 @@
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="24" rx="7" ry="9" fill="#8E44AD" opacity=".25"/><circle cx="22" cy="14" r="5" fill="#8E44AD" opacity=".3"/><path d="M14 20 C10 16 8 12 12 10 M30 20 C34 16 36 12 32 10" stroke="#3A5A40" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/><path d="M14 28 C10 30 8 34 12 36 M30 28 C34 30 36 34 32 36" stroke="#3A5A40" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/></svg>
           <span>Foto: Hmyzí rodinka</span>
         </div>
-        <div class="motif-body"><h3>Hmyzí rodinka</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Hmyzí rodinka</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=hmyzi-rodinka" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Zvířata a zimní spánek" data-img="karticky-zimni-spanek-detail.jpg" data-desc="Která zvířata spí celou zimu? Děti poznávají ježky, medvědy, plchy a jejich útulné zimní úkryty. Krásné na podzim i v zimě." data-age="3–6 let">
@@ -1746,7 +1758,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M10 32 C10 24 16 18 22 18 C28 18 34 24 34 32Z" fill="#C9B99A" opacity=".4"/><path d="M16 18 C16 12 20 10 22 10 C24 10 26 12 26 16" stroke="#3A5A40" stroke-width="1.8" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="14" r="4" fill="#F5F0E8" opacity=".6" stroke="#C9B99A" stroke-width="1"/></svg>
           <span>Foto: Zimní spánek</span>
         </div>
-        <div class="motif-body"><h3>Zvířata a zimní spánek</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Zvířata a zimní spánek</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=zimni-spanek" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
       <div class="motif-card" data-name="V lese" data-img="karticky-v-lese-detail.jpg" data-desc="Lesní prostředí plné překvapení – stromy, houby, zvěř a vůně borovic. Kartičky pro malé lesní skřítky a budoucí lesníky." data-age="2–6 let">
@@ -1754,7 +1766,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M22 8 L12 24 H32Z" fill="#3A5A40" opacity=".35"/><path d="M18 20 L10 32 H34L26 20" fill="#3A5A40" opacity=".25"/><rect x="19" y="32" width="6" height="8" rx="1" fill="#A0522D" opacity=".5"/></svg>
           <span>Foto: V lese</span>
         </div>
-        <div class="motif-body"><h3>V lese</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>V lese</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=v-lese" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
       <div class="motif-card" data-name="Na farmě" data-img="karticky-na-farme-detail.jpg" data-desc="Slepice, kravičky, prasátka i traktor. Farmářský svět v kapse – krásné pro děti i rodiče z města. Učí se, odkud pochází jídlo." data-age="2–6 let">
@@ -1762,7 +1774,7 @@
           <svg viewBox="0 0 44 44" fill="none"><path d="M8 24 L22 10 L36 24 H8Z" fill="#C9B99A" opacity=".4"/><rect x="12" y="24" width="20" height="14" rx="1" fill="#A0522D" opacity=".3"/><rect x="18" y="28" width="8" height="10" rx="1" fill="#3A5A40" opacity=".3"/></svg>
           <span>Foto: Na farmě</span>
         </div>
-        <div class="motif-body"><h3>Na farmě</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Na farmě</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=na-farme" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
       <div class="motif-card" data-name="V savaně" data-img="karticky-v-savane-detail.jpg" data-desc="Lvi, sloni, žirafy a baobaby. Africká savana jako ilustrovaná dobrodružná výprava plná úžasných zvířat a barev západu slunce." data-age="3–7 let">
@@ -1770,52 +1782,53 @@
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="34" rx="18" ry="4" fill="#F5C842" opacity=".2"/><path d="M10 34 C10 26 14 20 18 20 C16 16 18 12 22 12 C26 12 28 16 26 20 C30 20 34 26 34 34" fill="#F5C842" opacity=".3"/><circle cx="22" cy="22" r="6" fill="#E8673A" opacity=".2"/></svg>
           <span>Foto: V savaně</span>
         </div>
-        <div class="motif-body"><h3>V savaně</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>V savaně</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=v-savane" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
-      <div class="motif-card" data-name="V mořích a oceánech" data-img="karticky-more-oceany-detail.jpg" data-desc="Hlubiny i mělčiny oceánů – od delfínů přes chobotnice až po korálové útesy. Dobrodružná cesta podmořským světem." data-age="3–7 let">
+      <div class="motif-card" style="display:none" data-name="V mořích a oceánech" data-img="karticky-more-oceany-detail.jpg" data-desc="Hlubiny i mělčiny oceánů – od delfínů přes chobotnice až po korálové útesy. Dobrodružná cesta podmořským světem." data-age="3–7 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-more-oceany.jpg" alt="Kartičky V mořích a oceánech" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M6 28 C12 24 18 32 24 28 C30 24 36 32 42 28" stroke="#2980B9" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".4"/><path d="M6 34 C12 30 18 38 24 34 C30 30 36 38 42 34" stroke="#2980B9" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".3"/><path d="M18 20 C20 16 24 14 26 18 C22 16 20 20 18 20Z" fill="#2980B9" opacity=".35"/></svg>
           <span>Foto: Moře a oceány</span>
         </div>
-        <div class="motif-body"><h3>V mořích a oceánech</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>V mořích a oceánech</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=v-morich" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
-      <div class="motif-card" data-name="Na horách" data-img="karticky-na-horach-detail.jpg" data-desc="Kamzíci, ledovce, alpské louky a horská jezera. Kartičky pro budoucí horolezce a milovníky hor. Krásné i jako dekorace pokojíčku." data-age="3–7 let">
+      <div class="motif-card" style="display:none" data-name="Na horách" data-img="karticky-na-horach-detail.jpg" data-desc="Kamzíci, ledovce, alpské louky a horská jezera. Kartičky pro budoucí horolezce a milovníky hor. Krásné i jako dekorace pokojíčku." data-age="3–7 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-na-horach.jpg" alt="Kartičky Na horách" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M6 36 L18 14 L26 26 L30 20 L40 36Z" fill="#7F8C8D" opacity=".3"/><path d="M14 14 L18 10 L22 14" fill="#F5F0E8" opacity=".7"/><path d="M28 20 L30 16 L32 20" fill="#F5F0E8" opacity=".7"/></svg>
           <span>Foto: Na horách</span>
         </div>
-        <div class="motif-body"><h3>Na horách</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Na horách</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=na-horach" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
-      <div class="motif-card" data-name="Doma" data-img="karticky-doma-detail.jpg" data-desc="Každodenní svět dítěte – nábytek, kuchyňské nádobí, hračky i domácí mazlíčci. Skvělé pro pojmenovávání věcí v domácnosti." data-age="2–5 let">
+      <div class="motif-card" style="display:none" data-name="Doma" data-img="karticky-doma-detail.jpg" data-desc="Každodenní svět dítěte – nábytek, kuchyňské nádobí, hračky i domácí mazlíčci. Skvělé pro pojmenovávání věcí v domácnosti." data-age="2–5 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-doma.jpg" alt="Kartičky Doma" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M8 22 L22 8 L36 22 H8Z" fill="#C9B99A" opacity=".4"/><rect x="12" y="22" width="20" height="16" rx="1" fill="#A0522D" opacity=".3"/><rect x="16" y="26" width="6" height="6" rx="1" fill="#2980B9" opacity=".35"/><rect x="24" y="28" width="5" height="10" rx="1" fill="#3A5A40" opacity=".35"/></svg>
           <span>Foto: Doma</span>
         </div>
-        <div class="motif-body"><h3>Doma</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Doma</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=doma" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
-      <div class="motif-card" data-name="V džungli" data-img="karticky-v-dzungli-detail.jpg" data-desc="Tropický deštný les plný barev a zvuků – papoušci, leguáni, orchideje a hustá zeleň. Malí průzkumníci se budou cítit jako v dobrodružném filmu." data-age="3–7 let">
+      <div class="motif-card" style="display:none" data-name="V džungli" data-img="karticky-v-dzungli-detail.jpg" data-desc="Tropický deštný les plný barev a zvuků – papoušci, leguáni, orchideje a hustá zeleň. Malí průzkumníci se budou cítit jako v dobrodružném filmu." data-age="3–7 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-v-dzungli.jpg" alt="Kartičky V džungli" /> -->
           <svg viewBox="0 0 44 44" fill="none"><path d="M8 36 C8 26 14 16 22 14 C30 16 36 26 36 36" fill="#1E8449" opacity=".2"/><path d="M14 36 C12 28 16 20 22 18" stroke="#27AE60" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".5"/><path d="M30 36 C32 28 28 20 22 18" stroke="#27AE60" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".4"/><ellipse cx="22" cy="16" rx="5" ry="3" fill="#1E8449" opacity=".4"/></svg>
           <span>Foto: V džungli</span>
         </div>
-        <div class="motif-body"><h3>V džungli</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>V džungli</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=v-dzungli" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
-      <div class="motif-card" data-name="Za polárním kruhem" data-img="karticky-polarni-kruh-detail.jpg" data-desc="Ledový svět tučňáků, polárních medvědů, sobů a severního světla. Chladný, ale nádherný – děti ho milují!" data-age="4–8 let">
+      <div class="motif-card" style="display:none" data-name="Za polárním kruhem" data-img="karticky-polarni-kruh-detail.jpg" data-desc="Ledový svět tučňáků, polárních medvědů, sobů a severního světla. Chladný, ale nádherný – děti ho milují!" data-age="4–8 let">
         <div class="motif-img"><!-- Replace with: <img src="karticky-polarni-kruh.jpg" alt="Kartičky Za polárním kruhem" /> -->
           <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="30" rx="16" ry="8" fill="#AED6F1" opacity=".3"/><circle cx="22" cy="18" r="8" fill="#F5F0E8" opacity=".5" stroke="#AED6F1" stroke-width="1.5"/><path d="M14 30 C14 24 18 20 22 20 C26 20 30 24 30 30" fill="#AED6F1" opacity=".4"/></svg>
           <span>Foto: Za polárním kruhem</span>
         </div>
-        <div class="motif-body"><h3>Za polárním kruhem</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><button class="btn btn-outline btn-detail">Detail</button><a href="#objednat" class="btn btn-terra">Objednat</a></div></div>
+        <div class="motif-body"><h3>Za polárním kruhem</h3><p class="motif-price">Od 30 Kč</p><p class="motif-age">Věk: od 1,5 roku</p><div class="btn-group"><a href="detail.html?p=polarni-kruh" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a></div></div>
       </div>
 
-      </div><!-- /carousel-track -->
-      <button class="carousel-btn next" aria-label="Další">›</button>
-    </div><!-- /carousel-container -->
+    </div>
+    <div style="text-align:center;margin-top:28px;">
+      <a href="karticky.html" class="btn btn-outline">Zobrazit všechny kartičky →</a>
+    </div>
 
   </div><!-- /section-inner -->
 </section>
@@ -1868,8 +1881,7 @@
               <div class="set-count">8 kartiček v sadě</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;">
-              <button class="btn btn-sm btn-outline btn-set-detail">Detail</button>
-              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+              <a href="detail.html?p=sada-8-prostredi" class="btn btn-sm btn-terra">Zobrazit detail</a>
             </div>
           </div>
         </div>
@@ -1894,8 +1906,7 @@
               <div class="set-count">3 kartičky v sadě</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;">
-              <button class="btn btn-sm btn-outline btn-set-detail">Detail</button>
-              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+              <a href="detail.html?p=sada-dopravni" class="btn btn-sm btn-terra">Zobrazit detail</a>
             </div>
           </div>
         </div>
@@ -1920,8 +1931,7 @@
               <div class="set-count">5 kartiček dle výběru</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;">
-              <button class="btn btn-sm btn-outline btn-set-detail">Detail</button>
-              <a href="#objednat" class="btn btn-sm btn-terra">Objednat</a>
+              <a href="detail.html?p=sada-vlastni" class="btn btn-sm btn-terra">Zobrazit detail</a>
             </div>
           </div>
         </div>
@@ -1979,8 +1989,7 @@
             </div>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;">
-            <button class="btn btn-outline btn-sesit-detail" style="width:100%;justify-content:center;">Detail</button>
-            <a href="#objednat" class="btn btn-terra" style="width:100%;justify-content:center;">Objednat sešit</a>
+            <a href="detail.html?p=jarni-sesit" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a>
           </div>
         </div>
       </div>
@@ -2008,8 +2017,7 @@
             </div>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;">
-            <button class="btn btn-outline btn-sesit-detail" style="width:100%;justify-content:center;">Detail</button>
-            <a href="#objednat" class="btn btn-terra" style="width:100%;justify-content:center;">Objednat sešit</a>
+            <a href="detail.html?p=letni-sesit" class="btn btn-terra" style="width:100%;justify-content:center;">Zobrazit detail</a>
           </div>
         </div>
       </div>
@@ -2071,134 +2079,47 @@
   </svg>
 </div>
 
-<!-- ░░░ OBJEDNÁVKOVÝ FORMULÁŘ ░░░ -->
-<section id="objednat" style="background:var(--green-pale);">
+<!-- ░░░ FAQ ░░░ -->
+<section id="faq" style="background:var(--cream-dark);">
   <div class="section-inner">
     <div class="section-heading">
-      <div class="section-label">Mám zájem</div>
-      <h2>Objednat</h2>
-      <p>Vyplňte formulář a ozveme se vám do 24 hodin s potvrzením objednávky a platebními údaji.</p>
+      <div class="section-label">Máte otázky?</div>
+      <h2>Nejčastější otázky</h2>
     </div>
+    <div class="faq-list">
 
-    <div class="form-card">
-      <form id="order-form" novalidate>
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="f-name">Jméno a příjmení <span class="req">*</span></label>
-            <input type="text" id="f-name" name="entry.name" placeholder="Jana Nováková" required />
-          </div>
-          <div class="form-group">
-            <label for="f-email">E-mail <span class="req">*</span></label>
-            <input type="email" id="f-email" name="entry.email" placeholder="jana@email.cz" required />
-          </div>
-          <div class="form-group">
-            <label for="f-phone">Telefon</label>
-            <input type="tel" id="f-phone" name="entry.phone" placeholder="+420 123 456 789" />
-          </div>
-          <div class="form-group full">
-            <label>Výběr produktů <span class="req">*</span></label>
-            <p style="font-size:.85rem;color:var(--text-light);margin-bottom:12px;">Můžete objednat až 30 různých produktů, každý v množství 1–10 ks.</p>
-            <div class="product-rows" id="product-rows">
-              <div class="product-row" data-row="0">
-                <div class="form-group">
-                  <label>Produkt</label>
-                  <select class="product-select" name="entry.product_0" required>
-                    <option value="" disabled selected>— Vyberte produkt —</option>
-                    <optgroup label="🃏 Kartičky – motivy">
-                      <option value="Ovoce" data-category="karticky">Ovoce</option>
-                      <option value="Zelenina" data-category="karticky">Zelenina</option>
-                      <option value="Ovozel – přiřazování barev" data-category="karticky">Ovozel – přiřazování barev</option>
-                      <option value="Hmyzí rodinka" data-category="karticky">Hmyzí rodinka</option>
-                      <option value="Zvířata a zimní spánek" data-category="karticky">Zvířata a zimní spánek</option>
-                      <option value="V lese" data-category="karticky">V lese</option>
-                      <option value="Na farmě" data-category="karticky">Na farmě</option>
-                      <option value="V savaně" data-category="karticky">V savaně</option>
-                      <option value="V mořích a oceánech" data-category="karticky">V mořích a oceánech</option>
-                      <option value="Na horách" data-category="karticky">Na horách</option>
-                      <option value="Doma" data-category="karticky">Doma</option>
-                      <option value="V džungli" data-category="karticky">V džungli</option>
-                      <option value="Za polárním kruhem" data-category="karticky">Za polárním kruhem</option>
-                      <option value="Na stavbě" data-category="karticky">Na stavbě</option>
-                    </optgroup>
-                    <optgroup label="📦 Sady kartiček">
-                      <option value="Sada: 8 prostředí + přiřazování ke stínům" data-category="sada">Sada: 8 prostředí + přiřazování ke stínům</option>
-                      <option value="Sada: Dopravní prostředky" data-category="sada">Sada: Dopravní prostředky</option>
-                      <option value="Sada: 5 kartiček dle vlastního výběru" data-category="sada">Sada: 5 kartiček dle vlastního výběru</option>
-                    </optgroup>
-                    <optgroup label="📒 Sešity">
-                      <option value="Jarní pracovní sešit" data-category="sesit">Jarní pracovní sešit</option>
-                      <option value="Letní pracovní sešit" data-category="sesit">Letní pracovní sešit</option>
-                    </optgroup>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Typ</label>
-                  <select class="type-select" name="entry.type_0" required disabled>
-                    <option value="" disabled selected>— nejdřív vyberte produkt —</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Počet ks</label>
-                  <input type="number" class="qty-input" name="entry.qty_0" min="1" max="10" value="1" required />
-                </div>
-                <button type="button" class="remove-row-btn" title="Odebrat" style="visibility:hidden;">✕</button>
-              </div>
-            </div>
-            <button type="button" class="add-product-btn" id="add-product-btn">
-              <span>＋</span> Přidat další produkt
-            </button>
-          </div>
-          <div class="form-group full" id="vazba-wrap" style="display:none;">
-            <label class="form-check-label">
-              <input type="checkbox" id="f-vazba" name="entry.vazba" value="Kroužková vazba +10 Kč" />
-              <span>Svázat do sešitu kroužkovou vazbou <strong>+10 Kč</strong></span>
-            </label>
-          </div>
-          <div class="form-group full">
-            <label>Způsob dopravy <span class="req">*</span></label>
-            <div class="radio-group" id="doprava-group">
-              <label class="radio-option" id="opt-alzabox">
-                <input type="radio" name="entry.doprava" value="Alzabox (49 Kč)" required />
-                <span class="radio-label">📦 Alzabox</span>
-                <span class="radio-price">49 Kč</span>
-              </label>
-              <label class="radio-option" id="opt-balikovna">
-                <input type="radio" name="entry.doprava" value="Balíkovna (79 Kč)" />
-                <span class="radio-label">📮 Balíkovna</span>
-                <span class="radio-price">79 Kč</span>
-              </label>
-              <label class="radio-option" id="opt-zasilkovna">
-                <input type="radio" name="entry.doprava" value="Zásilkovna (89 Kč)" />
-                <span class="radio-label">🚚 Zásilkovna</span>
-                <span class="radio-price">89 Kč</span>
-              </label>
-            </div>
-          </div>
-          <div class="form-group full" id="pobocka-wrap" style="display:none;">
-            <label for="f-pobocka">Název a adresa pobočky / Alzaboxu <span class="req">*</span></label>
-            <div style="display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap;">
-              <input type="text" id="f-pobocka" name="entry.pobocka" placeholder="Např. Alzabox – OC Palladium, Praha 1 nebo Zásilkovna – Korunní 2, Praha 2" style="flex:1; min-width:200px;" />
-              <a id="pobocka-link" href="https://www.alza.cz/alzabox" target="_blank" rel="noopener" class="btn btn-outline" style="white-space:nowrap; flex-shrink:0; padding: 11px 18px; font-size:.85rem;">🔍 Najít pobočku</a>
-            </div>
-          </div>
-          <div class="form-group full">
-            <label for="f-note">Poznámka / dotaz</label>
-            <textarea id="f-note" name="entry.note" placeholder="Např. přání k narozeninám, specifické požadavky, dotaz na dodání..."></textarea>
-          </div>
-        </div>
-
-        <div class="form-submit-row">
-          <button type="submit" class="btn btn-primary">
-            <span>🌿</span> Odeslat objednávku
-          </button>
-        </div>
-      </form>
-
-      <div id="form-success">
-        <div class="success-icon">🌿</div>
-        <h3>Děkujeme!</h3>
-        <p>Vaše objednávka byla přijata. Ozveme se vám do 24 hodin s potvrzením a platebními údaji.</p>
+      <div class="faq-item">
+        <button class="faq-question">
+          Pro jak staré děti jsou kartičky určeny?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-answer">Kartičky jsou navrženy primárně pro děti od 1,5 do 6 let, přičemž konkrétní věkové doporučení najdete u každého motivu. Nejjednodušší sady (jako Ovoce nebo Zelenina) zvládají i nejmenší batolata, zatímco komplexnější motivy (jako Za polárním kruhem nebo V savaně) jsou vhodné i pro starší předškoláky.</div>
       </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Co doporučíte jako první kartičky?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-answer">Pro nejmenší děti od 1,5 roku doporučujeme začít s motivy Ovoce nebo Zelenina – jsou vizuálně jednoduché a děti je znají z každodenního života. Oblíbenou volbou je také Sada 8 různých prostředí, která nabídne pestrý úvod do světa kartiček.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Jaký produkt objednat k druhým narozeninám?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-answer">K druhým narozeninám skvěle fungují Ovoce, Zelenina nebo V lese – jsou přiměřeně jednoduché a vizuálně atraktivní. Jako dárek doporučujeme Sadu 8 různých prostředí nebo Sadu 5 kartiček dle vlastního výběru, které udělají radost i rodičům.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Odesíláte i na Slovensko?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-answer">Ano! Zásilky odesíláme i na Slovensko. Způsob dopravy a aktuální ceny dopravy na Slovensko prosím ověřte při objednávce nebo se zeptejte e-mailem na sebkova.patricie@gmail.com.</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2249,13 +2170,13 @@
           <a href="https://facebook.com/prirodni_karticky" target="_blank" rel="noopener">@prirodni_karticky</a>
         </div>
         <div class="footer-contact-item" style="margin-top:16px;">
-          <a href="#objednat" class="btn btn-sm" style="background:rgba(255,255,255,.15);color:var(--cream);border-radius:50px;padding:8px 18px;font-size:.85rem;border:1px solid rgba(255,255,255,.2);">Objednat →</a>
+          <a href="kosik.html" class="btn btn-sm" style="background:rgba(255,255,255,.15);color:var(--cream);border-radius:50px;padding:8px 18px;font-size:.85rem;border:1px solid rgba(255,255,255,.2);">Košík →</a>
         </div>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 Přírodní kartičky · Všechna práva vyhrazena · <button id="btn-podminky" class="footer-link-btn">Obchodní podmínky</button></p>
+      <p>© 2025 Přírodní kartičky · Všechna práva vyhrazena · <button id="btn-podminky" class="footer-link-btn">Obchodní podmínky</button> · <button id="btn-gdpr" class="footer-link-btn">Pravidla ochrany soukromí</button> · <button id="btn-doprava-info" class="footer-link-btn">Doprava a platba</button> · <button id="btn-vraceni" class="footer-link-btn">Vrácení zboží</button> · <button id="btn-pruvodce" class="footer-link-btn">Průvodce výběrem</button></p>
       <div class="footer-made-with">
         <span>🌿</span>
         <span>Tvořeno s láskou k přírodě</span>
@@ -2263,6 +2184,102 @@
     </div>
   </div>
 </footer>
+
+<!-- ░░░ FOOTER INFO MODALS ░░░ -->
+
+<!-- GDPR -->
+<div id="modal-gdpr" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="modal-box modal-box--terms">
+    <button class="modal-close-x" id="gdpr-close-x" aria-label="Zavřít">✕</button>
+    <div class="terms-content">
+      <h2>Pravidla ochrany soukromí</h2>
+      <p class="terms-subtitle">Přírodní kartičky | Patricie Šebková</p>
+      <h3>Správce osobních údajů</h3>
+      <p>Patricie Šebková, Šafaříkova 895, Sezimovo Ústí 1, IČO: 23676949<br>Kontakt: <a href="mailto:sebkova.patricie@gmail.com">sebkova.patricie@gmail.com</a></p>
+      <h3>Jaké údaje zpracováváme</h3>
+      <p>Zpracováváme pouze: jméno, příjmení, e-mail, telefon a adresu – výhradně za účelem vyřízení vaší objednávky.</p>
+      <h3>Právní základ</h3>
+      <p>Plnění smlouvy (čl. 6 odst. 1 písm. b) GDPR). Bez těchto údajů nelze objednávku vyřídit.</p>
+      <h3>Doba uchovávání</h3>
+      <p>Data uchováváme po dobu nezbytně nutnou, nejdéle 3 roky od poslední objednávky nebo v souladu s daňovými předpisy.</p>
+      <h3>Předávání třetím stranám</h3>
+      <p>Osobní údaje nejsou předávány třetím stranám s výjimkou dopravce nutného pro doručení zásilky.</p>
+      <h3>Vaše práva</h3>
+      <p>Máte právo na přístup ke svým údajům, jejich opravu, výmaz, přenositelnost a právo podat stížnost u Úřadu pro ochranu osobních údajů (ÚOOÚ). Pro uplatnění práv kontaktujte: <a href="mailto:sebkova.patricie@gmail.com">sebkova.patricie@gmail.com</a>.</p>
+    </div>
+    <div class="modal-actions" style="justify-content:center;margin-top:8px;">
+      <button class="btn btn-terra" id="gdpr-close-btn">Zavřít</button>
+    </div>
+  </div>
+</div>
+
+<!-- Doprava a platba -->
+<div id="modal-doprava-info" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="modal-box modal-box--terms">
+    <button class="modal-close-x" id="doprava-info-close-x" aria-label="Zavřít">✕</button>
+    <div class="terms-content">
+      <h2>Doprava a platba</h2>
+      <h3>Doprava</h3>
+      <p>Objednávky odesíláme do 5 pracovních dnů od připsání platby. Dostupné způsoby dopravy:</p>
+      <p>📦 <strong>Alzabox</strong> – 49 Kč<br>📦 <strong>Balíkovna</strong> – 79 Kč<br>📦 <strong>Zásilkovna</strong> – 89 Kč</p>
+      <p>🎉 <strong>Doprava zdarma</strong> při objednávce nad 1 200 Kč!</p>
+      <h3>Platba</h3>
+      <p>Platba probíhá <strong>bankovním převodem</strong> na základě zaslané faktury nebo <strong>online přes GoPay</strong>. Zboží odesíláme po připsání platby na účet.</p>
+      <h3>Faktura</h3>
+      <p>Fakturu obdržíte e-mailem automaticky po potvrzení platby.</p>
+    </div>
+    <div class="modal-actions" style="justify-content:center;margin-top:8px;">
+      <button class="btn btn-terra" id="doprava-info-close-btn">Zavřít</button>
+    </div>
+  </div>
+</div>
+
+<!-- Vrácení zboží -->
+<div id="modal-vraceni" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="modal-box modal-box--terms">
+    <button class="modal-close-x" id="vraceni-close-x" aria-label="Zavřít">✕</button>
+    <div class="terms-content">
+      <h2>Vrácení zboží a reklamace</h2>
+      <h3>Odstoupení od smlouvy</h3>
+      <p>Zákazník má právo odstoupit od smlouvy do <strong>14 dnů od převzetí zboží</strong> bez udání důvodu (§ 1829 NOZ). PDF produkty jsou po stažení vyňaty z práva na vrácení.</p>
+      <h3>Postup vrácení</h3>
+      <p>Zboží vraťte nepoškozené na adresu: <strong>Šafaříkova 895, Sezimovo Ústí 1</strong>. Náklady na vrácení hradí zákazník. Peníze vrátíme do 14 dnů od převzetí vráceného zboží.</p>
+      <h3>Reklamace</h3>
+      <p>Reklamaci uplatněte e-mailem na <a href="mailto:sebkova.patricie@gmail.com">sebkova.patricie@gmail.com</a> do 24 měsíců od převzetí. Přiložte popis závady + fotodokumentaci. Reklamaci vyřídíme do 30 dnů.</p>
+    </div>
+    <div class="modal-actions" style="justify-content:center;margin-top:8px;">
+      <button class="btn btn-terra" id="vraceni-close-btn">Zavřít</button>
+    </div>
+  </div>
+</div>
+
+<!-- Průvodce výběrem -->
+<div id="modal-pruvodce" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="modal-box modal-box--terms">
+    <button class="modal-close-x" id="pruvodce-close-x" aria-label="Zavřít">✕</button>
+    <div class="terms-content">
+      <h2>Průvodce výběrem kartiček</h2>
+      <p class="terms-subtitle">Doporučení dle věku dítěte</p>
+      <h3>🍼 1,5–2 roky</h3>
+      <p>Ovoce, Zelenina, Na farmě – jednoduché motivy ze života dítěte. Ideální první kartičky.</p>
+      <h3>🌱 2–3 roky</h3>
+      <p>V lese, Doma, Hmyzí rodinka, Zvířata a zimní spánek – rozvíjí slovní zásobu a poznání přírody.</p>
+      <h3>🌳 3–4 roky</h3>
+      <p>V savaně, V džungli, Na horách, Ovozel – přiřazování barev – složitější motivy a herní prvky.</p>
+      <h3>🎒 4+ let</h3>
+      <p>Za polárním kruhem, V mořích a oceánech, Na stavbě – komplexní světy pro zvídavé předškoláky.</p>
+      <h3>🎁 Jako první sada</h3>
+      <p>Sada 8 různých prostředí – skvělý přehled pro začátek. Obsahuje přiřazování ke stínům.</p>
+      <h3>🎂 K narozeninám</h3>
+      <p>Sada 5 kartiček dle vlastního výběru – osobní výběr oblíbených motivů, hezky se daruje.</p>
+      <h3>📒 Pracovní sešit</h3>
+      <p>Vhodný od 1,5 roku jako doplněk ke kartičkám – rozvíjí jemnou motoriku, barvy, tvary a přiřazování.</p>
+    </div>
+    <div class="modal-actions" style="justify-content:center;margin-top:8px;">
+      <button class="btn btn-terra" id="pruvodce-close-btn">Zavřít</button>
+    </div>
+  </div>
+</div>
 
 <!-- ░░░ OBCHODNÍ PODMÍNKY MODAL ░░░ -->
 <div id="modal-podminky" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="podminky-title">
@@ -2422,7 +2439,6 @@
   }
 
   initCarousel(document.getElementById('novinky-carousel'));
-  initCarousel(document.getElementById('motifs-carousel'));
 
   /* — Order form — */
   const form    = document.getElementById('order-form');
@@ -2895,6 +2911,52 @@
       });
     }
   }
+
+  /* ─── Cart Badge Update ─── */
+  function updateCartBadge() {
+    var badge = document.getElementById('cart-count');
+    if (!badge) return;
+    try {
+      var cart = JSON.parse(localStorage.getItem('pk_cart') || '[]');
+      var count = cart.reduce(function(s,i){return s+(i.qty||1);},0);
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'inline' : 'none';
+    } catch(e) {}
+  }
+  updateCartBadge();
+  window.addEventListener('storage', updateCartBadge);
+
+  /* ─── FAQ accordion ─── */
+  document.querySelectorAll('.faq-question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = btn.closest('.faq-item');
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  /* ─── Footer info popups ─── */
+  var footerPopupIds = ['gdpr','doprava-info','vraceni','pruvodce'];
+  footerPopupIds.forEach(function(id) {
+    var modal = document.getElementById('modal-'+id);
+    var btnOpen = document.getElementById('btn-'+id);
+    var btnClose = document.getElementById(id+'-close-x');
+    var btnClose2 = document.getElementById(id+'-close-btn');
+    function openP() { if(modal){ modal.style.display='flex'; document.body.classList.add('modal-open'); } }
+    function closeP() { if(modal){ modal.style.display='none'; document.body.classList.remove('modal-open'); } }
+    if(btnOpen) btnOpen.addEventListener('click', openP);
+    if(btnClose) btnClose.addEventListener('click', closeP);
+    if(btnClose2) btnClose2.addEventListener('click', closeP);
+    if(modal) modal.addEventListener('click', function(e){ if(e.target===modal) closeP(); });
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Escape') return;
+    footerPopupIds.forEach(function(id) {
+      var m = document.getElementById('modal-'+id);
+      if (m && m.style.display === 'flex') { m.style.display='none'; document.body.classList.remove('modal-open'); }
+    });
+  });
 
 })();
 </script>

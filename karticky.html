@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Všechny kartičky – Přírodní kartičky</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="products.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #F5F0E8; --cream-dark: #EDE5D5; --green: #3A5A40; --green-light: #5C8A63; --green-pale: #E8F0E9;
+      --beige: #C9B99A; --beige-light: #EDE3D3; --terra: #A0522D; --terra-light: #C4703F;
+      --text: #3D3228; --text-light: #6B5B4E; --radius: 14px; --radius-sm: 8px; --transition: .28s ease;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); line-height: 1.7;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+    h1, h2, h3 { font-family: 'Lora', serif; line-height: 1.3; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: 'Nunito', sans-serif; border: none; }
+    #topbar {
+      position: sticky; top: 0; z-index: 700; display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; background: rgba(245,240,232,.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--beige-light); box-shadow: 0 2px 12px rgba(58,90,64,.06);
+    }
+    #hamburger { background: none; font-size: 1.45rem; color: var(--green); padding: 4px 8px; border-radius: var(--radius-sm); }
+    .topbar-logo { font-family: 'Lora', serif; font-size: 1.2rem; color: var(--green); font-style: italic; }
+    .topbar-cart { background: none; font-size: 1.3rem; color: var(--green); padding: 4px 8px; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 4px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 64px 24px; }
+    .breadcrumb { padding: 20px 24px 0; max-width: 1200px; margin: 0 auto; font-size: .9rem; color: var(--text-light); }
+    .breadcrumb a { color: var(--green); }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .section-heading { text-align: center; margin-bottom: 48px; }
+    .section-label { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--terra); margin-bottom: 8px; font-weight: 700; }
+    .section-heading h2 { font-size: 2.2rem; color: var(--green); margin-bottom: 14px; }
+    .motifs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; }
+    .motif-card {
+      background: white; border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 12px rgba(58,90,64,.08);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .motif-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(58,90,64,.15); }
+    .motif-img { aspect-ratio: 4/3; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; position: relative; }
+    .motif-img svg { width: 60%; height: auto; }
+    .motif-img span { position: absolute; bottom: 8px; right: 10px; font-size: .7rem; color: var(--text-light); opacity: .6; }
+    .motif-body { padding: 18px 20px; }
+    .motif-body h3 { font-size: 1.15rem; color: var(--text); margin-bottom: 8px; }
+    .motif-price { font-size: .95rem; color: var(--terra); font-weight: 700; margin-bottom: 4px; }
+    .motif-age { font-size: .85rem; color: var(--text-light); margin-bottom: 14px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 50px; font-weight: 600;
+      transition: all .3s; cursor: pointer; justify-content: center; text-align: center;
+    }
+    .btn-terra { background: var(--terra); color: white; border: 2px solid var(--terra); }
+    .btn-terra:hover { background: var(--terra-light); border-color: var(--terra-light); }
+    footer { background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%); color: var(--cream); padding: 42px 24px 24px; margin-top: 80px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.2); padding-top: 20px; margin-top: 32px; text-align: center; font-size: .9rem; opacity: .85; }
+  </style>
+</head>
+<body>
+
+<header id="topbar">
+  <button id="hamburger" aria-label="Menu">☰</button>
+  <a href="index.html" class="topbar-logo">🌿 Přírodní kartičky</a>
+  <a href="kosik.html" class="topbar-cart" aria-label="Košík">🛒 <span id="cart-count" style="font-size:.75rem;font-weight:700;background:var(--terra);color:white;border-radius:50%;padding:0 5px;display:none;"></span></a>
+</header>
+
+<nav class="breadcrumb">
+  <a href="index.html">Domů</a> › Kartičky
+</nav>
+
+<section>
+  <div class="section-inner">
+    <div class="section-heading">
+      <div class="section-label">Vzdělávací kartičky</div>
+      <h2>Všechny kartičky</h2>
+      <p>14 úžasných motivů pro malé objevitele. Každý dostupný ve třech variantách.</p>
+    </div>
+
+    <div class="motifs-grid" id="motifs-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <p>© 2025 Přírodní kartičky · Tvořeno s láskou k přírodě 🌿</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+  
+  var grid = document.getElementById('motifs-grid');
+  if (!grid || !window.PRODUCTS) return;
+  
+  var karticky = window.PRODUCTS.karticky;
+  karticky.forEach(function(p) {
+    var card = document.createElement('div');
+    card.className = 'motif-card';
+    card.innerHTML = 
+      '<div class="motif-img">' +
+        '<svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="16" fill="' + (p.id === 'ovoce' ? '#E8673A' : '#3A5A40') + '" opacity=".25"/></svg>' +
+        '<span>Foto: ' + p.name + '</span>' +
+      '</div>' +
+      '<div class="motif-body">' +
+        '<h3>' + p.name + '</h3>' +
+        '<p class="motif-price">Od 30 Kč</p>' +
+        '<p class="motif-age">Věk: ' + p.age + '</p>' +
+        '<a href="detail.html?p=' + p.id + '" class="btn btn-terra" style="width:100%;">Zobrazit detail</a>' +
+      '</div>';
+    grid.appendChild(card);
+  });
+  
+  function updateCartBadge() {
+    var badge = document.getElementById('cart-count');
+    if (!badge) return;
+    var count = window.cartCount ? window.cartCount() : 0;
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'inline' : 'none';
+  }
+  updateCartBadge();
+  window.addEventListener('storage', updateCartBadge);
+})();
+</script>
+</body>
+</html>
